@@ -51,3 +51,7 @@ Ahora puedes ver los cambios en otro brazo en github
 # El siguiente comando nos permite ver en que brazo estamos trabajando actualmente
 git branch 
 ```
+
+
+>[!IMPORTANT]
+>Siempre haz commit antes de moverte a otro brazo
