@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
+    <!-- Icono para la pestaña -->
     <link rel="icon" href="{{ url_for('static', filename='IMG/inventario.png') }}">
     <!-- Estilos de boostrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -13,6 +14,7 @@
 </head>
 <body id="Inventario">
 
+<!-- Inicio del menu desplegable -->
 <div id="Menu_Desplegable"> 
     <header class="header ">
         <div class="container">
@@ -46,7 +48,9 @@
         </div>
     </div>
 </div>
-    
+<!-- Fin del menu desplegable -->
+
+<!-- Inicio de la cabecera del inventario -->
 <div class="container-fluid">
     <br>
     <h1 class="text-center ">Inventario</h1>
@@ -68,7 +72,7 @@
             {% endif %}
             {% endwith %}
 
-            <!-- Modal para agregar el producto -->
+            <!-- Inicio del modal para agregar el producto -->
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -110,95 +114,100 @@
                     </div>
                 </div>
             </div>
+            <!-- Fin del modal para agregar el producto -->
 
-            <!-- Agregar nuevo producto -->
-            <!-- Agregar nuevo producto -->
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Codigo</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Marca</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Fecha de vencimiento</th>
-            <th scope="col">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for producto in productos %}
-        <tr>
-            <td>{{ producto['Id'] }}</td>
-            <td>{{ producto['Nombre'] }}</td>
-            <td>{{ producto['Cantidad'] }}</td>
-            <td>{{ producto['Marca'] }}</td>
-            <td>{{ producto['precio'] }}</td>
-            <td>{{ producto['Descripcion'] }}</td>
-            <td>{{ producto['Fecha_vencimiento'] }}</td>
-            <td>
-                <a href="/update/{{ producto['Id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ producto['Id'] }}">Editar</a>
-                <button onclick="eliminarProducto('{{ producto['Id'] }}')" class="btn btn-danger btn-sm">Eliminar</button>
+            <!-- Inicio para agregar nuevo producto -->
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Fecha de vencimiento</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto['Id'] }}</td>
+                        <td>{{ producto['Nombre'] }}</td>
+                        <td>{{ producto['Cantidad'] }}</td>
+                        <td>{{ producto['Marca'] }}</td>
+                        <td>{{ producto['precio'] }}</td>
+                        <td>{{ producto['Descripcion'] }}</td>
+                        <td>{{ producto['Fecha_vencimiento'] }}</td>
+                        <td>
+                            <a href="/update/{{ producto['Id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ producto['Id'] }}">Editar</a>
+                            <button onclick="eliminarProducto('{{ producto['Id'] }}')" class="btn btn-danger btn-sm">Eliminar</button>
 
-            </td>
-        </tr>
-        <!-- Modal -->
-        <div id="modaledit{{ producto['Id'] }}" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-primary" style="align-content: center;">Detalles del producto para editar</h5>    
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        </td>
+                    </tr>
+                    <!-- Modal -->
+                    <div id="modaledit{{ producto['Id'] }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-primary" style="align-content: center;">Detalles del producto para editar</h5>    
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('update') }}" method="POST">
+                                        <input type="hidden" name="Id" value="{{ producto['Id'] }}">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input value="{{ producto['Nombre'] }}" type="text" name="Nombre" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cantidad</label>
+                                            <input value="{{ producto['Cantidad'] }}" type="text" name="Cantidad" class="form-control" id="exampleFormControlInput1" placeholder="Cantidad" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Marca</label>
+                                            <input value="{{ producto['Marca'] }}" name="Marca" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Marca" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Precio</label>
+                                            <input value="{{ producto['precio'] }}" name="precio" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Precio" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Descripción</label>
+                                            <textarea value="{{ producto['Descripcion'] }}" name="Descripcion" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Descripcion del producto" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha de vencimiento</label>
+                                            <input value="{{ producto['Fecha_vencimiento'] }}" name="Fecha_vencimiento" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de vencimiento" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-success mb-2">Actualizar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form action="{{ url_for('update') }}" method="POST">
-                            <input type="hidden" name="Id" value="{{ producto['Id'] }}">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input value="{{ producto['Nombre'] }}" type="text" name="Nombre" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Cantidad</label>
-                                <input value="{{ producto['Cantidad'] }}" type="text" name="Cantidad" class="form-control" id="exampleFormControlInput1" placeholder="Cantidad" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <input value="{{ producto['Marca'] }}" name="Marca" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Marca" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Precio</label>
-                                <input value="{{ producto['precio'] }}" name="precio" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Precio" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Descripción</label>
-                                <textarea value="{{ producto['Descripcion'] }}" name="Descripcion" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Descripcion del producto" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Fecha de vencimiento</label>
-                                <input value="{{ producto['Fecha_vencimiento'] }}" name="Fecha_vencimiento" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de vencimiento" required>
-                            </div>
-                            <button type="submit" class="btn btn-success mb-2">Actualizar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </tbody>
-</table>
-
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Final para agregar nuevo producto -->
+            
+            <!-- Inicio de botones para redirigir a los demas templates -->
             <a href="{{ url_for('Entradas') }}" class="btn btn-primary float-left">Ver entradas</a>
             <br><br>
             <a href="{{ url_for('Salidas') }}" class="btn btn-primary float-left">Ver salidas</a>
             <br><br>
             <a href="{{ url_for('Novedades') }}" class="btn btn-primary float-left">Ver Novedades</a>
+            <!-- Fin de botones para redirigir a los demas templates -->
         </div>
         <div class="col-sm-2"></div>
     </div>
 </div>
+<!-- Fin de la cabecera del inventario -->
 
+<!-- Script para el boton de eliminar producto de la linea 144 y mostrar el menu desplegable de la primera linea -->
 <script>
     function eliminarProducto(id) {
         console.log(id);
@@ -227,8 +236,9 @@
         }
     }
 </script>
+<!-- Fin del script -->
 
-
+<!-- Estilos al final de la pagina para el js -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
