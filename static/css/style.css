@@ -3366,7 +3366,68 @@ visibility: visible;
     border-top: 1px solid #444;
 }
 
-.modal {
+#Menu_Desplegable .modal {
     z-index: 99999;
 }
 
+/* Modulos administrador dentro del template de admin1 */
+#Modulos{
+  width: 100%;
+  padding: 100px 0;
+}
+
+#Modulos h2{
+  color: #040404;
+  font-size: 36px;
+  border-bottom: 2px solid rgb(20, 236, 196);
+  display: inline-block;
+  margin-bottom: 80px;
+}
+
+#Modulos h2 span{
+  font-size: 54px;
+}
+
+#Modulos .card-servicios{
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+#Modulos .card-servicios::after{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index:1;
+  top: 0;
+  left: 0;
+  content: "";
+  background: rgba(0, 242, 255, 0.045);
+  transition: .5s;
+}
+
+#Modulos .card-servicios a{
+  color: #fff;
+  font-weight: 700;
+  font-size: 26px; 
+  text-decoration: none;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 250px;
+  text-align: center;
+  transition: .5s;
+}
+#Modulos .card-servicios:hover a{
+  background: white;
+  color: blue;
+  bottom: 48%;
+}
+
+#Modulos .card-servicios:hover::after{
+  background: rgba(0, 0, 255, 0.465);
+}
