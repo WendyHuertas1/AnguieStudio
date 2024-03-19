@@ -66,3 +66,23 @@ git branch
 
 >[!IMPORTANT]
 >Siempre haz commit antes de moverte a otro brazo
+
+
+### Bajar cambios desde github
+
+```shell
+    git pull origin main
+```
+
+Se puede cambiar el nombre del brazo dependiendo del brazo del que estoy 
+y del brazo del que quiero descargar archivos.
+
+### Comandos que te pueden ayudar
+
+```shell
+    git status
+    git log --oneline
+    git fetch 
+    git fetch -a 
+    git branch -a
+```
