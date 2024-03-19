@@ -4,45 +4,47 @@
 	<meta charset="UTF-8">
 	<title>Administrador</title>
 	<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+	<style>
+        .submenu {
+            display: none;
+        }
+        .submenu.show {
+            display: block;
+        }
+    </style>
 </head>
 <body id="admin">
-	<header class="header">
+    <header class="header">
 		<div class="container">
-		<div class="btn-menu">
-			<label for="btn-menu">☰</label>
-		</div>
-			<div class="logo">
-				<h1>Menu</h1>
+			<div class="btn-menu">
+				<label for="btn-menu">☰</label>
 			</div>
-			
 		</div>
 	</header>
 	<div class="capa"></div>
 <input type="checkbox" id="btn-menu">
-<div class="container-menu">
-	<div class="cont-menu">
-		<nav>
-			<a href="#">Inicio</a>
-			<a href="#" onclick="mostrarLista()">Inventario</a>
-			<div id="listaInventario" style="display: none;">
-				<ul>
-					<li><a href="{{ url_for('inventario') }}">Inventario</a></li>
-					<li><a href="{{ url_for('Entradas') }}">Entradas</a></li>
-					<li><a href="{{ url_for('Salidas') }}">Salidas</a></li>
-					<li><a href="{{ url_for('Novedades') }}">Novedades</a></li>
-				</ul>
-			</div>
-			<a href="#">Citas</a>
-			<a href="#">Catalogo</a>
-			<a href="#">Modificar perfil</a>
-			<a href="{{url_for('home')}}">Cerrar sesion</a>
-		</nav>
-		<label for="btn-menu">✖️</label>
-	</div>
-
-	
-
+	<div class="container-menu">
+		<div class="cont-menu">
+			<nav>
+				<a href="#">Inicio</a>
+				<a href="#" onclick="mostrarLista()">Inventario</a>
+				<div id="listaInventario" style="display: none;">
+					<ul>
+						<li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+						<li><a href="{{ url_for('Entradas') }}">Entradas</a></li>
+						<li><a href="{{ url_for('Salidas') }}">Salidas</a></li>
+						<li><a href="{{ url_for('Novedades') }}">Novedades</a></li>
+					</ul>
+				</div>
+				<a href="#">Citas</a>
+				<a href="#">Catalogo</a>
+				<a href="#">Modificar perfil</a>
+				<a href="{{url_for('home')}}">Cerrar sesion</a>
+			</nav>
+			<label for="btn-menu">✖️</label>
+		</div>
 	<script>
 		function mostrarLista() {
 			var lista = document.getElementById("listaInventario");
@@ -54,5 +56,60 @@
 		}
 	</script>
 </div>
+
+	<main>
+		<section id="Modulos">
+		<div class="container text-center">
+			<h2>Nuestros <br> <span>Modulos</span></h2>
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="img/Servicios/img6.jpg" alt="Montañas" class="w-100">
+						<a href="">Inicio</a>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="{{ url_for('static', filename='IMG/inventario.webp')}}" alt="Montañas" class="w-100">
+						<a href="">Inventario</a>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="img/Servicios/img8.jpg" alt="Montañas" class="w-100">
+						<a href="">Entradas</a>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="img/Servicios/img9.jpg" alt="Montañas" class="w-100">
+						<a href="">Salidas</a>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="img/Servicios/img10.jpg" alt="Montañas" class="w-100">
+						<a href="">Novedades</a>
+					</div>
+
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="card-servicios">
+						<img src="img/Servicios/img11.jpg" alt="Montañas" class="w-100">
+						<a href="">Cerrar sesion</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>  
+		</section>
+	</main>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
