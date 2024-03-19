@@ -4,6 +4,17 @@
 
 In this repository you are going to find the code relative to my adso project...
 
+## Clonar Repositorio
+
+Entra en tu terminal o tu visual estudio code y escribe lo siguiente 
+
+```shell
+git clone https://github.com/Dilanss/Project.git
+cd Project
+```
+
+Ahora ya puedes abrir tu proyecto en visual studio code
+
 
 ### Initialize git
 
