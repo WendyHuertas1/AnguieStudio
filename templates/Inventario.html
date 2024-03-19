@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link rel="icon" href="{{ url_for('static', filename='IMG/inventario.png') }}">
+    <!-- Estilos de boostrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body id="Inventario">
+
+<div id="Menu_Desplegable"> 
+    <header class="header ">
+        <div class="container">
+            <div class="btn-menu">
+                <label for="btn-menu">☰</label>
+            </div>
+    
+        </div>
+    </header>
+    <div class="capa"></div>
+    <input type="checkbox" id="btn-menu">
+    <div class="container-menu">
+        <div class="cont-menu">
+            <nav>
+                <a href="{{ url_for('admin')}}">Inicio</a>
+                <a href="#" onclick="mostrarLista()">Inventario</a>
+                <div id="listaInventario" style="display: none;">
+                    <ul>
+                        <li><a href="{{ url_for('inventario') }}">inventario</a></li>
+                        <li><a href="{{ url_for('Entradas') }}">Entradas</a></li>
+                        <li><a href="{{ url_for('Salidas') }}">Salidas</a></li>
+                        <li><a href="{{ url_for('Novedades') }}">Novedades</a></li>
+                    </ul>
+                </div>
+                <a href="#">Citas</a>
+                <a href="#">Catalogo</a>
+                <a href="#">Modificar perfil</a>
+                <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+            </nav>
+            <label for="btn-menu">✖️</label>
+        </div>
+    </div>
+</div>
+    
+<div class="container-fluid">
+    <br>
+    <h1 class="text-center ">Inventario</h1>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h2>Lista de productos <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Agregar producto</a></h2>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!-- Modal para agregar el producto -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary" style="align-content: center;">Ingresa un nuevo producto</h5>  
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('insert') }}" method="POST">
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input type="text" name="Nombre" class="form-control" id="exampleFormControlInput1" placeholder="Nombre del producto" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cantidad</label>
+                                    <input type="text" name="Cantidad" class="form-control" id="exampleFormControlInput1" placeholder="Cantidad" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Marca</label>
+                                    <input name="Marca" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Marca del producto" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Precio</label>
+                                    <input name="Precio" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Precio del producto" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Descripción</label>
+                                    <textarea name="Descripcion" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Descripcion del producto" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fecha de vencimiento</label>
+                                    <input name="Fecha_vencimiento" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de vencimiento" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agregar nuevo producto -->
+            <!-- Agregar nuevo producto -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha de vencimiento</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto['Id'] }}</td>
+            <td>{{ producto['Nombre'] }}</td>
+            <td>{{ producto['Cantidad'] }}</td>
+            <td>{{ producto['Marca'] }}</td>
+            <td>{{ producto['precio'] }}</td>
+            <td>{{ producto['Descripcion'] }}</td>
+            <td>{{ producto['Fecha_vencimiento'] }}</td>
+            <td>
+                <a href="/update/{{ producto['Id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ producto['Id'] }}">Editar</a>
+                <button onclick="eliminarProducto('{{ producto['Id'] }}')" class="btn btn-danger btn-sm">Eliminar</button>
+
+            </td>
+        </tr>
+        <!-- Modal -->
+        <div id="modaledit{{ producto['Id'] }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" style="align-content: center;">Detalles del producto para editar</h5>    
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for('update') }}" method="POST">
+                            <input type="hidden" name="Id" value="{{ producto['Id'] }}">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input value="{{ producto['Nombre'] }}" type="text" name="Nombre" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input value="{{ producto['Cantidad'] }}" type="text" name="Cantidad" class="form-control" id="exampleFormControlInput1" placeholder="Cantidad" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Marca</label>
+                                <input value="{{ producto['Marca'] }}" name="Marca" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Marca" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Precio</label>
+                                <input value="{{ producto['precio'] }}" name="precio" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Precio" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea value="{{ producto['Descripcion'] }}" name="Descripcion" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Descripcion del producto" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha de vencimiento</label>
+                                <input value="{{ producto['Fecha_vencimiento'] }}" name="Fecha_vencimiento" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de vencimiento" required>
+                            </div>
+                            <button type="submit" class="btn btn-success mb-2">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+
+            <a href="{{ url_for('Entradas') }}" class="btn btn-primary float-left">Ver entradas</a>
+            <br><br>
+            <a href="{{ url_for('Salidas') }}" class="btn btn-primary float-left">Ver salidas</a>
+            <br><br>
+            <a href="{{ url_for('Novedades') }}" class="btn btn-primary float-left">Ver Novedades</a>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+<script>
+    function eliminarProducto(id) {
+        console.log(id);
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez eliminado, no podrás recuperar este elemento",
+            icon: "warning",
+            buttons: ["Cancelar", "Sí, eliminar"],
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                window.location.href = "/delete/" + id;
+            } else {
+                print("Error la eliminar el producto seleccionado por favor vuelve a intentarlo.")
+            }
+        });
+    }
+
+    function mostrarLista() {
+        var lista = document.getElementById("listaInventario");
+        if (lista.style.display === "block") {
+            lista.style.display = "none";
+        } else {
+            lista.style.display = "block";
+        }
+    }
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+</body>
+</html>

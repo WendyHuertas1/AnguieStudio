@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Administrador</title>
+	<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+</head>
+<body id="admin">
+	<header class="header">
+		<div class="container">
+		<div class="btn-menu">
+			<label for="btn-menu">☰</label>
+		</div>
+			<div class="logo">
+				<h1>Menu</h1>
+			</div>
+			
+		</div>
+	</header>
+	<div class="capa"></div>
+<input type="checkbox" id="btn-menu">
+<div class="container-menu">
+	<div class="cont-menu">
+		<nav>
+			<a href="#">Inicio</a>
+			<a href="#" onclick="mostrarLista()">Inventario</a>
+			<div id="listaInventario" style="display: none;">
+				<ul>
+					<li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+					<li><a href="{{ url_for('Entradas') }}">Entradas</a></li>
+					<li><a href="{{ url_for('Salidas') }}">Salidas</a></li>
+					<li><a href="{{ url_for('Novedades') }}">Novedades</a></li>
+				</ul>
+			</div>
+			<a href="#">Citas</a>
+			<a href="#">Catalogo</a>
+			<a href="#">Modificar perfil</a>
+			<a href="{{url_for('home')}}">Cerrar sesion</a>
+		</nav>
+		<label for="btn-menu">✖️</label>
+	</div>
+
+	
+
+	<script>
+		function mostrarLista() {
+			var lista = document.getElementById("listaInventario");
+			if (lista.style.display === "block") {
+				lista.style.display = "none";
+			} else {
+				lista.style.display = "block";
+			}
+		}
+	</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salida de Productos</title>
+    <link rel="icon" href="/static/IMG/inventario.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Estilo personalizado */
+        .container {
+            margin-top: 20px;
+        }
+        .btn-back {
+            margin-bottom: 20px;
+        }
+        .title-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="Menu_Desplegable"> 
+        <header class="header ">
+            <div class="container">
+                <div class="btn-menu">
+                    <label for="btn-menu">☰</label>
+                </div>
+        
+            </div>
+        </header>
+        <div class="capa"></div>
+        <input type="checkbox" id="btn-menu">
+        <div class="container-menu">
+            <div class="cont-menu">
+                <nav>
+                    <a href="{{ url_for('admin')}}">Inicio</a>
+                    <a href="#" onclick="mostrarLista()">Inventario</a>
+                    <div id="listaInventario" style="display: none;">
+                        <ul>
+                            <li><a href="{{ url_for('inventario') }}">inventario</a></li>
+                            <li><a href="{{ url_for('Entradas') }}">Entradas</a></li>
+                            <li><a href="{{ url_for('Salidas') }}">Salidas</a></li>
+                            <li><a href="{{ url_for('Novedades') }}">Novedades</a></li>
+                        </ul>
+                    </div>
+                    <a href="#">Citas</a>
+                    <a href="#">Catalogo</a>
+                    <a href="#">Modificar perfil</a>
+                    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+                </nav>
+                <label for="btn-menu">✖️</label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Botón de volver -->
+    <div class="container">
+        <a href="{{ url_for('inventario') }}" class="btn btn-primary float-left">Volver</a>
+    </div>
+    <br>
+    <!-- Título -->
+    <div class="container title-container">
+        <h1>Salida de Productos</h1>
+    </div>
+    
+    <!-- Tabla -->
+    <div class="container">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID salida</th>
+                    <th>ID Producto</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Fecha de salida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for salida in salidas %}
+                    <tr>
+                        <td>{{ salida['Id_Salida'] }}</td>
+                        <td>{{ salida['Id_Producto'] }}</td>
+                        <td>{{ salida['Nombre'] }}</td>
+                        <td>{{ salida['Cantidad'] }}</td>
+                        <td>{{ salida['precio'] }}</td>
+                        <td>{{ salida['Fecha_Salida'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function mostrarLista() {
+            var lista = document.getElementById("listaInventario");
+            if (lista.style.display === "block") {
+                lista.style.display = "none";
+            } else {
+                lista.style.display = "block";
+            }
+        }
+    </script>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+</body>
+</html>
