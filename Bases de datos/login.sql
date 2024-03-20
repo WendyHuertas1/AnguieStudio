@@ -17,14 +17,14 @@ INSERT INTO entrada_productos (Id_Entrada, Id_Producto, Nombre, Cantidad, precio
 (3, 3, 'Dilan', 100, 100, '2024-03-18');
 
 CREATE TABLE novedades (
-  Id_Novedades int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  Id_Producto int(11) NOT NULL,
-  fecha date NOT NULL,
-  Nombre varchar(100) NOT NULL,
-  Cantidad int(11) NOT NULL,
-  Entrada int(11) NOT NULL,
-  Salida int(11) NOT NULL,
-  Tipo varchar(50) NOT NULL DEFAULT ''
+    Id_Novedades int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Id_Producto int(11) NOT NULL,
+    fecha date NOT NULL,
+    Nombre varchar(100) NOT NULL,
+    Cantidad int(11) NOT NULL,
+    Entrada int(11) NOT NULL,
+    Salida int(11) NOT NULL,
+    Tipo varchar(50) NOT NULL DEFAULT ''
 );
 
 INSERT INTO novedades (Id_Novedades, Id_Producto, fecha, Nombre, Cantidad, Entrada, Salida, Tipo) VALUES
@@ -117,8 +117,9 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (id, correo, password, id_rol, nombre, apellido, telefono) VALUES
-(1, 'wendyhuertas2408@gmail.com', '12', 1, NULL, NULL, NULL),
-(2, 'dilanjimenez208@gmail.com', '123', 2, NULL, NULL, NULL),
-(3, 'wendy2408@outlook.es', '1234', 3, NULL, NULL, NULL),
+(1, 'wendyhuertas2408@gmail.com', '12', 1, 'Wendy', 'Huertas', 123123),
+(2, 'dilanjimenez208@gmail.com', '123', 2, 'Dilan', 'Jimenez', 234234),
+(3, 'wendy2408@outlook.es', '1234', 3, 'Lorena', 'Hernandez', 423423),
 (5, 'alejandro@gmail.com', '456', 3, 'Alejandro', 'Martinez', 2147483647),
 (6, 'alejandro@gmail.com', '456', 3, 'Alejandro', 'Martinez', 2147483647);
+(7, 'dilanjimenez200@gmail.com', '1234567', 1, 'Dilan', 'Jimenez', 123124);

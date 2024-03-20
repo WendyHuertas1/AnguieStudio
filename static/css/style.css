@@ -190,7 +190,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    height: 90vh;
     background-image: url(https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
     background-size: cover;
     backdrop-filter: blur(5px);
@@ -208,7 +208,7 @@
 
 #Login .information {
     width: 1000px;
-    height: 700px;
+    height: 500px;
     display: flex;
     align-items: center;
     text-align: center;
@@ -261,8 +261,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 800%;
-    height: 700px;
+    width: 300%;
+    height: 500px;
     text-align: center;
     background-color: white;
     border-top-right-radius: 20px;
@@ -503,8 +503,8 @@
 }
 
 #Registro .form-information-childs h2{
-   color: #555;
-   font-size: 2rem; 
+    color: #555;
+    font-size: 2rem; 
 }
 
 #Registro .icons{
@@ -611,27 +611,27 @@
 }
 
 /* Responsive */
- @media screen and (max-width:750px) {
+@media screen and (max-width:750px) {
     html{
         font-size: 12px;
     }
 }
 
- @media screen and (max-width:580px) {
+@media screen and (max-width:580px) {
     html{
         font-size: 10px;
     }
     #Registro .container-form{
         height: auto;
-       flex-direction: column; 
+        flex-direction: column; 
     }
     #Registro .information{
-       width: 100%;
-       padding: 20%;
-       border-top-left-radius: 0px;
-       border-top-right-radius: 0px;
-       border-bottom-left-radius: 20px; 
-       border-bottom-right-radius: 20px;
+        width: 100%;
+        padding: 20%;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 20px; 
+        border-bottom-right-radius: 20px;
 
     }
 
@@ -855,216 +855,368 @@
 
 /* Menu para el cliente */
 
-#Cliente  {
-    background-image: url(../IMG/Cliente.jpg);
-    background-size: cover;
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+#Cliente	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Montserrat Alternates', sans-serif;
+	}
+#Cliente	body{
+		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+		background-size: 100vw 100vh;
+		background-repeat: no-repeat;
+}
+#Cliente	.capa{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  top: 0;left: 0;
 }
 
-#Cliente img {
-    width: 150px;
-    float: left;
+#Cliente .header{
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;left: 0;
+}
+#Cliente	.container{
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+#Cliente .container .btn-menu, .logo{
+  float: left;
+  line-height:100px;
+}
+#Cliente .container .btn-menu label{
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
+#Cliente .logo h1{
+  color: black;
+  font-weight: 400;
+  font-size: 22px;
+  margin-left: 10px;
+}
+#Cliente .container .menu{
+  float: right;
+  line-height: 100px;
+}
+#Cliente .container .menu a{
+  display: inline-block;
+  padding: 15px;
+  line-height: normal;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  margin-right: 5px;
+}
+#Cliente .container .menu a:hover{
+  border-bottom: 2px solid #c7c7c7;
+  padding-bottom: 5px;
 }
 
-#Cliente .titulo {
-    font-size: 50px;
-    color: #fff7E5;
+#Cliente #btn-menu{
+  display: none;
+}
+#Cliente .container-menu{
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100vh;
+  top: 0;left: 0;
+  transition: all 500ms ease;
+  opacity: 0;
+  visibility: hidden;
+}
+#Cliente #btn-menu:checked ~ .container-menu{
+  opacity: 1;
+  visibility: visible;
+}
+#Cliente .cont-menu{
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
+  transform: translateX(-100%);
+}
+#Cliente	#btn-menu:checked ~ .container-menu .cont-menu{
+  transform: translateX(0%);
+}
+#Cliente	.cont-menu nav{
+  transform: translateY(15%);
+}
+#Cliente	.cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #c7c7c7;
+  border-left: 5px solid transparent;
+  transition: all 400ms ease;
+}
+#Cliente	.cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
+}
+#Cliente	.cont-menu label{
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Cliente .navbar {
-    background: transparent;
+#Cliente #btn-menu:checked ~ .container-menu {
+opacity: 1;
+visibility: visible;
 }
 
-#Cliente .offcanvas {
-    background: #ffbcbf;
+#Cliente .cont-menu {
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
 }
 
-#Cliente .offcanvas-body {
-    color: rgb(255, 255, 255);
+#Cliente .cont-menu nav {
+  transform: translateY(15%);
 }
 
-#Cliente .offcanvas-title {
-    font: 50px;
+#Cliente .cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #7c7c7c;
+  border-left: 5px solid color transparent;
+  transition: all 400ms ease;
 }
 
-#Cliente .card {
-    width: 500px;  
-    justify-content: center;  
+#Cliente .cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
 }
 
-#Cliente .card img {
-    width: 100%;
+#Cliente .cont-menu label {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Cliente .card-left {
-    left: 42%;
+#Cliente .cont-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#Cliente .card-rigth {
-    right: 1%;
+#Cliente .cont-menu nav ul li {
+  padding: 10px 20px;
+  color: #c7c7c7;
+  transition: all 400ms ease;
 }
 
-#Cliente h1 {
-    text-align: center;
-    font-size: 60px;
-    padding: 20px;
+#Cliente .cont-menu nav ul li:hover {
+  background: #1f1f1f;
+  color: #fff;
 }
 
-#Cliente h5 {
-    text-align: center;
-}
-
-#Cliente #Cartas button {
-    background-color: #ffbcbf;
-    text-align: center;
-    height: 35px;
-    width: 100px;
-    border-radius: 10px;
-    border: none;  
-}
-
-#Cliente #Cartas button:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
-}
-
-#Cliente .Icono {
-    background-color: #ff8c9d;
-    color: black;
-    transition: .5s;
-}
-
-#Cliente .Icono:hover {
-    background-color: #ffbcbf;
-}
-
-#Cliente #Cartas {
-    margin: 20px;
-}
-
-#Cliente .Cartas1 {
-    padding-right: 100px;
-}
-
-#Cliente .Cartas2 {
-    padding-left: 50px;
-    padding-bottom: 20px;
-}
-
-#Cliente .card-body {
-    text-align: center;
+#Cliente .cont-menu nav ul li:first-child {
+  border-top: 1px solid #444;
 }
 
 /* Menu para el empleado */
 
-#Empleado  {
-    background-image: url(../IMG/Empleado.jpg);
-    background-size: cover;
-    
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+#Empleado	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Montserrat Alternates', sans-serif;
+	}
+#Empleado	body{
+		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+		background-size: 100vw 100vh;
+		background-repeat: no-repeat;
+}
+#Empleado	.capa{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  top: 0;left: 0;
 }
 
-#Empleado img {
-    width: 150px;
-    float: left;
+#Empleado .header{
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;left: 0;
+}
+#Empleado	.container{
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+#Empleado .container .btn-menu, .logo{
+  float: left;
+  line-height:100px;
+}
+#Empleado .container .btn-menu label{
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
+#Empleado .logo h1{
+  color: black;
+  font-weight: 400;
+  font-size: 22px;
+  margin-left: 10px;
+}
+#Empleado .container .menu{
+  float: right;
+  line-height: 100px;
+}
+#Empleado .container .menu a{
+  display: inline-block;
+  padding: 15px;
+  line-height: normal;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  margin-right: 5px;
+}
+#Empleado .container .menu a:hover{
+  border-bottom: 2px solid #c7c7c7;
+  padding-bottom: 5px;
 }
 
-#Empleado .titulo {
-    font-size: 50px;
-    color: black;
+#Empleado #btn-menu{
+  display: none;
+}
+#Empleado .container-menu{
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100vh;
+  top: 0;left: 0;
+  transition: all 500ms ease;
+  opacity: 0;
+  visibility: hidden;
+}
+#Empleado #btn-menu:checked ~ .container-menu{
+  opacity: 1;
+  visibility: visible;
+}
+#Empleado .cont-menu{
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
+  transform: translateX(-100%);
+}
+#Empleado	#btn-menu:checked ~ .container-menu .cont-menu{
+  transform: translateX(0%);
+}
+#Empleado	.cont-menu nav{
+  transform: translateY(15%);
+}
+#Empleado	.cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #c7c7c7;
+  border-left: 5px solid transparent;
+  transition: all 400ms ease;
+}
+#Empleado	.cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
+}
+#Empleado	.cont-menu label{
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Empleado .navbar {
-    background: transparent;
-    
+#Empleado #btn-menu:checked ~ .container-menu {
+opacity: 1;
+visibility: visible;
 }
 
-#Empleado .offcanvas {
-    background: #ffbcbf;
+#Empleado .cont-menu {
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
 }
 
-#Empleado .offcanvas-body {
-    color: rgb(255, 255, 255);
+#Empleado .cont-menu nav {
+  transform: translateY(15%);
 }
 
-#Empleado .offcanvas-title {
-    font: 50px;
+#Empleado .cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #7c7c7c;
+  border-left: 5px solid color transparent;
+  transition: all 400ms ease;
 }
 
-#Empleado .card {
-    width: 500px;  
-    justify-content: center;  
+#Empleado .cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
 }
 
-#Empleado .card img {
-    width: 100%;
+#Empleado .cont-menu label {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Empleado .card-left {
-    left: 42%;
+#Empleado .cont-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#Empleado .card-rigth {
-    right: 1%;
+#Empleado .cont-menu nav ul li {
+  padding: 10px 20px;
+  color: #c7c7c7;
+  transition: all 400ms ease;
 }
 
-#Empleado h1 {
-    text-align: center;
-    font-size: 60px;
-    padding: 20px;
-    color: black;
-    backdrop-filter: blur(10px);
+#Empleado .cont-menu nav ul li:hover {
+  background: #1f1f1f;
+  color: #fff;
 }
 
-#Empleado h5 {
-    text-align: center;
-}
-
-#Empleado #Cartas button {
-    background-color: #ffbcbf;
-    text-align: center;
-    height: 35px;
-    width: 100px;
-    border-radius: 10px;
-    border: none;  
-}
-
-#Empleado #Cartas button:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
-}
-
-#Empleado .Icono {
-    background-color: #ff8c9d;
-    color: black;
-    transition: .5s;
-}
-
-#Empleado .Icono:hover {
-    background-color: #ffbcbf;
-}
-
-#Empleado #Cartas {
-    margin: 20px;
-}
-
-#Empleado .Cartas1 {
-    padding-right: 100px;
-}
-
-#Empleado .Cartas2 {
-    padding-left: 50px;
-    padding-bottom: 20px;
-}
-
-#Empleado .card-body {
-    text-align: center;
+#Empleado .cont-menu nav ul li:first-child {
+  border-top: 1px solid #444;
 }
 
 
@@ -3379,7 +3531,7 @@ visibility: visible;
 #Modulos h2{
   color: #040404;
   font-size: 36px;
-  border-bottom: 2px solid rgb(20, 236, 196);
+  border-bottom: 2px solid rgb(224, 72, 123);
   display: inline-block;
   margin-bottom: 80px;
 }
@@ -3395,20 +3547,10 @@ visibility: visible;
   margin-bottom: 40px;
 }
 
-#Modulos .card-servicios::after{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index:1;
-  top: 0;
-  left: 0;
-  content: "";
-  background: rgba(0, 242, 255, 0.045);
-  transition: .5s;
-}
-
 #Modulos .card-servicios a{
-  color: #fff;
+  background-color: #7f0072;
+  width: 400px;
+  color: white;
   font-weight: 700;
   font-size: 26px; 
   text-decoration: none;
@@ -3418,16 +3560,8 @@ visibility: visible;
   left: 0;
   right: 0;
   margin: 0 auto;
-  max-width: 250px;
+  max-width: 400px;
   text-align: center;
   transition: .5s;
 }
-#Modulos .card-servicios:hover a{
-  background: white;
-  color: blue;
-  bottom: 48%;
-}
 
-#Modulos .card-servicios:hover::after{
-  background: rgba(0, 0, 255, 0.465);
-}

@@ -20,10 +20,18 @@ mysql = MySQL(app)
 def home():
     return render_template("index.html")
 
-# Funcion para redirigi al admin1.html
+# Funcion para redirigi al Administrador.html
 @app.route('/admin')
 def admin():
-    return render_template("admin1.html")
+    return render_template("Administrador.html")
+
+@app.route('/Empleado')
+def Empleado():
+    return render_template("Empleado.html")
+
+@app.route('/Cliente')
+def Cliente():
+    return render_template("Cliente.html")
 
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
@@ -40,15 +48,16 @@ def login():
             session['logueado'] = True
             session['id'] = account['id']
             session['id_rol'] = account['id_rol']
+            session['nombre'] = account['nombre'] 
 
             if session['id_rol'] == 1:
-                return render_template("admin1.html")
+                return render_template("Administrador.html", nombre=session['nombre'])  
             elif session['id_rol'] == 2:
-                return render_template("admin2.html")
+                return render_template("Empleado.html", nombre=session['nombre'])  
             elif session['id_rol'] == 3:
-                return redirect(url_for('inventario'))
+                return render_template("Cliente.html", nombre=session['nombre'])
         else:
-            return render_template('index1.html', mensaje="¡Usuario o contraseña incorrectas!")
+            return render_template('login.html', mensaje="¡Usuario o contraseña incorrectas!")
 
     return render_template('login.html')
 
@@ -174,7 +183,7 @@ def update():
         Nombre = request.form['Nombre']
         Cantidad = request.form['Cantidad']
         Marca = request.form['Marca']
-        Precio = request.form['Precio']
+        Precio = request.form['precio']
         Descripcion = request.form['Descripcion']
         Fecha_vencimiento = request.form['Fecha_vencimiento']
         try:
@@ -218,14 +227,18 @@ def Salidas():
     return render_template('Salidas.html', salidas=salidas_data)
 
 # Funcion para registrar las novedades de los productos
+# Funcion para mostrar las novedades de entrada
 @app.route('/Novedades')
 def Novedades():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM Novedades WHERE Tipo = 'Entrada'")
+    cur.execute("SELECT n.*, p.Cantidad AS Cantidad_Actual FROM Novedades n JOIN productos p ON n.Id_Producto = p.Id WHERE n.Tipo = 'Entrada'")
     entradas_data = cur.fetchall()
+
     cur.execute("SELECT * FROM Novedades WHERE Tipo = 'Salida'")
-    salidas_data = cur.fetchall() 
+    salidas_data = cur.fetchall()
+
     cur.close()
+    
     return render_template('Novedades.html', entradas=entradas_data, salidas=salidas_data)
 
 # Ruta
