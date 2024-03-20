@@ -3182,7 +3182,7 @@ h6 {
 }
 #admin .container .btn-menu, .logo{
   float: left;
-  line-height:100px;
+  line-height:200px;
 }
 #admin .container .btn-menu label{
   color: black;
@@ -3332,203 +3332,13 @@ visibility: visible;
   border-top: 1px solid #444;
 }
 
-
-
-
-/* ---------------------------- */
-/* Inventario */
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
-
-#Menu_Desplegable *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat Alternates', sans-serif;
-}
-
-
-/*Estilos para el encabezado*/
-#Menu_Desplegable .header{
-    width: 100%;
-    height: 100px;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-#Menu_Desplegable .container{
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-}
-
-#Menu_Desplegable .container .btn-menu,
-#Menu_Desplegable .logo{
-    float: left;
-    line-height: 100px;
-}
-
-#Menu_Desplegable .container .btn-menu label{
-    color: black;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-#Menu_Desplegable .logo h1{
-    color: black;
-    font-weight: 400;
-    font-size: 22px;
-    margin-left: 10px;
-}
-
-#Menu_Desplegable .container .menu{
-    float: right;
-    line-height: 100px;
-}
-
-#Menu_Desplegable .container .menu a{
-    display: inline-block;
-    padding: 15px;
-    line-height: normal;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-    font-size: 15px;
-    margin-right: 5px;
-}
-
-
-/*Fin de Estilos para el encabezado*/
-
-/*Menú lateral*/
-#Menu_Desplegable #btn-menu{
-    display: none;
-}
-
-#Menu_Desplegable .container-menu{
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    transition: all 500ms ease;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 9999; 
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu{
-    opacity: 1;
-    visibility: visible;
-    z-index: 9999; 
-}
-
-#Menu_Desplegable .cont-menu{
-    width: 100%;
-    max-width: 250px;
-    background: #1c1c1c;
-    height: 100vh;
-    position: relative;
-    transition: all 500ms ease;
-    transform: translateX(-100%);
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu .cont-menu{
-    transform: translateX(0%);
-}
-
-#Menu_Desplegable .cont-menu nav{
-    transform: translateY(15%);
-}
-
-#Menu_Desplegable .cont-menu nav a{
-    display: block;
-    text-decoration: none;
-    padding: 20px;
-    color: #c7c7c7;
-    border-left: 5px solid transparent;
-    transition: all 400ms ease;
-}
-
-
-#Menu_Desplegable .cont-menu label{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu {
-    opacity: 1;
-    visibility: visible;
-}
-
-#Menu_Desplegable .cont-menu {
-    width: 100%;
-    max-width: 250px;
-    background: #1c1c1c;
-    height: 100vh;
-    position: relative;
-    transition: all 500ms ease;
-}
-
-#Menu_Desplegable .cont-menu nav {
-    transform: translateY(15%);
-}
-
-#Menu_Desplegable .cont-menu nav a{
-    display: block;
-    text-decoration: none;
-    padding: 20px;
-    color: #7c7c7c;
-    border-left: 5px solid color transparent;
-    transition: all 400ms ease;
-}
-
-
-
-#Menu_Desplegable .cont-menu label {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-#Menu_Desplegable .cont-menu nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#Menu_Desplegable .cont-menu nav ul li {
-    padding: 10px 20px;
-    color: #c7c7c7;
-    transition: all 400ms ease;
-}
-
-
-
-#Menu_Desplegable .cont-menu nav ul li:first-child {
-    border-top: 1px solid #444;
-}
-
-#Menu_Desplegable .modal {
-    z-index: 99999;
-}
-
 /* Modulos administrador dentro del template de admin1 */
-#Modulos{
+#Modulos {
   width: 100%;
-  padding: 100px 0;
+  padding: 40px 0;
 }
 
-#Modulos h2{
+#Modulos h2 {
   color: #040404;
   font-size: 36px;
   border-bottom: 2px solid rgb(224, 72, 123);
@@ -3536,32 +3346,433 @@ visibility: visible;
   margin-bottom: 80px;
 }
 
-#Modulos h2 span{
+#Modulos h2 span {
   font-size: 54px;
 }
 
-#Modulos .card-servicios{
+#Modulos .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#Modulos .col-lg-4 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+#Modulos .card-servicios {
   position: relative;
-  z-index: 1;
   cursor: pointer;
   margin-bottom: 40px;
 }
 
-#Modulos .card-servicios a{
+#Modulos .card-servicios a {
   background-color: #7f0072;
-  width: 400px;
+  width: 540.9px; 
+  max-width: 100%; 
   color: white;
   font-weight: 700;
-  font-size: 26px; 
+  font-size: 26px;
   text-decoration: none;
   position: absolute;
-  z-index: 1;
   bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  max-width: 400px;
+  left: 45%;
+  transform: translateX(-50%);
   text-align: center;
   transition: .5s;
+  height: 50px;
+  line-height: 50px; 
 }
+
+#Modulos .card-servicios img {
+  max-width: 90%;
+  height: auto;
+}
+
+/* -------------------------------- Navegador Nuevo */
+#admin .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#admin .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#admin .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#admin .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#admin .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#admin .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#admin .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#admin .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#admin .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#admin .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#admin .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#admin .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#admin .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* ---------------------------- */
+/* Inventario */
+#Inventario .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Inventario .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Inventario .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Inventario .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Inventario .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Inventario .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Inventario .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Inventario .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Inventario .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Inventario .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Inventario .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Inventario .Navegador_Nuevo a:hover {
+  background-color: #DDDDDD;
+  color: black;
+}
+
+#Inventario .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* ------------------------------------- Entrada */
+#Entrada .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Entrada .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Entrada .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Entrada .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Entrada .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Entrada .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Entrada .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Entrada .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Entrada .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Entrada .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Entrada .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Entrada .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Entrada .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* -------------------------------------- Salidas */
+#Salidas .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Salidas .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Salidas .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Salidas .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Salidas .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Salidas .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Salidas .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Salidas .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Salidas .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Salidas .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Salidas .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Salidas .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Salidas .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+#Inventario .column a {
+  background-color: #FFBCBF;
+  color: black;
+  transition: 0.5s;
+}
+
+#Inventario .column a:hover {
+  background-color: #c26bba;
+  color: white;
+}
+
 
