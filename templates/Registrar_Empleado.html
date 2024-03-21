@@ -72,7 +72,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-primary">Ingresa un nuevo producto</h5>  
+                        <h5 class="modal-title text-primary">Ingresa un nuevo empleado</h5>  
                     </div>
                     <div class="modal-body">
                         <form action="{{ url_for('Registrar_Empleado') }}" method="POST">
@@ -131,8 +131,8 @@
                     <td>{{ empleado['apellido'] }}</td>
                     <td>{{ empleado['telefono'] }}</td>
                     <td>
-                        <a href="/update/{{ empleado['id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ empleado['id'] }}">Editar</a>
-                        <button onclick="eliminarProducto('{{ empleado['id'] }}')" class="btn btn-danger btn-sm">Eliminar</button>
+                        <a href="/Update_Empleado/{{ empleado['id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ empleado['id'] }}">Editar</a>
+                        <!-- <button onclick="eliminarEmpleado('{{ empleado['id'] }}')" class="btn btn-danger btn-sm">Eliminar</button> -->
                     </td>
                 </tr>
                 <!-- Modal para actualizar al empleado-->
@@ -177,7 +177,7 @@
     </main>
 
 <script>
-    function eliminarProducto(id) {
+    function eliminarEmpleado(id) {
         console.log(id);
         swal({
             title: "¿Estás seguro?",

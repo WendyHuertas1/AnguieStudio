@@ -3759,7 +3759,7 @@ h6 {
 #Registrar_Empleado nav {
   background: #fff;
   width: 280px;
-  height: 780px;
+  height: 953px;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
 
@@ -3802,6 +3802,7 @@ h6 {
 
 #Registrar_Empleado nav a:hover {
   background: #eee;
+  width: 250px;
 }
 
 #Registrar_Empleado nav .logout {
