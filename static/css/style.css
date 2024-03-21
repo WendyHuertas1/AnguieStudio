@@ -191,9 +191,10 @@
     align-items: center;
     justify-content: center;
     height: 90vh;
-    background-image: url(https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+    /* background-image: url(https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
     background-size: cover;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); */
+    background: radial-gradient( #FFBCBF, #F394C3);
 }
 
 #Login .container{
@@ -347,28 +348,25 @@
 
 /* Estilos para elboton volver con su hover */
 #Login #volver {
-    text-decoration: none;
-    list-style: none;
-    border: solid 2px black;
-    position: absolute;top: 40px; left: 40px;
-    border-radius: 10px;
-    height: 25px;
-    width: 100px;
-    text-align: center;
-    justify-content: center;
-    border: none;
-    background-color: #ffbcbf;
-    color: black;
+  text-decoration: none;
+  list-style: none;
+  position: absolute;
+  border: none;
+  top: 40px;
+  left: 40px;
+  border-radius: 10px;
+  height: 25px;
+  width: 100px;
+  color: black; 
 }
 
 #Login #volver:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
+  background-color: rgb(237, 92, 237);
+  color: #fff;
+  box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
+  transition: all 0.3s ease;
 }
+
 
 #Login .icons{
     margin: 15px 0;
@@ -428,8 +426,9 @@
     align-items: center;
     justify-content: center;
     height: 85vh;
-    background-image: url(../IMG/Registro.jpg);
-    background-size: cover;
+    /* background-image: url(../IMG/Registro.jpg);
+    background-size: cover; */
+    background: radial-gradient( #FFBCBF, #F394C3);
 }
 
 #Registro .container-form {
@@ -1315,16 +1314,6 @@ visibility: visible;
 #citas input[type="submit"]:hover {
     background-color: #003F7F;
 }
-
-
-/* ----------------------------------------------------------------------------- */
-/**
-* Template Name: BizLand
-* Updated: Sep 18 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 /*--------------------------------------------------------------
 # General
@@ -3155,12 +3144,8 @@ h6 {
 		padding: 0;
 		box-sizing: border-box;
 		font-family: 'Montserrat Alternates', sans-serif;
-	}
-#admin	body{
-		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
-		background-size: 100vw 100vh;
-		background-repeat: no-repeat;
 }
+
 #admin	.capa{
   position: fixed;
   width: 100%;
@@ -3215,122 +3200,6 @@ h6 {
   padding-bottom: 5px;
 }
 /*Fin de Estilos para el encabezado*/
-
-/*Menù lateral*/
-#admin #btn-menu{
-  display: none;
-}
-#admin .container-menu{
-  position: absolute;
-  background: rgba(0,0,0,0.5);
-  width: 100%;
-  height: 100vh;
-  top: 0;left: 0;
-  transition: all 500ms ease;
-  opacity: 0;
-  visibility: hidden;
-}
-#admin #btn-menu:checked ~ .container-menu{
-  opacity: 1;
-  visibility: visible;
-}
-#admin .cont-menu{
-  width: 100%;
-  max-width: 250px;
-  background: #1c1c1c;
-  height: 100vh;
-  position: relative;
-  transition: all 500ms ease;
-  transform: translateX(-100%);
-}
-#admin	#btn-menu:checked ~ .container-menu .cont-menu{
-  transform: translateX(0%);
-}
-#admin	.cont-menu nav{
-  transform: translateY(15%);
-}
-#admin	.cont-menu nav a{
-  display: block;
-  text-decoration: none;
-  padding: 20px;
-  color: #c7c7c7;
-  border-left: 5px solid transparent;
-  transition: all 400ms ease;
-}
-#admin	.cont-menu nav a:hover{
-  border-left: 5px solid #c7c7c7;
-  background: #1f1f1f;
-}
-#admin	.cont-menu label{
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-#admin #btn-menu:checked ~ .container-menu {
-opacity: 1;
-visibility: visible;
-}
-
-#admin .cont-menu {
-  width: 100%;
-  max-width: 250px;
-  background: #1c1c1c;
-  height: 100vh;
-  position: relative;
-  transition: all 500ms ease;
-}
-
-#admin .cont-menu nav {
-  transform: translateY(15%);
-}
-
-#admin .cont-menu nav a{
-  display: block;
-  text-decoration: none;
-  padding: 20px;
-  color: #7c7c7c;
-  border-left: 5px solid color transparent;
-  transition: all 400ms ease;
-}
-
-#admin .cont-menu nav a:hover{
-  border-left: 5px solid #c7c7c7;
-  background: #1f1f1f;
-}
-
-#admin .cont-menu label {
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-#admin .cont-menu nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#admin .cont-menu nav ul li {
-  padding: 10px 20px;
-  color: #c7c7c7;
-  transition: all 400ms ease;
-}
-
-#admin .cont-menu nav ul li:hover {
-  background: #1f1f1f;
-  color: #fff;
-}
-
-#admin .cont-menu nav ul li:first-child {
-  border-top: 1px solid #444;
-}
 
 /* Modulos administrador dentro del template de admin1 */
 #Modulos {
@@ -3391,97 +3260,72 @@ visibility: visible;
 }
 
 /* -------------------------------- Navegador Nuevo */
-#admin .Navegador_Nuevo * {
-	margin: 0;
-	padding: 0;
-	outline: none;
-	border: none;
-	text-decoration: none;
-	box-sizing: border-box;
-	font-family: "Poppins", sans-serif;
-}
 
-#admin .Navegador_Nuevo {
-  position: fixed;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#admin body{
+  background: #dfe9f5;
+}
+#admin .contenedor{
+  display: flex;
+}
+#admin nav{
+  position: relative;
   top: 0;
+  bottom: 0;
+  height: 145vh;
   left: 0;
-  width: 100px;
-  height: 100%;
-  background: #ffffff;
-  overflow-y: auto;
-  z-index: 1000;
-  border-right: 1px solid #ddd;
-  transition: width 0.5s ease; 
+  background: #fff;
+  width: 280px;
+  overflow: hidden;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
-
-#admin .Navegador_Nuevo img:hover{
-  width: 100px; 
-}
-
-#admin .Navegador_Nuevo ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#admin .Navegador_Nuevo .logo {
+#admin nav .logo{
   text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease;
-  margin: 10px 0;
+  margin: 10px 0 0 10px;
 }
-
-#admin .Navegador_Nuevo .logo img {
-  width: 90px; 
-  height: 90px;
-  justify-content: center;
+#admin nav .logo img{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
-
-#admin .Navegador_Nuevo .logo .nav-item {
+#admin nav .logo span{
   font-weight: bold;
-  padding-left: 10px;
-  font-size: 16px;
+  padding-left: 15px;
+  font-size: 18px;
   text-transform: uppercase;
 }
-
-#admin .Navegador_Nuevo a {
+#admin nav a{
   position: relative;
-  color: #555353;
+  color: rgb(85, 83, 83);
   font-size: 14px;
-  display: block;
-  width: 100%;
-  padding: 10px 20px; 
-  text-decoration: none;
+  display: table;
+  width: 280px;
+  padding: 10px;
 }
-
-#admin .Navegador_Nuevo .fas {
-  width: 40px;
+#admin nav .fas{
+  position: relative;
+  width: 70px;
   height: 40px;
-  line-height: 40px;
-  font-size: 18px;
+  top: 14px;
+  font-size: 20px;
   text-align: center;
 }
-
-#admin .Navegador_Nuevo .fas:hover {
-  width: 1px; 
-  height: 1px; 
-  line-height: 1px; 
-  font-size: 1px;
-}
-#admin .Navegador_Nuevo .nav-item {
+#admin nav .nav-item{
+  position: relative;
+  top: 12px;
   margin-left: 10px;
 }
-
-#admin .Navegador_Nuevo a:hover {
-  background-color: rgb(168, 167, 157);
+#admin nav a:hover{
+  background: #eee;
+}
+#admin nav .logout{
+  position: absolute;
+  bottom: 0;
 }
 
-#admin .Navegador_Nuevo .logout {
-	position: absolute;
-	bottom: 0;
-}
+
 
 /* ---------------------------- */
 /* Inventario */
@@ -3695,6 +3539,11 @@ visibility: visible;
   transition: width 0.5s ease; 
 }
 
+#Salidas .Navegador_Nuevo:hover {
+  width: 150px;
+}
+
+
 #Salidas .Navegador_Nuevo img:hover{
   width: 100px; 
 }
@@ -3703,6 +3552,14 @@ visibility: visible;
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+#Salidas .Navegador_Nuevo li {
+  margin-bottom: 10px;
+  order: 1;
 }
 
 #Salidas .Navegador_Nuevo .logo {
@@ -3743,6 +3600,8 @@ visibility: visible;
   line-height: 40px;
   font-size: 18px;
   text-align: center;
+  transition: all 0.3s ease; 
+  line-height: 40px; 
 }
 
 #Salidas .Navegador_Nuevo .fas:hover {
@@ -3751,6 +3610,11 @@ visibility: visible;
   line-height: 1px; 
   font-size: 1px;
 }
+
+#Salidas .Navegador_Nuevo:hover .fas {
+  line-height: 30px;
+}
+
 #Salidas .Navegador_Nuevo .nav-item {
   margin-left: 10px;
 }
@@ -3762,8 +3626,10 @@ visibility: visible;
 #Salidas .Navegador_Nuevo .logout {
 	position: absolute;
 	bottom: 0;
+  order: 2; 
 }
 
+/* Botones del inventario para redirigir a la entrada, salida y novedades */
 #Inventario .column a {
   background-color: #FFBCBF;
   color: black;
@@ -3774,5 +3640,173 @@ visibility: visible;
   background-color: #c26bba;
   color: white;
 }
+/* Fin de los estilos del inventario */
 
+/* ----------------------------------- navar novedades */
+#Novedades .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
 
+#Novedades .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Novedades .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Novedades .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Novedades .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Novedades .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Novedades .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Novedades .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Novedades .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Novedades .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Novedades .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Novedades .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Novedades .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* ----------------------------------- Estilos para el Registro de empleado */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#Registrar_Empleado {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+#Registrar_Empleado body {
+  background: #dfe9f5;
+  margin: 0;
+  padding: 0;
+}
+
+#Registrar_Empleado .contenedor {
+  display: flex;
+  justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+#Registrar_Empleado nav {
+  background: #fff;
+  width: 280px;
+  height: 780px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+#Registrar_Empleado nav .logo {
+  text-align: center;
+  margin: 10px 0;
+}
+
+#Registrar_Empleado nav .logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#Registrar_Empleado nav .logo span {
+  font-weight: bold;
+  padding-left: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+#Registrar_Empleado nav a {
+  color: rgb(85, 83, 83);
+  font-size: 14px;
+  display: table; /* Cambiado de table a block */
+  padding: 10px;
+  text-decoration: none;
+}
+
+#Registrar_Empleado nav .fas {
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+#Registrar_Empleado nav .nav-item {
+  margin-left: 10px;
+}
+
+#Registrar_Empleado nav a:hover {
+  background: #eee;
+}
+
+#Registrar_Empleado nav .logout {
+  position: absolute;
+  bottom: 0;
+}
+
+/* -------------- */

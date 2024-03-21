@@ -20,18 +20,25 @@ mysql = MySQL(app)
 def home():
     return render_template("index.html")
 
-# Funcion para redirigi al Administrador.html
+# Funcion para redirigir al Administrador.html
 @app.route('/admin')
 def admin():
     return render_template("Administrador.html")
 
+# Redireccion al template del empleado
 @app.route('/Empleado')
 def Empleado():
     return render_template("Empleado.html")
 
+# Redireccion al template de cliente
 @app.route('/Cliente')
 def Cliente():
     return render_template("Cliente.html")
+
+# Redireccion al template de registrar empleado
+@app.route('/Redirigir_Empleado')
+def Redirigir_Empleado():
+    return render_template("Registrar_Empleado.html")
 
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
@@ -133,8 +140,34 @@ def crear_registro():
     else:
         pass
 
-# Rutas y funciones para (Inventario)
+# Funcion para crear Empleados
+@app.route('/Registrar_Empleado', methods=["GET", "POST"])
+def Registrar_Empleado():
+    if request.method == "POST":
+        correo = request.form.get('correo')
+        password = request.form.get('password')
+        nombre = request.form.get('nombre')
+        apellido = request.form.get('apellido')
+        telefono = request.form.get('telefono')
+        # Asegúrate de que tu conexión y consulta SQL sean correctas
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO usuarios (correo, password, nombre, apellido, telefono, id_rol) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (correo, password, nombre, apellido, telefono, 2))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('Redirigir_Empleado'))  
+    return render_template("Registrar_Empleado.html")
 
+# Funcion para mostrar datos de todos los empleado en en Registrar_Empleado.html:
+@app.route('/ver_empleados')
+def ver_empleados():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id_rol = 2")
+    empleados_data = cur.fetchall()
+    cur.close()
+    return render_template("Registrar_Empleado.html", empleados=empleados_data)
+
+# Rutas y funciones para (Inventario)
 # Funcion del inventario para seleccionar los productos y los campos
 @app.route('/inventario')
 def inventario():
@@ -175,6 +208,19 @@ def delete(Id):
         cur.close()
     return redirect(url_for('inventario'))
 
+@app.route('/ Delete_Empleado/<string:id>', methods=['GET'])
+def Delete_Empleado(id):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM usuarios WHERE id=%s", (id,))
+        mysql.connection.commit()
+        flash("Empleado eliminado con éxito")
+    except Exception as e:
+        flash("Error al eliminar el empleado: " + str(e))
+    finally:
+        cur.close()
+    return redirect(url_for('Redirigir_Empleado'))
+
 # Funcion para actualizar un producto
 @app.route('/update', methods=['POST', 'GET'])
 def update():
@@ -201,6 +247,31 @@ def update():
         finally:
             cur.close()
     return render_template('inventario.html')
+
+# Update_Empleado Funcion para editar al empleado
+@app.route('/Update_Empleado', methods=['POST', 'GET'])
+def Update_Empleado():
+    if request.method == 'POST':
+        id = request.form['id']
+        Correo = request.form['correo']
+        Nombre = request.form['Nombre']
+        apellido = request.form['apellido']
+        telefono = request.form['telefono']
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute("""
+            UPDATE usuarios SET correo=%s, nombre=%s, apellido=%s, telefono=%s
+            WHERE id=%s
+            """, (Correo, Nombre, apellido, telefono, id))
+            
+            mysql.connection.commit()
+            flash("Empleado actualizado con éxito")
+            return redirect(url_for('inventario'))
+        except Exception as e:
+            flash(f"Error al actualizar al empleado: {str(e)}")
+        finally:
+            cur.close()
+    return render_template('Redirigir_Empleado')
 
 # Funcion del inventario para registrar las entradas
 @app.route('/Entradas')
