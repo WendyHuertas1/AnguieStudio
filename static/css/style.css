@@ -3810,4 +3810,77 @@ h6 {
   bottom: 0;
 }
 
-/* -------------- */
+/* ------------------------------ Citas*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#Citas {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+#Citas body {
+  background: #dfe9f5;
+  margin: 0;
+  padding: 0;
+}
+
+#Citas .contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+#Citas nav {
+  background: #fff;
+  width: 280px;
+  height: 953px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+#Citas nav .logo {
+  text-align: center;
+  margin: 10px 0;
+}
+
+#Citas nav .logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#Citas nav .logo span {
+  font-weight: bold;
+  padding-left: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+#Citas nav a {
+  color: rgb(85, 83, 83);
+  font-size: 14px;
+  display: table; 
+  padding: 10px;
+  text-decoration: none;
+}
+
+#Citas nav .fas {
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+#Citas nav .nav-item {
+  margin-left: 10px;
+}
+
+#Citas nav a:hover {
+  background: #eee;
+  width: 250px;
+}
+
+#Citas nav .logout {
+  position: absolute;
+  bottom: 0;
+}

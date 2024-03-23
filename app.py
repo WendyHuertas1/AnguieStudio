@@ -9,7 +9,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'login'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 
 mysql = MySQL(app)
 
@@ -39,6 +39,11 @@ def Cliente():
 @app.route('/Redirigir_Empleado')
 def Redirigir_Empleado():
     return render_template("Registrar_Empleado.html")
+
+#Redirigir al template de Citas.html
+@app.route('/Citas')
+def Citas():
+    return render_template("Citas.html")
 
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
@@ -312,6 +317,33 @@ def Novedades():
     
     return render_template('Novedades.html', entradas=entradas_data, salidas=salidas_data)
 
-# Ruta
+# Citas
+@app.route('/Registrar_Cita', methods=["GET", "POST"])
+def Registrar_Cita():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT nombre FROM servicios")
+    servicios_data = [row[0] for row in cur.fetchall()]
+    cur.close()
+    
+    if request.method == "POST":
+        nombre = request.form.get('nombre')
+        servicio = request.form.get('servicio')
+        empleado = request.form.get('Empleado')
+        fecha = request.form.get('Fecha')
+        hora = request.form.get('Hora')
+        motivo = request.form.get('motivo')
+        
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO citas (nombre, servicio, empleado, fecha, hora, motivo) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (nombre, servicio, empleado, fecha, hora, motivo))
+        mysql.connection.commit()
+        cur.close()
+        
+
+        return redirect(url_for('Citas'))
+    
+
+    return render_template("Citas.html", servicios_data=servicios_data)
+
 if __name__ == "__main__":
     app.run(debug=True)
