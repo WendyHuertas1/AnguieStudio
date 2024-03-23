@@ -9,6 +9,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'login'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 
 mysql = MySQL(app)
@@ -58,16 +59,16 @@ def login():
 
         if account:
             session['logueado'] = True
-            session['id'] = account['id']
-            session['id_rol'] = account['id_rol']
-            session['nombre'] = account['nombre'] 
+            session['id'] = account['id']  
+            session['id_rol'] = account['id_rol']  
+            session['nombre'] = account['nombre']  
 
-            if session['id_rol'] == 1:
-                return render_template("Administrador.html", nombre=session['nombre'])  
-            elif session['id_rol'] == 2:
-                return render_template("Empleado.html", nombre=session['nombre'])  
-            elif session['id_rol'] == 3:
-                return render_template("Cliente.html", nombre=session['nombre'])
+        if session['id_rol'] == 1:
+            return render_template("Administrador.html", nombre=session['nombre'])
+        elif session['id_rol'] == 2:
+            return render_template("Empleado.html", nombre=session['nombre'])
+        elif session['id_rol'] == 3:
+            return render_template("Cliente.html", nombre=session['nombre'])
         else:
             return render_template('login.html', mensaje="¡Usuario o contraseña incorrectas!")
 
