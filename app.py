@@ -11,6 +11,7 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'login'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
+
 mysql = MySQL(app)
 
 # Rutas y funciones para la primera aplicación
@@ -19,11 +20,6 @@ mysql = MySQL(app)
 @app.route('/')
 def home():
     return render_template("index.html")
-
-# Funcion para redirigi al admin1.html
-@app.route('/admin')
-def admin():
-    return render_template("admin1.html")
 
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
@@ -38,19 +34,66 @@ def login():
 
         if account:
             session['logueado'] = True
-            session['id'] = account['id']
-            session['id_rol'] = account['id_rol']
+            session['id'] = account['id']  
+            session['id_rol'] = account['id_rol']  
+            session['nombre'] = account['nombre']  
 
-            if session['id_rol'] == 1:
-                return render_template("admin1.html")
-            elif session['id_rol'] == 2:
-                return render_template("admin2.html")
-            elif session['id_rol'] == 3:
-                return redirect(url_for('inventario'))
+        if session['id_rol'] == 1:
+            return render_template("Administrador.html", nombre=session['nombre'])
+        elif session['id_rol'] == 2:
+            return render_template("Empleado.html", nombre=session['nombre'])
+        elif session['id_rol'] == 3:
+            return render_template("Cliente.html", nombre=session['nombre'])
         else:
-            return render_template('index1.html', mensaje="¡Usuario o contraseña incorrectas!")
+            return render_template('login.html', mensaje="¡Usuario o contraseña incorrectas!")
 
     return render_template('login.html')
+
+# Funcion para redirigir al Administrador.html
+@app.route('/admin')
+def admin():
+    return render_template("Administrador.html")
+
+# Redireccion al template del empleado
+@app.route('/Empleado')
+def Empleado():
+    return render_template("Empleado.html")
+
+# Redireccion al template de cliente
+@app.route('/Cliente')
+def Cliente():
+    return render_template("Cliente.html")
+
+# Redireccion al template de registrar empleado
+@app.route('/Redirigir_Empleado')
+def Redirigir_Empleado():
+    return render_template("Registrar_Empleado.html")
+
+#Redirigir al template de Citas.html
+@app.route('/Citas')
+def Citas():
+    # Obtener el ID del cliente logeado desde la sesión
+    cliente_id = session.get('id')
+
+    cursor = mysql.connection.cursor()
+
+    # Consulta para obtener nombres de servicios
+    cursor.execute("SELECT nombre FROM servicios")
+    servicios = cursor.fetchall()
+    nombres_servicios = [servicio['nombre'] for servicio in servicios]
+
+    # Consulta para obtener nombres de empleados
+    cursor.execute("SELECT nombre FROM usuarios WHERE id_rol = 2")
+    empleados = cursor.fetchall()
+    empleados_servicios = [empleado['nombre'] for empleado in empleados]
+
+    # Consulta para obtener las citas del cliente logeado
+    cursor.execute("SELECT * FROM citas WHERE id_cliente = %s", (cliente_id,))
+    citas = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template("Citas.html", nombres_servicios=nombres_servicios, empleados_servicios=empleados_servicios, citas=citas)
 
 # Funcion de olvidar contraseña
 @app.route('/forgot', methods=['GET', 'POST'])
@@ -124,8 +167,34 @@ def crear_registro():
     else:
         pass
 
-# Rutas y funciones para (Inventario)
+# Funcion para crear Empleados
+@app.route('/Registrar_Empleado', methods=["GET", "POST"])
+def Registrar_Empleado():
+    if request.method == "POST":
+        correo = request.form.get('correo')
+        password = request.form.get('password')
+        nombre = request.form.get('nombre')
+        apellido = request.form.get('apellido')
+        telefono = request.form.get('telefono')
+        # Asegúrate de que tu conexión y consulta SQL sean correctas
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO usuarios (correo, password, nombre, apellido, telefono, id_rol) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (correo, password, nombre, apellido, telefono, 2))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('Redirigir_Empleado'))  
+    return render_template("Registrar_Empleado.html")
 
+# Funcion para mostrar datos de todos los empleado en en Registrar_Empleado.html:
+@app.route('/ver_empleados')
+def ver_empleados():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id_rol = 2")
+    empleados_data = cur.fetchall()
+    cur.close()
+    return render_template("Registrar_Empleado.html", empleados=empleados_data)
+
+# Rutas y funciones para (Inventario)
 # Funcion del inventario para seleccionar los productos y los campos
 @app.route('/inventario')
 def inventario():
@@ -166,6 +235,19 @@ def delete(Id):
         cur.close()
     return redirect(url_for('inventario'))
 
+@app.route('/ Delete_Empleado/<string:id>', methods=['GET'])
+def Delete_Empleado(id):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM usuarios WHERE id=%s", (id,))
+        mysql.connection.commit()
+        flash("Empleado eliminado con éxito")
+    except Exception as e:
+        flash("Error al eliminar el empleado: " + str(e))
+    finally:
+        cur.close()
+    return redirect(url_for('Redirigir_Empleado'))
+
 # Funcion para actualizar un producto
 @app.route('/update', methods=['POST', 'GET'])
 def update():
@@ -174,7 +256,7 @@ def update():
         Nombre = request.form['Nombre']
         Cantidad = request.form['Cantidad']
         Marca = request.form['Marca']
-        Precio = request.form['Precio']
+        Precio = request.form['precio']
         Descripcion = request.form['Descripcion']
         Fecha_vencimiento = request.form['Fecha_vencimiento']
         try:
@@ -192,6 +274,31 @@ def update():
         finally:
             cur.close()
     return render_template('inventario.html')
+
+# Update_Empleado Funcion para editar al empleado
+@app.route('/Update_Empleado', methods=['POST', 'GET'])
+def Update_Empleado():
+    if request.method == 'POST':
+        id = request.form['id']
+        Correo = request.form['correo']
+        Nombre = request.form['Nombre']
+        apellido = request.form['apellido']
+        telefono = request.form['telefono']
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute("""
+            UPDATE usuarios SET correo=%s, nombre=%s, apellido=%s, telefono=%s
+            WHERE id=%s
+            """, (Correo, Nombre, apellido, telefono, id))
+            
+            mysql.connection.commit()
+            flash("Empleado actualizado con éxito")
+            return redirect(url_for('inventario'))
+        except Exception as e:
+            flash(f"Error al actualizar al empleado: {str(e)}")
+        finally:
+            cur.close()
+    return render_template('Redirigir_Empleado')
 
 # Funcion del inventario para registrar las entradas
 @app.route('/Entradas')
@@ -218,16 +325,48 @@ def Salidas():
     return render_template('Salidas.html', salidas=salidas_data)
 
 # Funcion para registrar las novedades de los productos
+# Funcion para mostrar las novedades de entrada
 @app.route('/Novedades')
 def Novedades():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM Novedades WHERE Tipo = 'Entrada'")
+    cur.execute("SELECT n.*, p.Cantidad AS Cantidad_Actual FROM Novedades n JOIN productos p ON n.Id_Producto = p.Id WHERE n.Tipo = 'Entrada'")
     entradas_data = cur.fetchall()
+
     cur.execute("SELECT * FROM Novedades WHERE Tipo = 'Salida'")
-    salidas_data = cur.fetchall() 
+    salidas_data = cur.fetchall()
+
     cur.close()
+    
     return render_template('Novedades.html', entradas=entradas_data, salidas=salidas_data)
 
-# Ruta
+# Citas
+# Citas
+@app.route('/Registrar_Cita', methods=["GET", "POST"])
+def Registrar_Cita():
+    cursor = mysql.connection.cursor()
+    cursor.close()
+    
+    if request.method == "POST":
+        nombre = request.form.get('nombre')
+        servicio = request.form.get('servicio')
+        empleado_nombre = request.form.get('empleados_nombre')
+        fecha = request.form.get('Fecha')
+        hora = request.form.get('Hora')
+        motivo = request.form.get('motivo')
+        
+        # Obtener el ID del usuario logueado desde la sesión
+        session.get('id')
+        
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO citas (nombre, servicio, empleado_nombre, fecha, hora, motivo, id_cliente) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (nombre, servicio, empleado_nombre, fecha, hora, motivo, session['id']))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('Citas'))
+
+    return render_template("Citas.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

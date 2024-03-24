@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+	<style>
+		.card-servicios {
+		margin-bottom: 20px;
+	}
+	</style>
+</head>
+<body id="admin">
+    <div class="contenedor">
+    <nav>
+        <ul>
+        <li><a href="#" class="logo">
+            <span class="nav-item">DashBoard</span>
+        </a></li>
+        <li><a href="{{ url_for('admin')}}">
+            <i class="fas fa-home"></i>
+            <span class="nav-item">Home</span>
+        </a></li>
+        <li><a href="">
+            <i class="fas fa-user"></i>
+            <span class="nav-item">Citas</span>
+        </a></li>
+        <li><a href="{{ url_for('inventario')}}">
+            <i class="fas fa-wallet"></i>
+            <span class="nav-item">Inventario</span>
+        </a></li>
+        <li><a href="">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-item">Catalogo</span>
+        </a></li>
+        <li><a href="{{ url_for('Registrar_Empleado')}}">
+            <i class="fas fa-tasks"></i>
+            <span class="nav-item">Agregar empleado</span>
+        </a></li>
+        <li><a href="">
+            <i class="fas fa-cog"></i>
+            <span class="nav-item">Perfil</span>
+        </a></li>
+        
+        <li><a href="{{ url_for('home')}}" class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Log out</span>
+        </a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="Modulos">
+            <div class="container text-center">
+                <h1>Bienvenido/a, {{ nombre }}</h1>
+                <p> Administrador </p>
+                <h2><span>Modulos</span></h2>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card-servicios">
+                            <img src="{{ url_for('static', filename='IMG/empleados.jpg')}}" alt="Registrar Empleado" >
+                            <a href="{{ url_for('Redirigir_Empleado')}}">Registrar Empleado</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card-servicios">
+                            <img src="{{ url_for('static', filename='IMG/Citas.png')}}" alt="Citas" >
+                            <a href="">Citas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card-servicios">
+                            <img src="{{ url_for('static', filename='IMG/inventario.webp')}}" alt="Inventario" >
+                            <a href="{{ url_for('inventario')}}">Inventario</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card-servicios">
+                            <img src="{{  url_for('static', filename='IMG/belleza.jpg')}}" alt="Editar perfil" >
+                            <a href="">Catalogo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

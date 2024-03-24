@@ -190,10 +190,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80vh;
-    background-image: url(https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+    height: 90vh;
+    /* background-image: url(https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
     background-size: cover;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); */
+    background: radial-gradient( #FFBCBF, #F394C3);
 }
 
 #Login .container{
@@ -208,7 +209,7 @@
 
 #Login .information {
     width: 1000px;
-    height: 700px;
+    height: 500px;
     display: flex;
     align-items: center;
     text-align: center;
@@ -261,8 +262,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 800%;
-    height: 700px;
+    width: 300%;
+    height: 500px;
     text-align: center;
     background-color: white;
     border-top-right-radius: 20px;
@@ -347,28 +348,25 @@
 
 /* Estilos para elboton volver con su hover */
 #Login #volver {
-    text-decoration: none;
-    list-style: none;
-    border: solid 2px black;
-    position: absolute;top: 40px; left: 40px;
-    border-radius: 10px;
-    height: 25px;
-    width: 100px;
-    text-align: center;
-    justify-content: center;
-    border: none;
-    background-color: #ffbcbf;
-    color: black;
+  text-decoration: none;
+  list-style: none;
+  position: absolute;
+  border: none;
+  top: 40px;
+  left: 40px;
+  border-radius: 10px;
+  height: 25px;
+  width: 100px;
+  color: black; 
 }
 
 #Login #volver:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
+  background-color: rgb(237, 92, 237);
+  color: #fff;
+  box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
+  transition: all 0.3s ease;
 }
+
 
 #Login .icons{
     margin: 15px 0;
@@ -428,8 +426,9 @@
     align-items: center;
     justify-content: center;
     height: 85vh;
-    background-image: url(../IMG/Registro.jpg);
-    background-size: cover;
+    /* background-image: url(../IMG/Registro.jpg);
+    background-size: cover; */
+    background: radial-gradient( #FFBCBF, #F394C3);
 }
 
 #Registro .container-form {
@@ -503,8 +502,8 @@
 }
 
 #Registro .form-information-childs h2{
-   color: #555;
-   font-size: 2rem; 
+    color: #555;
+    font-size: 2rem; 
 }
 
 #Registro .icons{
@@ -611,27 +610,27 @@
 }
 
 /* Responsive */
- @media screen and (max-width:750px) {
+@media screen and (max-width:750px) {
     html{
         font-size: 12px;
     }
 }
 
- @media screen and (max-width:580px) {
+@media screen and (max-width:580px) {
     html{
         font-size: 10px;
     }
     #Registro .container-form{
         height: auto;
-       flex-direction: column; 
+        flex-direction: column; 
     }
     #Registro .information{
-       width: 100%;
-       padding: 20%;
-       border-top-left-radius: 0px;
-       border-top-right-radius: 0px;
-       border-bottom-left-radius: 20px; 
-       border-bottom-right-radius: 20px;
+        width: 100%;
+        padding: 20%;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 20px; 
+        border-bottom-right-radius: 20px;
 
     }
 
@@ -855,216 +854,368 @@
 
 /* Menu para el cliente */
 
-#Cliente  {
-    background-image: url(../IMG/Cliente.jpg);
-    background-size: cover;
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+#Cliente	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Montserrat Alternates', sans-serif;
+	}
+#Cliente	body{
+		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+		background-size: 100vw 100vh;
+		background-repeat: no-repeat;
+}
+#Cliente	.capa{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  top: 0;left: 0;
 }
 
-#Cliente img {
-    width: 150px;
-    float: left;
+#Cliente .header{
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;left: 0;
+}
+#Cliente	.container{
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+#Cliente .container .btn-menu, .logo{
+  float: left;
+  line-height:100px;
+}
+#Cliente .container .btn-menu label{
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
+#Cliente .logo h1{
+  color: black;
+  font-weight: 400;
+  font-size: 22px;
+  margin-left: 10px;
+}
+#Cliente .container .menu{
+  float: right;
+  line-height: 100px;
+}
+#Cliente .container .menu a{
+  display: inline-block;
+  padding: 15px;
+  line-height: normal;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  margin-right: 5px;
+}
+#Cliente .container .menu a:hover{
+  border-bottom: 2px solid #c7c7c7;
+  padding-bottom: 5px;
 }
 
-#Cliente .titulo {
-    font-size: 50px;
-    color: #fff7E5;
+#Cliente #btn-menu{
+  display: none;
+}
+#Cliente .container-menu{
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100vh;
+  top: 0;left: 0;
+  transition: all 500ms ease;
+  opacity: 0;
+  visibility: hidden;
+}
+#Cliente #btn-menu:checked ~ .container-menu{
+  opacity: 1;
+  visibility: visible;
+}
+#Cliente .cont-menu{
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
+  transform: translateX(-100%);
+}
+#Cliente	#btn-menu:checked ~ .container-menu .cont-menu{
+  transform: translateX(0%);
+}
+#Cliente	.cont-menu nav{
+  transform: translateY(15%);
+}
+#Cliente	.cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #c7c7c7;
+  border-left: 5px solid transparent;
+  transition: all 400ms ease;
+}
+#Cliente	.cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
+}
+#Cliente	.cont-menu label{
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Cliente .navbar {
-    background: transparent;
+#Cliente #btn-menu:checked ~ .container-menu {
+opacity: 1;
+visibility: visible;
 }
 
-#Cliente .offcanvas {
-    background: #ffbcbf;
+#Cliente .cont-menu {
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
 }
 
-#Cliente .offcanvas-body {
-    color: rgb(255, 255, 255);
+#Cliente .cont-menu nav {
+  transform: translateY(15%);
 }
 
-#Cliente .offcanvas-title {
-    font: 50px;
+#Cliente .cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #7c7c7c;
+  border-left: 5px solid color transparent;
+  transition: all 400ms ease;
 }
 
-#Cliente .card {
-    width: 500px;  
-    justify-content: center;  
+#Cliente .cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
 }
 
-#Cliente .card img {
-    width: 100%;
+#Cliente .cont-menu label {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Cliente .card-left {
-    left: 42%;
+#Cliente .cont-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#Cliente .card-rigth {
-    right: 1%;
+#Cliente .cont-menu nav ul li {
+  padding: 10px 20px;
+  color: #c7c7c7;
+  transition: all 400ms ease;
 }
 
-#Cliente h1 {
-    text-align: center;
-    font-size: 60px;
-    padding: 20px;
+#Cliente .cont-menu nav ul li:hover {
+  background: #1f1f1f;
+  color: #fff;
 }
 
-#Cliente h5 {
-    text-align: center;
-}
-
-#Cliente #Cartas button {
-    background-color: #ffbcbf;
-    text-align: center;
-    height: 35px;
-    width: 100px;
-    border-radius: 10px;
-    border: none;  
-}
-
-#Cliente #Cartas button:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
-}
-
-#Cliente .Icono {
-    background-color: #ff8c9d;
-    color: black;
-    transition: .5s;
-}
-
-#Cliente .Icono:hover {
-    background-color: #ffbcbf;
-}
-
-#Cliente #Cartas {
-    margin: 20px;
-}
-
-#Cliente .Cartas1 {
-    padding-right: 100px;
-}
-
-#Cliente .Cartas2 {
-    padding-left: 50px;
-    padding-bottom: 20px;
-}
-
-#Cliente .card-body {
-    text-align: center;
+#Cliente .cont-menu nav ul li:first-child {
+  border-top: 1px solid #444;
 }
 
 /* Menu para el empleado */
 
-#Empleado  {
-    background-image: url(../IMG/Empleado.jpg);
-    background-size: cover;
-    
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+#Empleado	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Montserrat Alternates', sans-serif;
+	}
+#Empleado	body{
+		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
+		background-size: 100vw 100vh;
+		background-repeat: no-repeat;
+}
+#Empleado	.capa{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  top: 0;left: 0;
 }
 
-#Empleado img {
-    width: 150px;
-    float: left;
+#Empleado .header{
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;left: 0;
+}
+#Empleado	.container{
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+#Empleado .container .btn-menu, .logo{
+  float: left;
+  line-height:100px;
+}
+#Empleado .container .btn-menu label{
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
+#Empleado .logo h1{
+  color: black;
+  font-weight: 400;
+  font-size: 22px;
+  margin-left: 10px;
+}
+#Empleado .container .menu{
+  float: right;
+  line-height: 100px;
+}
+#Empleado .container .menu a{
+  display: inline-block;
+  padding: 15px;
+  line-height: normal;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  margin-right: 5px;
+}
+#Empleado .container .menu a:hover{
+  border-bottom: 2px solid #c7c7c7;
+  padding-bottom: 5px;
 }
 
-#Empleado .titulo {
-    font-size: 50px;
-    color: black;
+#Empleado #btn-menu{
+  display: none;
+}
+#Empleado .container-menu{
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100vh;
+  top: 0;left: 0;
+  transition: all 500ms ease;
+  opacity: 0;
+  visibility: hidden;
+}
+#Empleado #btn-menu:checked ~ .container-menu{
+  opacity: 1;
+  visibility: visible;
+}
+#Empleado .cont-menu{
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
+  transform: translateX(-100%);
+}
+#Empleado	#btn-menu:checked ~ .container-menu .cont-menu{
+  transform: translateX(0%);
+}
+#Empleado	.cont-menu nav{
+  transform: translateY(15%);
+}
+#Empleado	.cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #c7c7c7;
+  border-left: 5px solid transparent;
+  transition: all 400ms ease;
+}
+#Empleado	.cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
+}
+#Empleado	.cont-menu label{
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Empleado .navbar {
-    background: transparent;
-    
+#Empleado #btn-menu:checked ~ .container-menu {
+opacity: 1;
+visibility: visible;
 }
 
-#Empleado .offcanvas {
-    background: #ffbcbf;
+#Empleado .cont-menu {
+  width: 100%;
+  max-width: 250px;
+  background: #1c1c1c;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
 }
 
-#Empleado .offcanvas-body {
-    color: rgb(255, 255, 255);
+#Empleado .cont-menu nav {
+  transform: translateY(15%);
 }
 
-#Empleado .offcanvas-title {
-    font: 50px;
+#Empleado .cont-menu nav a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #7c7c7c;
+  border-left: 5px solid color transparent;
+  transition: all 400ms ease;
 }
 
-#Empleado .card {
-    width: 500px;  
-    justify-content: center;  
+#Empleado .cont-menu nav a:hover{
+  border-left: 5px solid #c7c7c7;
+  background: #1f1f1f;
 }
 
-#Empleado .card img {
-    width: 100%;
+#Empleado .cont-menu label {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-#Empleado .card-left {
-    left: 42%;
+#Empleado .cont-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#Empleado .card-rigth {
-    right: 1%;
+#Empleado .cont-menu nav ul li {
+  padding: 10px 20px;
+  color: #c7c7c7;
+  transition: all 400ms ease;
 }
 
-#Empleado h1 {
-    text-align: center;
-    font-size: 60px;
-    padding: 20px;
-    color: black;
-    backdrop-filter: blur(10px);
+#Empleado .cont-menu nav ul li:hover {
+  background: #1f1f1f;
+  color: #fff;
 }
 
-#Empleado h5 {
-    text-align: center;
-}
-
-#Empleado #Cartas button {
-    background-color: #ffbcbf;
-    text-align: center;
-    height: 35px;
-    width: 100px;
-    border-radius: 10px;
-    border: none;  
-}
-
-#Empleado #Cartas button:hover {
-    background-color: rgb(237, 92, 237);
-    border: none;
-    color: #fff;
-    box-shadow: 2px 2px 7px 2px rgb(231, 0, 231);
-    transition: all 0.3s ease;
-    border: none;
-}
-
-#Empleado .Icono {
-    background-color: #ff8c9d;
-    color: black;
-    transition: .5s;
-}
-
-#Empleado .Icono:hover {
-    background-color: #ffbcbf;
-}
-
-#Empleado #Cartas {
-    margin: 20px;
-}
-
-#Empleado .Cartas1 {
-    padding-right: 100px;
-}
-
-#Empleado .Cartas2 {
-    padding-left: 50px;
-    padding-bottom: 20px;
-}
-
-#Empleado .card-body {
-    text-align: center;
+#Empleado .cont-menu nav ul li:first-child {
+  border-top: 1px solid #444;
 }
 
 
@@ -1163,16 +1314,6 @@
 #citas input[type="submit"]:hover {
     background-color: #003F7F;
 }
-
-
-/* ----------------------------------------------------------------------------- */
-/**
-* Template Name: BizLand
-* Updated: Sep 18 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 /*--------------------------------------------------------------
 # General
@@ -3003,12 +3144,8 @@ h6 {
 		padding: 0;
 		box-sizing: border-box;
 		font-family: 'Montserrat Alternates', sans-serif;
-	}
-#admin	body{
-		background: url(https://www.xtrafondos.com/wallpapers/montanas-con-nieve-en-el-bosque-3934.jpg);
-		background-size: 100vw 100vh;
-		background-repeat: no-repeat;
 }
+
 #admin	.capa{
   position: fixed;
   width: 100%;
@@ -3030,7 +3167,7 @@ h6 {
 }
 #admin .container .btn-menu, .logo{
   float: left;
-  line-height:100px;
+  line-height:200px;
 }
 #admin .container .btn-menu label{
   color: black;
@@ -3064,370 +3201,686 @@ h6 {
 }
 /*Fin de Estilos para el encabezado*/
 
-/*Menù lateral*/
-#admin #btn-menu{
-  display: none;
-}
-#admin .container-menu{
-  position: absolute;
-  background: rgba(0,0,0,0.5);
+/* Modulos administrador dentro del template de admin1 */
+#Modulos {
   width: 100%;
-  height: 100vh;
-  top: 0;left: 0;
-  transition: all 500ms ease;
-  opacity: 0;
-  visibility: hidden;
+  padding: 40px 0;
 }
-#admin #btn-menu:checked ~ .container-menu{
-  opacity: 1;
-  visibility: visible;
+
+#Modulos h2 {
+  color: #040404;
+  font-size: 36px;
+  border-bottom: 2px solid rgb(224, 72, 123);
+  display: inline-block;
+  margin-bottom: 80px;
 }
-#admin .cont-menu{
-  width: 100%;
-  max-width: 250px;
-  background: #1c1c1c;
-  height: 100vh;
+
+#Modulos h2 span {
+  font-size: 54px;
+}
+
+#Modulos .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#Modulos .col-lg-4 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+#Modulos .card-servicios {
   position: relative;
-  transition: all 500ms ease;
-  transform: translateX(-100%);
-}
-#admin	#btn-menu:checked ~ .container-menu .cont-menu{
-  transform: translateX(0%);
-}
-#admin	.cont-menu nav{
-  transform: translateY(15%);
-}
-#admin	.cont-menu nav a{
-  display: block;
-  text-decoration: none;
-  padding: 20px;
-  color: #c7c7c7;
-  border-left: 5px solid transparent;
-  transition: all 400ms ease;
-}
-#admin	.cont-menu nav a:hover{
-  border-left: 5px solid #c7c7c7;
-  background: #1f1f1f;
-}
-#admin	.cont-menu label{
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  color: #fff;
   cursor: pointer;
-  font-size: 18px;
+  margin-bottom: 40px;
 }
 
-#admin #btn-menu:checked ~ .container-menu {
-opacity: 1;
-visibility: visible;
-}
-
-#admin .cont-menu {
-  width: 100%;
-  max-width: 250px;
-  background: #1c1c1c;
-  height: 100vh;
-  position: relative;
-  transition: all 500ms ease;
-}
-
-#admin .cont-menu nav {
-  transform: translateY(15%);
-}
-
-#admin .cont-menu nav a{
-  display: block;
-  text-decoration: none;
-  padding: 20px;
-  color: #7c7c7c;
-  border-left: 5px solid color transparent;
-  transition: all 400ms ease;
-}
-
-#admin .cont-menu nav a:hover{
-  border-left: 5px solid #c7c7c7;
-  background: #1f1f1f;
-}
-
-#admin .cont-menu label {
-  position: absolute;
-  right: 5px;
-  top: 10px;
+#Modulos .card-servicios a {
+  background-color: #7f0072;
+  width: 540.9px; 
+  max-width: 100%; 
   color: white;
-  cursor: pointer;
+  font-weight: 700;
+  font-size: 26px;
+  text-decoration: none;
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: .5s;
+  height: 50px;
+  line-height: 50px; 
+}
+
+#Modulos .card-servicios img {
+  max-width: 90%;
+  height: auto;
+}
+
+/* -------------------------------- Navegador Nuevo */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#admin body{
+  background: #dfe9f5;
+}
+#admin .contenedor{
+  display: flex;
+}
+#admin nav{
+  position: relative;
+  top: 0;
+  bottom: 0;
+  height: 145vh;
+  left: 0;
+  background: #fff;
+  width: 280px;
+  overflow: hidden;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+#admin nav .logo{
+  text-align: center;
+  display: flex;
+  margin: 10px 0 0 10px;
+}
+#admin nav .logo img{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+#admin nav .logo span{
+  font-weight: bold;
+  padding-left: 15px;
   font-size: 18px;
+  text-transform: uppercase;
 }
-
-#admin .cont-menu nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+#admin nav a{
+  position: relative;
+  color: rgb(85, 83, 83);
+  font-size: 14px;
+  display: table;
+  width: 280px;
+  padding: 10px;
 }
-
-#admin .cont-menu nav ul li {
-  padding: 10px 20px;
-  color: #c7c7c7;
-  transition: all 400ms ease;
+#admin nav .fas{
+  position: relative;
+  width: 70px;
+  height: 40px;
+  top: 14px;
+  font-size: 20px;
+  text-align: center;
 }
-
-#admin .cont-menu nav ul li:hover {
-  background: #1f1f1f;
-  color: #fff;
+#admin nav .nav-item{
+  position: relative;
+  top: 12px;
+  margin-left: 10px;
 }
-
-#admin .cont-menu nav ul li:first-child {
-  border-top: 1px solid #444;
+#admin nav a:hover{
+  background: #eee;
 }
-
+#admin nav .logout{
+  position: absolute;
+  bottom: 0;
+}
 
 
 
 /* ---------------------------- */
 /* Inventario */
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
-
-#Menu_Desplegable *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat Alternates', sans-serif;
+#Inventario .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
 }
 
-
-/*Estilos para el encabezado*/
-#Menu_Desplegable .header{
-    width: 100%;
-    height: 100px;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-#Menu_Desplegable .container{
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-}
-
-#Menu_Desplegable .container .btn-menu,
-#Menu_Desplegable .logo{
-    float: left;
-    line-height: 100px;
-}
-
-#Menu_Desplegable .container .btn-menu label{
-    color: black;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-#Menu_Desplegable .logo h1{
-    color: black;
-    font-weight: 400;
-    font-size: 22px;
-    margin-left: 10px;
-}
-
-#Menu_Desplegable .container .menu{
-    float: right;
-    line-height: 100px;
-}
-
-#Menu_Desplegable .container .menu a{
-    display: inline-block;
-    padding: 15px;
-    line-height: normal;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-    font-size: 15px;
-    margin-right: 5px;
-}
-
-
-/*Fin de Estilos para el encabezado*/
-
-/*Menú lateral*/
-#Menu_Desplegable #btn-menu{
-    display: none;
-}
-
-#Menu_Desplegable .container-menu{
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    transition: all 500ms ease;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 9999; 
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu{
-    opacity: 1;
-    visibility: visible;
-    z-index: 9999; 
-}
-
-#Menu_Desplegable .cont-menu{
-    width: 100%;
-    max-width: 250px;
-    background: #1c1c1c;
-    height: 100vh;
-    position: relative;
-    transition: all 500ms ease;
-    transform: translateX(-100%);
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu .cont-menu{
-    transform: translateX(0%);
-}
-
-#Menu_Desplegable .cont-menu nav{
-    transform: translateY(15%);
-}
-
-#Menu_Desplegable .cont-menu nav a{
-    display: block;
-    text-decoration: none;
-    padding: 20px;
-    color: #c7c7c7;
-    border-left: 5px solid transparent;
-    transition: all 400ms ease;
-}
-
-
-#Menu_Desplegable .cont-menu label{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-#Menu_Desplegable #btn-menu:checked ~ .container-menu {
-    opacity: 1;
-    visibility: visible;
-}
-
-#Menu_Desplegable .cont-menu {
-    width: 100%;
-    max-width: 250px;
-    background: #1c1c1c;
-    height: 100vh;
-    position: relative;
-    transition: all 500ms ease;
-}
-
-#Menu_Desplegable .cont-menu nav {
-    transform: translateY(15%);
-}
-
-#Menu_Desplegable .cont-menu nav a{
-    display: block;
-    text-decoration: none;
-    padding: 20px;
-    color: #7c7c7c;
-    border-left: 5px solid color transparent;
-    transition: all 400ms ease;
-}
-
-
-
-#Menu_Desplegable .cont-menu label {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-#Menu_Desplegable .cont-menu nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#Menu_Desplegable .cont-menu nav ul li {
-    padding: 10px 20px;
-    color: #c7c7c7;
-    transition: all 400ms ease;
-}
-
-
-
-#Menu_Desplegable .cont-menu nav ul li:first-child {
-    border-top: 1px solid #444;
-}
-
-#Menu_Desplegable .modal {
-    z-index: 99999;
-}
-
-/* Modulos administrador dentro del template de admin1 */
-#Modulos{
-  width: 100%;
-  padding: 100px 0;
-}
-
-#Modulos h2{
-  color: #040404;
-  font-size: 36px;
-  border-bottom: 2px solid rgb(20, 236, 196);
-  display: inline-block;
-  margin-bottom: 80px;
-}
-
-#Modulos h2 span{
-  font-size: 54px;
-}
-
-#Modulos .card-servicios{
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  margin-bottom: 40px;
-}
-
-#Modulos .card-servicios::after{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index:1;
+#Inventario .Navegador_Nuevo {
+  position: fixed;
   top: 0;
   left: 0;
-  content: "";
-  background: rgba(0, 242, 255, 0.045);
-  transition: .5s;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
 }
 
-#Modulos .card-servicios a{
-  color: #fff;
-  font-weight: 700;
-  font-size: 26px; 
-  text-decoration: none;
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  max-width: 250px;
+#Inventario .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Inventario .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Inventario .Navegador_Nuevo .logo {
   text-align: center;
-  transition: .5s;
-}
-#Modulos .card-servicios:hover a{
-  background: white;
-  color: blue;
-  bottom: 48%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
 }
 
-#Modulos .card-servicios:hover::after{
-  background: rgba(0, 0, 255, 0.465);
+#Inventario .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Inventario .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Inventario .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Inventario .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Inventario .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Inventario .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Inventario .Navegador_Nuevo a:hover {
+  background-color: #DDDDDD;
+  color: black;
+}
+
+#Inventario .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* ------------------------------------- Entrada */
+#Entrada .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Entrada .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Entrada .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Entrada .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Entrada .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Entrada .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Entrada .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Entrada .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Entrada .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Entrada .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Entrada .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Entrada .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Entrada .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* -------------------------------------- Salidas */
+#Salidas .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Salidas .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Salidas .Navegador_Nuevo:hover {
+  width: 150px;
+}
+
+
+#Salidas .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Salidas .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+#Salidas .Navegador_Nuevo li {
+  margin-bottom: 10px;
+  order: 1;
+}
+
+#Salidas .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Salidas .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Salidas .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Salidas .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Salidas .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+  transition: all 0.3s ease; 
+  line-height: 40px; 
+}
+
+#Salidas .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+
+#Salidas .Navegador_Nuevo:hover .fas {
+  line-height: 30px;
+}
+
+#Salidas .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Salidas .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Salidas .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+  order: 2; 
+}
+
+/* Botones del inventario para redirigir a la entrada, salida y novedades */
+#Inventario .column a {
+  background-color: #FFBCBF;
+  color: black;
+  transition: 0.5s;
+}
+
+#Inventario .column a:hover {
+  background-color: #c26bba;
+  color: white;
+}
+/* Fin de los estilos del inventario */
+
+/* ----------------------------------- navar novedades */
+#Novedades .Navegador_Nuevo * {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+#Novedades .Navegador_Nuevo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: #ffffff;
+  overflow-y: auto;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  transition: width 0.5s ease; 
+}
+
+#Novedades .Navegador_Nuevo img:hover{
+  width: 100px; 
+}
+
+#Novedades .Navegador_Nuevo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#Novedades .Navegador_Nuevo .logo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin: 10px 0;
+}
+
+#Novedades .Navegador_Nuevo .logo img {
+  width: 90px; 
+  height: 90px;
+  justify-content: center;
+}
+
+#Novedades .Navegador_Nuevo .logo .nav-item {
+  font-weight: bold;
+  padding-left: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+#Novedades .Navegador_Nuevo a {
+  position: relative;
+  color: #555353;
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 10px 20px; 
+  text-decoration: none;
+}
+
+#Novedades .Navegador_Nuevo .fas {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#Novedades .Navegador_Nuevo .fas:hover {
+  width: 1px; 
+  height: 1px; 
+  line-height: 1px; 
+  font-size: 1px;
+}
+#Novedades .Navegador_Nuevo .nav-item {
+  margin-left: 10px;
+}
+
+#Novedades .Navegador_Nuevo a:hover {
+  background-color: rgb(168, 167, 157);
+}
+
+#Novedades .Navegador_Nuevo .logout {
+	position: absolute;
+	bottom: 0;
+}
+
+/* ----------------------------------- Estilos para el Registro de empleado */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#Registrar_Empleado {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+#Registrar_Empleado body {
+  background: #dfe9f5;
+  margin: 0;
+  padding: 0;
+}
+
+#Registrar_Empleado .contenedor {
+  display: flex;
+  justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+#Registrar_Empleado nav {
+  background: #fff;
+  width: 280px;
+  height: 953px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+#Registrar_Empleado nav .logo {
+  text-align: center;
+  margin: 10px 0;
+}
+
+#Registrar_Empleado nav .logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#Registrar_Empleado nav .logo span {
+  font-weight: bold;
+  padding-left: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+#Registrar_Empleado nav a {
+  color: rgb(85, 83, 83);
+  font-size: 14px;
+  display: table; /* Cambiado de table a block */
+  padding: 10px;
+  text-decoration: none;
+}
+
+#Registrar_Empleado nav .fas {
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+#Registrar_Empleado nav .nav-item {
+  margin-left: 10px;
+}
+
+#Registrar_Empleado nav a:hover {
+  background: #eee;
+  width: 250px;
+}
+
+#Registrar_Empleado nav .logout {
+  position: absolute;
+  bottom: 0;
+}
+
+/* ------------------------------ Citas*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
+
+#Citas {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+#Citas body {
+  background: #dfe9f5;
+  margin: 0;
+  padding: 0;
+}
+
+#Citas .contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+#Citas nav {
+  background: #fff;
+  width: 280px;
+  height: 953px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+#Citas nav .logo {
+  text-align: center;
+  margin: 10px 0;
+}
+
+#Citas nav .logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#Citas nav .logo span {
+  font-weight: bold;
+  padding-left: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+#Citas nav a {
+  color: rgb(85, 83, 83);
+  font-size: 14px;
+  display: table; 
+  padding: 10px;
+  text-decoration: none;
+}
+
+#Citas nav .fas {
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+#Citas nav .nav-item {
+  margin-left: 10px;
+}
+
+#Citas nav a:hover {
+  background: #eee;
+  width: 250px;
+}
+
+#Citas nav .logout {
+  position: absolute;
+  bottom: 0;
 }

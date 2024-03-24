@@ -1,6 +1,21 @@
 CREATE DATABASE login;
 USE login;
 
+CREATE TABLE citas (
+  id_cita int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id_cliente int(11) NOT NULL,
+  nombre varchar(100) NOT NULL,
+  servicio varchar(100) NOT NULL,
+  empleado int(11) NOT NULL,
+  fecha date NOT NULL,
+  hora time NOT NULL,
+  motivo varchar(500) NOT NULL
+) ;
+
+INSERT INTO citas (id_cita, id_cliente, nombre, servicio, empleado, fecha, hora, motivo) VALUES
+(1, 3, 'Lorena Hernandez', 'Corte de cabello', 2, '2024-03-23', '10:00:00', 'Corte de mantenimiento'),
+(2, 4, 'Alejandro Martinez', 'Manicure', 2, '2024-03-24', '15:30:00', 'Arreglo de uñas'),
+(3, 1, 'Wendy Huertas', 'Maquillaje', 1, '2024-03-25', '12:00:00', 'Maquillaje para evento');
 
 CREATE TABLE entrada_productos (
   Id_Entrada int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -17,14 +32,14 @@ INSERT INTO entrada_productos (Id_Entrada, Id_Producto, Nombre, Cantidad, precio
 (3, 3, 'Dilan', 100, 100, '2024-03-18');
 
 CREATE TABLE novedades (
-  Id_Novedades int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  Id_Producto int(11) NOT NULL,
-  fecha date NOT NULL,
-  Nombre varchar(100) NOT NULL,
-  Cantidad int(11) NOT NULL,
-  Entrada int(11) NOT NULL,
-  Salida int(11) NOT NULL,
-  Tipo varchar(50) NOT NULL DEFAULT ''
+    Id_Novedades int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Id_Producto int(11) NOT NULL,
+    fecha date NOT NULL,
+    Nombre varchar(100) NOT NULL,
+    Cantidad int(11) NOT NULL,
+    Entrada int(11) NOT NULL,
+    Salida int(11) NOT NULL,
+    Tipo varchar(50) NOT NULL DEFAULT ''
 );
 
 INSERT INTO novedades (Id_Novedades, Id_Producto, fecha, Nombre, Cantidad, Entrada, Salida, Tipo) VALUES
@@ -117,8 +132,20 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (id, correo, password, id_rol, nombre, apellido, telefono) VALUES
-(1, 'wendyhuertas2408@gmail.com', '12', 1, NULL, NULL, NULL),
-(2, 'dilanjimenez208@gmail.com', '123', 2, NULL, NULL, NULL),
-(3, 'wendy2408@outlook.es', '1234', 3, NULL, NULL, NULL),
+(1, 'wendyhuertas2408@gmail.com', '12', 1, 'Wendy', 'Huertas', 123123),
+(2, 'dilanjimenez208@gmail.com', '123', 2, 'Dilan', 'Jimenez', 234234),
+(3, 'wendy2408@outlook.es', '1234', 3, 'Lorena', 'Hernandez', 423423),
 (5, 'alejandro@gmail.com', '456', 3, 'Alejandro', 'Martinez', 2147483647),
-(6, 'alejandro@gmail.com', '456', 3, 'Alejandro', 'Martinez', 2147483647);
+(6, 'alejandro@gmail.com', '456', 3, 'Alejandro', 'Martinez', 2147483647),
+(7, 'dilanjimenez200@gmail.com', '1234567', 1, 'Dilan', 'Jimenez', 123124);
+
+CREATE TABLE servicios (
+  id_servicio int(11) NOT NULL,
+  nombre varchar(100) NOT NULL,
+  empleado int(11) NOT NULL
+);
+
+INSERT INTO servicios (id_servicio, nombre, empleado) VALUES
+(1, 'Corte de cabello', 2),
+(2, 'Manicure', 2),
+(3, 'Maquillaje', 1);
