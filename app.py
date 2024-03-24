@@ -21,36 +21,6 @@ mysql = MySQL(app)
 def home():
     return render_template("index.html")
 
-# Funcion para redirigir al Administrador.html
-@app.route('/admin')
-def admin():
-    return render_template("Administrador.html")
-
-# Redireccion al template del empleado
-@app.route('/Empleado')
-def Empleado():
-    return render_template("Empleado.html")
-
-# Redireccion al template de cliente
-@app.route('/Cliente')
-def Cliente():
-    return render_template("Cliente.html")
-
-# Redireccion al template de registrar empleado
-@app.route('/Redirigir_Empleado')
-def Redirigir_Empleado():
-    return render_template("Registrar_Empleado.html")
-
-#Redirigir al template de Citas.html
-@app.route('/Citas')
-def Citas():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT nombre FROM servicios")
-    servicios = cursor.fetchall()
-    nombres_servicios = [servicio['nombre'] for servicio in servicios]
-    cursor.close()
-    return render_template("Citas.html", nombres_servicios=nombres_servicios)
-
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
 def login():
@@ -78,6 +48,52 @@ def login():
             return render_template('login.html', mensaje="¡Usuario o contraseña incorrectas!")
 
     return render_template('login.html')
+
+# Funcion para redirigir al Administrador.html
+@app.route('/admin')
+def admin():
+    return render_template("Administrador.html")
+
+# Redireccion al template del empleado
+@app.route('/Empleado')
+def Empleado():
+    return render_template("Empleado.html")
+
+# Redireccion al template de cliente
+@app.route('/Cliente')
+def Cliente():
+    return render_template("Cliente.html")
+
+# Redireccion al template de registrar empleado
+@app.route('/Redirigir_Empleado')
+def Redirigir_Empleado():
+    return render_template("Registrar_Empleado.html")
+
+#Redirigir al template de Citas.html
+@app.route('/Citas')
+def Citas():
+    # Obtener el ID del cliente logeado desde la sesión
+    cliente_id = session.get('id')
+
+    cursor = mysql.connection.cursor()
+
+    # Consulta para obtener nombres de servicios
+    cursor.execute("SELECT nombre FROM servicios")
+    servicios = cursor.fetchall()
+    nombres_servicios = [servicio['nombre'] for servicio in servicios]
+
+    # Consulta para obtener nombres de empleados
+    cursor.execute("SELECT nombre FROM usuarios WHERE id_rol = 2")
+    empleados = cursor.fetchall()
+    empleados_servicios = [empleado['nombre'] for empleado in empleados]
+
+    # Consulta para obtener las citas del cliente logeado
+    cursor.execute("SELECT * FROM citas WHERE id_cliente = %s", (cliente_id,))
+    citas = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template("Citas.html", nombres_servicios=nombres_servicios, empleados_servicios=empleados_servicios, citas=citas)
 
 # Funcion de olvidar contraseña
 @app.route('/forgot', methods=['GET', 'POST'])
@@ -324,26 +340,32 @@ def Novedades():
     return render_template('Novedades.html', entradas=entradas_data, salidas=salidas_data)
 
 # Citas
+# Citas
 @app.route('/Registrar_Cita', methods=["GET", "POST"])
 def Registrar_Cita():
+    cursor = mysql.connection.cursor()
+    cursor.close()
+    
     if request.method == "POST":
         nombre = request.form.get('nombre')
         servicio = request.form.get('servicio')
-        empleado = request.form.get('Empleado')
+        empleado_nombre = request.form.get('empleados_nombre')
         fecha = request.form.get('Fecha')
         hora = request.form.get('Hora')
         motivo = request.form.get('motivo')
         
+        # Obtener el ID del usuario logueado desde la sesión
+        session.get('id')
+        
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO citas (nombre, servicio, empleado, fecha, hora, motivo) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (nombre, servicio, empleado, fecha, hora, motivo))
+        cur.execute("INSERT INTO citas (nombre, servicio, empleado_nombre, fecha, hora, motivo, id_cliente) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (nombre, servicio, empleado_nombre, fecha, hora, motivo, session['id']))
         mysql.connection.commit()
         cur.close()
 
         return redirect(url_for('Citas'))
 
     return render_template("Citas.html")
-
 
 
 if __name__ == "__main__":
