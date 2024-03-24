@@ -87,11 +87,12 @@
                                 <label for="Servicio">Servicio:</label>
                                 <select name="servicio" class="form-select" aria-label="Default select example">
                                     <option value="" selected>Selecciona el servicio</option>
-                                    {% for servicio in servicios_data %}
+                                    {% for servicio in nombres_servicios %}
                                         <option value="{{ servicio }}">{{ servicio }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>                       
+                            </div>
+        
                             <br>
                             <div class="form-group">
                                 <label for="Empleado">Empleado:</label>

@@ -44,7 +44,12 @@ def Redirigir_Empleado():
 #Redirigir al template de Citas.html
 @app.route('/Citas')
 def Citas():
-    return render_template("Citas.html")
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT nombre FROM servicios")
+    servicios = cursor.fetchall()
+    nombres_servicios = [servicio['nombre'] for servicio in servicios]
+    cursor.close()
+    return render_template("Citas.html", nombres_servicios=nombres_servicios)
 
 # Funcion del login para inicar sesion
 @app.route('/acceso-login', methods=["GET", "POST"])
@@ -321,11 +326,6 @@ def Novedades():
 # Citas
 @app.route('/Registrar_Cita', methods=["GET", "POST"])
 def Registrar_Cita():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT nombre FROM servicios")
-    servicios_data = [row[0] for row in cur.fetchall()]
-    cur.close()
-    
     if request.method == "POST":
         nombre = request.form.get('nombre')
         servicio = request.form.get('servicio')
@@ -339,12 +339,12 @@ def Registrar_Cita():
                     (nombre, servicio, empleado, fecha, hora, motivo))
         mysql.connection.commit()
         cur.close()
-        
 
         return redirect(url_for('Citas'))
-    
 
-    return render_template("Citas.html", servicios_data=servicios_data)
+    return render_template("Citas.html")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
