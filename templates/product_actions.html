@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Administracion de productos{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>Administración de productos</h3>
+    <div class="container my-3 mx-3">
+        <ul class="list-unstyled d-flex">
+            {% for product in products %}
+            <li>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ product.image_path }}" alt="Product Image" height="250">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('update_product', id=product.id) }}" class="btn btn-primary">Actualizar</a>
+                            <a href="{{ url_for('delete_product', id=product.id) }}" class="btn btn-danger">Borrar</a>
+                            {% if not product.active %}
+                            <a href="{{ url_for('activate_product', id=product.id) }}" class="btn btn-success">Activado</a>
+                            {% else %}
+                            <a href="{{ url_for('deactivate_product', id=product.id) }}" class="btn btn-warning">Desactivado</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

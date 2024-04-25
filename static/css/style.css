@@ -3948,6 +3948,8 @@ color: #000000;
   max-width: 600px;
 }
 
+
+
 .lab label{
   margin-bottom: 0;
   font-size: 14px;
@@ -3960,6 +3962,12 @@ color: #000000;
   border-radius: 10px;
 }
 
+
+
+
+
+
+
 @media(max-width:576px){
   .wrapper{
       padding: 25px 20px;
@@ -3969,6 +3977,9 @@ color: #000000;
   }
 }
 
+
+
+
 .iconosi{
 color: pink;
 display: flex; 
@@ -3977,6 +3988,9 @@ align-items: center;
 font-size: 65px; 
 height: 50px; 
 }
+
+
+
 
 .boton12 {
 background-color: #EA4C89;

@@ -157,3 +157,6 @@ INSERT INTO usuarios (id, correo, password, id_rol, nombre, apellido, telefono, 
 
 ALTER TABLE cart_item
   ADD CONSTRAINT fk_cart_item_product FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE;
+
+
+
