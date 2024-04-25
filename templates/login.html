@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +13,12 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">   
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+    <style>
+        /* Estilo para inputs inválidos */
+        input:invalid {
+            border-color: red;
+        }
+    </style>
 </head>
 
 <body id="Login">
@@ -38,9 +45,10 @@
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo electrónico" name="txtCorreo" required>
                         <small id="emailHelp" class="form-text text-muted"></small>
                     </label>
-                    <label>
+                    <label for="exampleInputPassword1" style="position: relative;">
                         <i class='bx bx-lock'></i>
                         <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" name="txtPassword">
+                        <i class="bx bx-show" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1.5em; cursor: pointer;"></i>
                     </label>
                     <li id="contraseña"><a href="{{ url_for ('forgot') }}">¿Olvidaste tu contraseña?</a></li>
                     <br>
@@ -51,5 +59,47 @@
     </div>
     </div>
     <button id="volver"><a href="{{ url_for ('home')}}">Volver</a></button>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('exampleInputPassword1');
+    
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('bx-show'); 
+            this.classList.toggle('bx-hide'); 
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("form").addEventListener("submit", function(event){
+            var contrasena = document.getElementById("exampleInputPassword1").value;
+            var mensaje = document.getElementById("mensaje");
+
+            // Comprobar si la contraseña tiene al menos 8 caracteres
+            if (contrasena.length < 8) {
+                mensaje.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                event.preventDefault();
+                return;
+            }
+
+            // Comprobar si la contraseña contiene al menos una mayúscula
+            if (!/[A-Z]/.test(contrasena)) {
+                mensaje.textContent = "La contraseña debe contener al menos una mayúscula.";
+                event.preventDefault();
+                return;
+            }
+
+            // Comprobar si la contraseña contiene al menos un caracter especial
+            if (!/[^A-Za-z0-9]/.test(contrasena)) {
+                mensaje.textContent = "La contraseña debe contener al menos un caracter especial.";
+                event.preventDefault();
+                return;
+            }
+        });
+    });
+</script>
 </body>
 </html>

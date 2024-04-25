@@ -1,5 +1,13 @@
-from flask import Flask, render_template, request, url_for, flash, session, redirect
+
+from flask import Flask, render_template, request, url_for, flash, session, redirect, jsonify, send_from_directory
+
+
 from flask_mysqldb import MySQL
+from flask_mail import Mail
+from flask_mail import Message
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -8,14 +16,23 @@ app.secret_key = 'your_secret_key'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'login'
+app.config['MYSQL_DB'] = 'AngieStudio'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['UPLOAD_FOLDER'] = 'static/img'
 
+# Configuracion para enviar correos
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'dilanyarce22@gmail.com'  
+app.config['MAIL_PASSWORD'] = 'ppoj ltoy ryhq zrkg'  
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 mysql = MySQL(app)
 
 # Rutas y funciones para la primera aplicación
-
 # Ruta para cuando se inicialice el programa se inicie desde el index.html
 @app.route('/')
 def home():
@@ -38,44 +55,100 @@ def login():
             session['id_rol'] = account['id_rol']  
             session['nombre'] = account['nombre']  
 
-        if session['id_rol'] == 1:
-            return render_template("Administrador.html", nombre=session['nombre'])
-        elif session['id_rol'] == 2:
-            return render_template("Empleado.html", nombre=session['nombre'])
-        elif session['id_rol'] == 3:
-            return render_template("Cliente.html", nombre=session['nombre'])
+            if session['id_rol'] == 1:
+                client_count = get_client_count()
+                return render_template("Administrador.html", nombre=session['nombre'], client_count=client_count)
+            elif session['id_rol'] == 2:
+                return render_template("Empleado.html", nombre=session['nombre'])
+            elif session['id_rol'] == 3:
+                return render_template("Cliente.html", nombre=session['nombre'])
         else:
             return render_template('login.html', mensaje="¡Usuario o contraseña incorrectas!")
 
     return render_template('login.html')
 
+
+def get_client_count():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT COUNT(*) AS count FROM usuarios WHERE id_rol = 2')  
+    result = cur.fetchone()
+    cur.close()
+    return result['count'] if result else 0
+
 # Funcion para redirigir al Administrador.html
 @app.route('/admin')
 def admin():
-    return render_template("Administrador.html")
+    
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id_rol = 2")
+    empleados = cur.fetchall()  
+    cur.close()
+
+    client_count = get_client_count()
+    return render_template("Administrador.html", nombre=session.get('nombre'),  client_count=client_count, empleados=empleados)
+
 
 # Redireccion al template del empleado
 @app.route('/Empleado')
 def Empleado():
-    return render_template("Empleado.html")
+    return render_template("Empleado.html", nombre=session.get('nombre'))
 
 # Redireccion al template de cliente
 @app.route('/Cliente')
 def Cliente():
-    return render_template("Cliente.html")
+    return render_template("Cliente.html", nombre=session.get('nombre'))
 
 # Redireccion al template de registrar empleado
 @app.route('/Redirigir_Empleado')
 def Redirigir_Empleado():
-    return render_template("Registrar_Empleado.html")
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id_rol = 2")
+    empleados = cur.fetchall()
+    cur.close()
+    return render_template("Registrar_Empleado.html", empleados=empleados, nombre=session.get('nombre'))
 
 #Redirigir al template de Citas.html
-@app.route('/Citas')
+@app.route('/Citas', methods=['GET', 'POST'])
 def Citas():
+    if request.method == 'POST':
+        id_cita = request.form['id_cita']
+        nombre = request.form['nombre']
+        servicio = request.form['servicio']
+        empleado_nombre = request.form['empleado_nombre']
+        fecha = request.form['Fecha']
+        hora = request.form['Hora'] 
+        motivo = request.form['motivo']
+        
+        
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE citas SET nombre=%s, servicio=%s, empleado_nombre=%s, fecha=%s, hora=%s, motivo=%s WHERE id_cita=%s", 
+                    (nombre, servicio,  empleado_nombre,  fecha, hora, motivo, id_cita)) 
+        mysql.connection.commit()
+        cur.close()
+        
+        flash("Cita actualizada correctamente.")
+        return redirect(url_for('Citas'))
+
     # Obtener el ID del cliente logeado desde la sesión
     cliente_id = session.get('id')
 
     cursor = mysql.connection.cursor()
+
+    if session.get('id_rol') == 2:  # Si el usuario es un empleado
+        # Consulta para obtener el nombre del empleado logueado
+        cursor.execute("SELECT nombre FROM usuarios WHERE id = %s", (cliente_id,))
+        nombre_empleado = cursor.fetchone()['nombre']
+
+        # Consulta para obtener las citas del empleado logeado
+        cursor.execute("SELECT * FROM citas WHERE empleado_nombre = %s", (nombre_empleado,))
+    elif session.get('id_rol') == 1:  # Si el usuario es un administrador
+        # Consulta para obtener todas las citas
+        cursor.execute("SELECT * FROM citas")
+    else:
+        # Consulta para obtener las citas del cliente logeado
+        cursor.execute("SELECT * FROM citas WHERE id_cliente = %s", (cliente_id,))
+    
+    citas = cursor.fetchall()
 
     # Consulta para obtener nombres de servicios
     cursor.execute("SELECT nombre FROM servicios")
@@ -86,69 +159,70 @@ def Citas():
     cursor.execute("SELECT nombre FROM usuarios WHERE id_rol = 2")
     empleados = cursor.fetchall()
     empleados_servicios = [empleado['nombre'] for empleado in empleados]
-
-    # Consulta para obtener las citas del cliente logeado
-    cursor.execute("SELECT * FROM citas WHERE id_cliente = %s", (cliente_id,))
-    citas = cursor.fetchall()
-
+    
     cursor.close()
 
-    return render_template("Citas.html", nombres_servicios=nombres_servicios, empleados_servicios=empleados_servicios, citas=citas)
+    horas = []
+    for i in range(8, 12): 
+        hora_am = str(i).zfill(2) + ':00 am'
+        horas.append(hora_am)
 
-# Funcion de olvidar contraseña
-@app.route('/forgot', methods=['GET', 'POST'])
-def forgot():
-    error = None
-    if request.method == 'POST':
-        user_email = request.form['txtCorreo']
-
-        if is_email_registered(user_email):
-            session['reset_email'] = user_email
-            return redirect(url_for('newpassword'))
+    for i in range(12, 18):  
+        if i == 12:  
+            hora_pm = str(i).zfill(2) + ':00 pm'
         else:
-            error = 'Correo no registrado. Por favor, inténtalo de nuevo o regístrate.'
-    return render_template('forgot.html', error=error)
+            hora_pm = str(i - 12).zfill(2) + ':00 pm'  
+        horas.append(hora_pm)
+        
+    return render_template("Citas.html", nombres_servicios=nombres_servicios, empleados_servicios=empleados_servicios, citas=citas, nombre=session.get('nombre'), lista_servicios=nombres_servicios, horas=horas)
 
-# Funcion para redirigir al olvidar contraseña
+@app.route('/actualizar_cita_fecha_hora', methods=['POST'])
+def actualizar_cita_fecha_hora():
+    if request.method == 'POST':
+        id_cita = request.form['id_cita']
+        fecha = request.form['fecha']
+        hora = request.form['hora'] 
+        
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE citas SET fecha=%s, hora=%s WHERE id_cita=%s", (fecha, hora, id_cita))
+        mysql.connection.commit()
+        cur.close()
+        
+        flash("Cita actualizada correctamente.")
+        return redirect(url_for('Citas'))
+
+@app.route('/agregar_servicio', methods=['POST'])
+def agregar_servicio():
+    if request.method == 'POST':
+        nombre_servicio = request.form['nombre_servicio']
+        empleado = request.form['empleados_nombre']
+
+        # Insertar el nuevo servicio en la base de datos
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO servicios (nombre, empleado) VALUES (%s, %s)", (nombre_servicio, empleado))
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Nuevo servicio agregado correctamente.")
+        return redirect(url_for('Citas'))
+    else:
+        flash("Error al agregar el nuevo servicio.")
+        return redirect(url_for('Citas'))
+
+# Función para cerrar sesión
 @app.route('/logout')
 def logout():
-    session.clear()  
-    return redirect(url_for('home'))  
+    # Eliminar la sesión del usuario
+    session.clear()
+    # Redirigir al usuario a la página de inicio
+    return redirect(url_for('home'))
 
-def is_email_registered(correo):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM usuarios WHERE correo = %s", (correo,))
-    account = cur.fetchone()
-    cur.close()
-    if account:
-        return True
-    else:
-        return False
-
-# Funcion para el template de la nueva contraseña 
-@app.route('/newpassword', methods=['GET', 'POST'])
-def newpassword():
-    error = None
-    if request.method == 'POST':
-        if request.form['newpass'] != request.form['conpass']:
-            error = 'Las contraseñas no coinciden..!!'
-        else:
-            user_email = session.get('reset_email')
-            new_password = request.form['newpass']
-            cur = mysql.connection.cursor()
-            cur.execute("UPDATE usuarios SET password = %s WHERE correo = %s", (new_password, user_email))
-            mysql.connection.commit()
-            cur.close()
-            session.pop('reset_email', None)
-            return redirect(url_for('home'))
-    return render_template('newpassword.html', error=error)
-
-# Funcion para redirigir al registro.html
+# Función para redirigir al registro.html
 @app.route('/registro')
 def registro():
     return render_template("registro.html")
 
-# Funcion para crear el registro desde el template del registro
+# Función para crear el registro desde el template del registro
 @app.route('/crear-registro', methods=["GET", "POST"])
 def crear_registro():
     if request.method == "POST":
@@ -167,7 +241,7 @@ def crear_registro():
     else:
         pass
 
-# Funcion para crear Empleados
+# Función para crear Empleados
 @app.route('/Registrar_Empleado', methods=["GET", "POST"])
 def Registrar_Empleado():
     if request.method == "POST":
@@ -176,52 +250,84 @@ def Registrar_Empleado():
         nombre = request.form.get('nombre')
         apellido = request.form.get('apellido')
         telefono = request.form.get('telefono')
-        # Asegúrate de que tu conexión y consulta SQL sean correctas
+        dias_trabajo = request.form.get('dias_trabajo')
+        horario_trabajo = request.form.get('horario_trabajo')
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO usuarios (correo, password, nombre, apellido, telefono, id_rol) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (correo, password, nombre, apellido, telefono, 2))
+        cur.execute("INSERT INTO usuarios (correo, password, nombre, apellido, telefono, id_rol, dias_trabajo, horario_trabajo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    (correo, password, nombre, apellido, telefono, 2, dias_trabajo, horario_trabajo))
         mysql.connection.commit()
         cur.close()
         return redirect(url_for('Redirigir_Empleado'))  
-    return render_template("Registrar_Empleado.html")
+    else:
+        #Mostar los empleados
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT id, correo, dias_trabajo, horario_trabajo, nombre, apellido, telefono FROM usuarios WHERE id_rol = 2")
+        empleados = cur.fetchall()  
+        cur.close()
+        return render_template("Registrar_Empleado.html", empleados=empleados)
 
-# Funcion para mostrar datos de todos los empleado en en Registrar_Empleado.html:
-@app.route('/ver_empleados')
-def ver_empleados():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM usuarios WHERE id_rol = 2")
-    empleados_data = cur.fetchall()
-    cur.close()
-    return render_template("Registrar_Empleado.html", empleados=empleados_data)
 
-# Rutas y funciones para (Inventario)
-# Funcion del inventario para seleccionar los productos y los campos
+# Función del inventario para seleccionar los productos y los campos
 @app.route('/inventario')
 def inventario():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM productos")
     productos_data = cur.fetchall()
     cur.close()
-    return render_template('inventario.html', productos=productos_data)
+    return render_template('inventario.html', productos=productos_data, nombre=session.get('nombre'))
 
-# Funcion para insertar un nuevo producto
+# Función para insertar un nuevo producto
 @app.route('/insert', methods=['POST'])
 def insert():
     if request.method == "POST":
         flash("Producto ingresado con éxito")
+        Id = request.form['Id']
         Nombre = request.form['Nombre']
+        Fecha_Ingreso = request.form['Fecha_Ingreso']
         Cantidad = request.form['Cantidad']
         Marca = request.form['Marca']
         Precio = request.form['Precio']
         Descripcion = request.form['Descripcion']
+        Imagen = request.files['Imagen']
         Fecha_vencimiento = request.form['Fecha_vencimiento']
+
+        # Save the image on the server
+        filename = secure_filename(Imagen.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        Imagen.save(image_path)
+
+        # Insert the product into the catalog
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO productos (Nombre, Cantidad, Marca, Precio, Descripcion, Fecha_vencimiento) VALUES (%s, %s, %s, %s, %s, %s)", 
-                    (Nombre, Cantidad, Marca, Precio, Descripcion, Fecha_vencimiento))
+        cur.execute("INSERT INTO productos (Id, Nombre, Fecha_Ingreso, Cantidad, Marca, Precio, Descripcion, Imagen, Fecha_vencimiento) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+                    (Id, Nombre, Fecha_Ingreso, Cantidad, Marca, Precio, Descripcion, image_path, Fecha_vencimiento))
         mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('inventario', nombre=session.get('nombre')))
+    
+@app.route('/add_to_catalog/<int:id>', methods=['POST'])
+def add_to_catalog(id):
+    # Obtener el producto desde la base de datos de productos
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM productos WHERE Id = %s", (id,))
+    product = cur.fetchone()
+    cur.close()
+
+    if product:
+        # Insertar el producto en la tabla de catálogo
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO product (title, description, price, image_path, quantity) VALUES (%s, %s, %s, %s, %s)",
+                    (product['Nombre'], product['Descripcion'], product['precio'], product['Imagen'], product['Cantidad']))
+        mysql.connection.commit()
+        cur.close()
+
+        # flash('Producto agregado al catálogo', 'success')
+        return redirect(url_for('inventario'))
+    else:
+        # flash('El producto no existe', 'error')
         return redirect(url_for('inventario'))
 
-# Funcion de eliminar el producto
+# Función para eliminar el producto
 @app.route('/delete/<string:Id>', methods=['GET'])
 def delete(Id):
     try:
@@ -235,25 +341,26 @@ def delete(Id):
         cur.close()
     return redirect(url_for('inventario'))
 
-@app.route('/ Delete_Empleado/<string:id>', methods=['GET'])
+@app.route('/Delete_Empleado/<string:id>', methods=['GET'])
 def Delete_Empleado(id):
     try:
         cur = mysql.connection.cursor()
         cur.execute("DELETE FROM usuarios WHERE id=%s", (id,))
         mysql.connection.commit()
-        flash("Empleado eliminado con éxito")
+        # flash("Empleado eliminado con éxito")
     except Exception as e:
         flash("Error al eliminar el empleado: " + str(e))
     finally:
         cur.close()
-    return redirect(url_for('Redirigir_Empleado'))
+    return render_template('Registrar_Empleado.html', nombre=session.get('nombre'))
 
-# Funcion para actualizar un producto
+# Función para actualizar un producto
 @app.route('/update', methods=['POST', 'GET'])
 def update():
     if request.method == 'POST':
         Id = request.form['Id']
         Nombre = request.form['Nombre']
+        Fecha_Ingreso = request.form['Fecha_Ingreso']
         Cantidad = request.form['Cantidad']
         Marca = request.form['Marca']
         Precio = request.form['precio']
@@ -262,111 +369,460 @@ def update():
         try:
             cur = mysql.connection.cursor()
             cur.execute("""
-            UPDATE productos SET Nombre=%s, Cantidad=%s, Marca=%s, Precio=%s, Descripcion=%s, Fecha_vencimiento=%s
+            UPDATE productos SET Nombre=%s, Fecha_Ingreso= %s, Cantidad=%s, Marca=%s, Precio=%s, Descripcion=%s, Fecha_vencimiento=%s
             WHERE Id=%s
-            """, (Nombre, Cantidad, Marca, Precio, Descripcion, Fecha_vencimiento, Id))
+            """, (Nombre, Fecha_Ingreso, Cantidad, Marca, Precio, Descripcion, Fecha_vencimiento, Id))
             
             mysql.connection.commit()
             flash("Actualizado con éxito")
-            return redirect(url_for('inventario'))
+            return redirect(url_for('inventario', nombre=session.get('nombre')))
         except Exception as e:
             flash(f"Error al actualizar: {str(e)}")
         finally:
             cur.close()
-    return render_template('inventario.html')
+    return render_template('inventario.html', nombre=session.get('nombre'))
 
-# Update_Empleado Funcion para editar al empleado
+# Update_Empleado Función para editar al empleado
 @app.route('/Update_Empleado', methods=['POST', 'GET'])
 def Update_Empleado():
     if request.method == 'POST':
         id = request.form['id']
-        Correo = request.form['correo']
-        Nombre = request.form['Nombre']
+        correo = request.form['correo'] 
+        correo = request.form['correo'] 
+        dias_trabajo = request.form['dias_trabajo'] 
+        horario_trabajo = request.form['horario_trabajo']  
+        nombre = request.form['nombre']  
         apellido = request.form['apellido']
         telefono = request.form['telefono']
         try:
             cur = mysql.connection.cursor()
             cur.execute("""
-            UPDATE usuarios SET correo=%s, nombre=%s, apellido=%s, telefono=%s
+            UPDATE usuarios SET correo=%s ,Dias_trabajo=%s , Horario_trabajo=%s, nombre=%s, apellido=%s, telefono=%s
             WHERE id=%s
-            """, (Correo, Nombre, apellido, telefono, id))
+            """, (correo, dias_trabajo, horario_trabajo, nombre, apellido, telefono, id))
             
             mysql.connection.commit()
-            flash("Empleado actualizado con éxito")
-            return redirect(url_for('inventario'))
+            # flash("Empleado actualizado con éxito")
         except Exception as e:
             flash(f"Error al actualizar al empleado: {str(e)}")
-        finally:
-            cur.close()
-    return render_template('Redirigir_Empleado')
+        
+        return render_template('Registrar_Empleado.html', nombre=session.get('nombre'))
 
-# Funcion del inventario para registrar las entradas
+# Función del inventario para registrar las entradas
 @app.route('/Entradas')
 def Entradas():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM entrada_productos")
     entradas_data = cur.fetchall()
     cur.close()
-    return render_template('Entradas.html', entradas_data=entradas_data)  
+    return render_template('Entradas.html', entradas_data=entradas_data, nombre=session.get('nombre'))
 
-# Funcion para redirigir al template de Entradas.html
+# Función para redirigir al template de Entradas.html
 @app.route('/redireccionar_a_entradas')
 def redireccionar_a_entradas():
     # Redireccionar a la página de Entradas.html
-    return redirect(url_for('Entradas'))
+    return redirect(url_for('Entradas', nombre=session.get('nombre')))
 
-# Funcion para registrar las salidas de los productos
+# Función para registrar las salidas de los productos
 @app.route('/Salidas')
 def Salidas():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM salida_productos")
     salidas_data = cur.fetchall()
     cur.close()
-    return render_template('Salidas.html', salidas=salidas_data)
+    return render_template('Salidas.html', salidas=salidas_data, nombre=session.get('nombre'))
 
-# Funcion para registrar las novedades de los productos
-# Funcion para mostrar las novedades de entrada
+# Función para registrar las novedades de los productos
+# Función para mostrar las novedades de entrada
 @app.route('/Novedades')
 def Novedades():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT n.*, p.Cantidad AS Cantidad_Actual FROM Novedades n JOIN productos p ON n.Id_Producto = p.Id WHERE n.Tipo = 'Entrada'")
-    entradas_data = cur.fetchall()
-
-    cur.execute("SELECT * FROM Novedades WHERE Tipo = 'Salida'")
-    salidas_data = cur.fetchall()
-
+    Id_Producto = request.args.get('Id_Producto')
+    marca = request.args.get('Marca')
+    if Id_Producto:
+        cur = mysql.connection.cursor()
+        if marca:
+            cur.execute("""
+                SELECT n.*, p.Cantidad AS Cantidad_Actual 
+                FROM Novedades n 
+                JOIN productos p ON n.Id_Producto = p.Id 
+                WHERE p.Id = %s AND n.Marca = %s
+            """, (Id_Producto, marca))
+        else:
+            cur.execute("""
+                SELECT n.*, p.Cantidad AS Cantidad_Actual 
+                FROM Novedades n 
+                JOIN productos p ON n.Id_Producto = p.Id 
+                WHERE p.Id = %s
+            """, (Id_Producto,))
+    else:
+        cur = mysql.connection.cursor()
+        if marca:
+            cur.execute("""
+                SELECT n.*, p.Cantidad AS Cantidad_Actual 
+                FROM Novedades n 
+                JOIN productos p ON n.Id_Producto = p.Id 
+                WHERE n.Marca = %s
+            """, (marca,))
+        else:
+            cur.execute("""
+                SELECT n.*, p.Cantidad AS Cantidad_Actual 
+                FROM Novedades n 
+                JOIN productos p ON n.Id_Producto = p.Id
+            """)
+    novedades_data = cur.fetchall()
     cur.close()
-    
-    return render_template('Novedades.html', entradas=entradas_data, salidas=salidas_data)
 
-# Citas
-# Citas
+    # Obtener todas las marcas distintas de la tabla de novedades
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT DISTINCT Marca FROM Novedades")
+    marcas_data = cur.fetchall()
+    cur.close()
+
+    return render_template('Novedades.html', novedades=novedades_data, marcas=marcas_data, nombre=session.get('nombre'))
+
+
+# --------------------------------------------------------Registrar Citas
 @app.route('/Registrar_Cita', methods=["GET", "POST"])
 def Registrar_Cita():
-    cursor = mysql.connection.cursor()
-    cursor.close()
-    
     if request.method == "POST":
+        cliente_id = session.get('id')
+
+        # Verificar el límite de citas
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT num_citas FROM usuarios WHERE id = %s", (cliente_id,))
+        num_citas = cur.fetchone()['num_citas']
+        cur.close()
+
+        if num_citas >= 5:
+            flash("Has alcanzado el límite de 5 citas. Por favor, elimina una cita existente para agregar una nueva.")
+            return redirect(url_for('Citas'))
+        
+        # Procesar el formulario de cita
         nombre = request.form.get('nombre')
         servicio = request.form.get('servicio')
         empleado_nombre = request.form.get('empleados_nombre')
         fecha = request.form.get('Fecha')
         hora = request.form.get('Hora')
         motivo = request.form.get('motivo')
-        
-        # Obtener el ID del usuario logueado desde la sesión
-        session.get('id')
-        
+
+        # Verificar si la cita ya existe
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM citas WHERE empleado_nombre = %s AND hora  = %s",
+                    (empleado_nombre, hora))
+        existing_cita = cur.fetchone()
+        cur.close()
+
+        if existing_cita:
+            flash(f"Ya hay una cita programada para el empleado: {empleado_nombre} el dia: {fecha} a las: {hora} Por favor, elige otra hora.")
+            return redirect(url_for('Citas'))
+
+        # Insertar la cita en la base de datos
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO citas (nombre, servicio, empleado_nombre, fecha, hora, motivo, id_cliente) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-            (nombre, servicio, empleado_nombre, fecha, hora, motivo, session['id']))
+                    (nombre, servicio, empleado_nombre, fecha, hora, motivo, cliente_id))
+        mysql.connection.commit()
+
+        # Incrementar el número de citas del usuario en la base de datos
+        cur.execute("UPDATE usuarios SET num_citas = num_citas + 1 WHERE id = %s", (cliente_id,))
+        mysql.connection.commit()
+
+        # Obtener el correo electrónico del usuario
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT correo FROM usuarios WHERE id = %s", (cliente_id,))
+        user_email = cur.fetchone()['correo']
+        cur.close()
+
+        # Enviar correo electrónico
+        msg = Message('Nueva cita registrada', sender='dilanyarce22@gmail.com', recipients=[user_email])
+        msg.body = f"""\
+        Nueva cita registrada
+
+        Se ha registrado una nueva cita para: {nombre} el día: {fecha} a las: {hora} con el empleado: {empleado_nombre}. Motivo: {motivo}.
+        """
+        mail.send(msg)
+
+        flash("Cita agregada correctamente.")
+        return redirect(url_for('Citas'))
+
+    return render_template("Citas.html", nombre=session.get('nombre'))
+
+# ---------------------------------------------------Funcion pora eliminar cita
+@app.route('/eliminar_cita/<int:cita_id>', methods=["POST"])
+def eliminar_cita(cita_id):
+    if request.method == "POST":
+        try:
+            # Obtener el ID del cliente asociado con la cita
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT id_cliente FROM citas WHERE id_cita = %s", (cita_id,))
+            cliente_id = cur.fetchone()['id_cliente']
+            cur.close()
+
+            # Eliminar la cita de la base de datos
+            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM citas WHERE id_cita = %s", (cita_id,))
+            mysql.connection.commit()
+            cur.close()
+
+            # Decrementar el número de citas del cliente
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE usuarios SET num_citas = num_citas - 1 WHERE id = %s", (cliente_id,))
+            mysql.connection.commit()
+            cur.close()
+
+            flash("Cita eliminada correctamente.")
+        except Exception as e:
+            flash("Error al eliminar la cita: " + str(e))
+
+    return redirect(url_for('Citas'))
+
+# -----------------------------------------Funcion para pedir el correo para el restablecimiento de contraseña
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    error = None
+    if request.method == 'POST':
+        user_email = request.form['txtCorreo']
+            
+        session['reset_email'] = user_email
+        send_reset_email(user_email)
+        return redirect(url_for('login'))
+    return render_template('forgot.html', error=error)
+
+# -----------------------Función para enviar el correo electrónico con el enlace de restablecimiento de contraseña
+def send_reset_email(user_email):
+    reset_link = url_for('newpassword', _external=True)
+    msg = Message('Recuperación de contraseña', sender='dilanyarce22@gmail.com', recipients=[user_email])
+    msg.body = f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_link}'
+    mail.send(msg)
+
+# -----------------------------------------------------Ruta para restablecer la contraseña
+@app.route('/newpassword', methods=['GET', 'POST'])
+def newpassword():
+    error = None
+    if request.method == 'POST':
+        if request.form['newpass'] != request.form['conpass']:
+            error = 'Las contraseñas no coinciden..!!'
+        else:
+            user_email = session.get('reset_email')
+            new_password = request.form['newpass']
+            if update_password_in_database(user_email, new_password):
+                session.pop('reset_email', None)
+                return redirect(url_for('login'))
+            else:
+                error = 'Error al actualizar la contraseña. Por favor, inténtalo de nuevo.'
+    return render_template('newpassword.html', error=error)
+
+#---------------------------------------- Función para actualizar la contraseña en la base de datos
+def update_password_in_database(user_email, new_password):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE usuarios SET password = %s WHERE correo = %s", (new_password, user_email))
+        mysql.connection.commit()
+        cur.close()
+        return True
+    except Exception as e:
+        print("Error al actualizar la contraseña:", e)
+        return False
+    
+#------------------------------------------------------------------ Actualizar cuenta
+@app.route('/actualizar-cuenta', methods=['GET', 'POST'])
+def actualizar_cuenta():
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        nuevo_nombre = request.form['txtNombre']
+        nuevo_apellido = request.form['txtApellido']
+        nuevo_correo = request.form['txtCorreo']
+        nuevo_telefono = request.form['txtTelefono']
+        nueva_contrasena = request.form['txtPassword']
+        confirmar_contrasena = request.form['txtConfirmPassword']
+
+        # Validar que las contraseñas coincidan
+        if nueva_contrasena != confirmar_contrasena:
+            flash('Las contraseñas no coinciden. Inténtalo de nuevo.', 'error')
+            return redirect(url_for('actualizar_cuenta'))
+
+        # Actualizar los datos en la base de datos
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE usuarios SET nombre = %s, apellido = %s, correo = %s, telefono = %s, password = %s WHERE id = %s",
+                    (nuevo_nombre, nuevo_apellido, nuevo_correo, nuevo_telefono, nueva_contrasena, session['id']))
         mysql.connection.commit()
         cur.close()
 
-        return redirect(url_for('Citas'))
+        # flash('Información de la cuenta actualizada correctamente.', 'success')
+        return redirect(url_for('actualizar_cuenta'))
 
-    return render_template("Citas.html")
+    # Obtener los datos actuales del usuario
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios WHERE id = %s", (session['id'],))
+    usuario = cur.fetchone()
+    cur.close()
 
+    return render_template('Cambiar_perfil.html', usuario=usuario)
+
+# ---------------------------------------------------- Catalogo
+@app.route('/Home_Catalogo')
+def Home_Catalogo():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT *, IFNULL((SELECT SUM(quantity) FROM product WHERE id = product.id), 0) AS quantity FROM product WHERE active = 1")
+    products = cur.fetchall()
+    cur.close()
+    return render_template('home.html', products=products)
+
+
+@app.route('/add_to_cart/<int:id>', methods=['POST'])
+def add_to_cart(id):
+    product_id = id
+    quantity = int(request.form.get('quantity', 1))  # Obtener la cantidad del formulario
+
+    # Verificar si 'cart' ya está en la sesión
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    # Verificar si el producto ya está en el carrito
+    if str(product_id) in session['cart']:
+        # Si el producto ya está en el carrito, aumentar la cantidad
+        session['cart'][str(product_id)] += quantity
+    else:
+        # Si el producto no está en el carrito, agregarlo con la cantidad especificada
+        session['cart'][str(product_id)] = quantity
+
+    # Mostrar un mensaje de éxito
+    # flash('Producto añadido al carrito exitosamente', 'success')
+
+    # Redirigir de vuelta a la página de inicio
+    return redirect(url_for('Home_Catalogo'))
+
+
+@app.route('/cart')
+def cart():
+    if 'cart' not in session or len(session['cart']) == 0:
+        # flash('No hay productos en el carrito', 'info')
+        return redirect(url_for('Home_Catalogo'))
+    
+    cart_items = []
+    total_price = 0
+    
+    cur = mysql.connection.cursor()
+    for product_id, quantity in session['cart'].items():
+        cur.execute("SELECT * FROM product WHERE id = %s", (int(product_id),))
+        product = cur.fetchone()
+        if product:
+            cart_items.append({'product': product, 'quantity': quantity})
+            total_price += product['price'] * quantity
+    cur.close()
+
+    return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
+@app.route('/remove_from_cart/<int:id>', methods=['POST'])
+def remove_from_cart(id):
+    product_id = id
+    if 'cart' in session and str(product_id) in session['cart']:
+        session['cart'].pop(str(product_id))
+        flash('Producto removido del carrito exitosamente', 'success')
+    else:
+        flash('El producto no está en el carrito', 'danger')
+    return redirect(url_for('cart'))
+
+# ---------------------- crear productos
+
+@app.route('/products', methods=['GET', 'POST'])
+def create_product():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        quantity = request.form.get('quantity') 
+
+        # Save the image on the server
+        image = request.files['image']
+        filename = secure_filename(image.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image.save(image_path)
+
+        # Create the product in the database
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO product (title, description, price, image_path, quantity) VALUES (%s, %s, %s, %s, %s)", (title, description, price, image_path, quantity))
+        mysql.connection.commit()
+        cur.close()
+
+        # flash('Producto creado exitosamente', 'success')
+        return redirect(url_for('Home_Catalogo'))
+    return render_template('create_product.html')
+
+
+# --------------------- borrar productos
+
+@app.route('/products/delete/<int:id>', methods=['GET', 'POST'])
+def delete_product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM product WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    # flash('Producto eliminado exitosamente', 'success')
+    return redirect(url_for('Home_Catalogo'))
+
+# ---------------------------- actualizar producto
+
+@app.route('/products/update/<int:id>', methods=['GET', 'POST'])
+def update_product(id):
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        quantity = request.form.get('quantity') 
+        image = request.files['image']
+        if image:
+            filename = secure_filename(image.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image.save(image_path)
+        else:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT image_path FROM product WHERE id = %s", (id,))
+            image_path = cur.fetchone()['image_path']
+            cur.close()
+
+        # Update the product in the database
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE product SET title = %s, description = %s, price = %s, image_path = %s, quantity = %s WHERE id = %s", (title, description, price, image_path, quantity, id))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Producto actualizado exitosamente', 'success')
+        return redirect(url_for('Home_Catalogo'))
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM product WHERE id = %s", (id,))
+    product = cur.fetchone()
+    cur.close()
+    return render_template('update_product.html', product=product)
+
+# ---------------------- boton de activar o descativar
+
+@app.route('/products/activate/<int:id>', methods=['GET', 'POST'])
+def activate_product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE product SET active = 1 WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Producto activado exitosamente', 'success')
+    return redirect(url_for('Home_Catalogo'))
+
+@app.route('/products/deactivate/<int:id>', methods=['GET', 'POST'])
+def deactivate_product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE product SET active = 0 WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Producto desactivado exitosamente', 'success')
+    return redirect(url_for('Home_Catalogo'))
+
+# ------------ producto
+
+@app.route('/product_actions')
+def product_actions():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM product")
+    products = cur.fetchall()
+    cur.close()
+    return render_template('product_actions.html', products=products)
 
 if __name__ == "__main__":
     app.run(debug=True)

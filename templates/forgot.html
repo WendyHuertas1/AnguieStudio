@@ -1,3 +1,4 @@
+
 <html lang="en">
 
 <head>
@@ -12,47 +13,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="static/css/css/sb-admin.css" rel="stylesheet">
-    <link href="static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link rel="icon" href="../static/IMG/Uñas-icono.png">
-</head>
-<body class="bg-dark">
-<div class="container">
-    <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Reset Password</div>
-        <div class="card-body">
-            <div class="text-center mt-4 mb-5">
-                <h4>Forgot your password?</h4>
-                <p>Enter your Username and we will guide you on how to reset your password.</p>
-            </div>
-            <form action="" method="post">
-                <div class="form-group">
-                    <input class="form-control" name="txtCorreo" required="required" id="exampleInputEmail1" type="email"
-                        aria-describedby="emailHelp" value="{{request.form.txtCorreo }}" placeholder="Correo electronico">
-                </div>
-                <br>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-block" name="submit" value="Reset Password">
-                </div>
-            </form>
-            {% if error %}
-            <div class="form-group">
-                <div class="alert alert-danger bg-danger"><h3 class="blink_text">No Record Found</h3></div>
-            </div>
-            {% endif %}
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/css/sb-admin.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='IMG/Uñas-icono.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap5.css') }}">
 
-            <div class="text-center">
-                <a class="d-block small" href="{{ url_for ('login') }}">Back to Login</a>
-            </div>
+</head>
+<body id="Forgot" class="forgot">
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <img src="{{url_for('static', filename='IMG/forgot.svg')}}" alt="Main IMG" class="img-fluid">
         </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 pt-5">
+                <h1>¿Olvidaste <br> tu contraseña?</h1>
+                <p>Ingresa tu correo registrado para seguir con tu cambio de contraseña</p>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <input name="txtCorreo" required="required" id="exampleInputEmail1" type="email"
+                            aria-describedby="emailHelp" value="{{request.form.txtCorreo }}" placeholder="Correo electronico" class="form-control main-input mt-5">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div>
+                            <input type="submit" class=" botin  btn-sz-primary" name="submit" value="Enviar Correo">
+                        </div>    
+                    </div>
+                </form>
+                {% if error %}
+                <div class="form-group">
+                    <div class="alert alert-danger bg-danger"><h3 class="blink_text">No encontrado</h3></div>
+                </div>
+                {% endif %}
+    
+                <div class="col-6 pt-5">
+                    <a class="d-block small" href="{{ url_for('login') }}">Volver al login</a>
+                </div>
+            </div>
+            </div>
+            
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript-->
-<script src="static/vendor/jquery/jquery.min.js"></script>
-<script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Core plugin JavaScript-->
-<script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 </body>
 </html>
