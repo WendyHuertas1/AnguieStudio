@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Orden Procesada{% endblock %}
+{% block content %}
+<div>
+    <h1>Orden Procesada</h1>
+    <p>Detalles del cliente:</p>
+    <ul>
+        <li><strong>Nombre:</strong> {{ nombre }}</li>
+        <li><strong>Apellidos:</strong> {{ apellidos }}</li>
+        <li><strong>Dirección:</strong> {{ direccion }}</li>
+        <li><strong>Teléfono:</strong> {{ telefono }}</li>
+        <li><strong>Correo:</strong> {{ correo }}</li>
+    </ul>
+    <p>Detalles del carrito:</p>
+    <ul>
+        {% for item in cart_items %}
+        <li>
+            <strong>Nombre del producto:</strong> {{ item['title'] }}<br>
+            <strong>Precio del producto:</strong> ${{ item['price'] }}<br>
+            <strong>Cantidad:</strong> {{ item['quantity'] }}<br>
+            <strong>Precio Total:</strong> ${{ item['total'] }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Modifica el formulario para que envíe una solicitud para limpiar el carrito -->
+    <form action="{{ url_for('limpiar_carrito') }}" method="POST">
+        <button type="submit" class="btn btn-primary">Volver al catálogo</button>
+    </form>
+</div>
+{% endblock %}

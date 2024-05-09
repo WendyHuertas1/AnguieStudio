@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Citas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye la librería de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Incluye los estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">   
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <title>Citas</title>
 </head>
-<body id="Citas">
-    <div class="contenedor">
+<body id="Empleado">
+    <div class="citasas">
+    <div class="content">
+        <div class="contenedor">
             <div class="contariner1">
                 <div class="sidebar1">
                     <div class="menu1-boton">
@@ -48,7 +58,7 @@
                                 <li>
                                     <a href="#">
                                         <i class="iconoos bi bi-box2"></i>
-                                            <span class="textoos">Inventario</span>
+                                            <span class="textoos">inventario</span>
                                         <i class="flecha bi bi-caret-down"></i>
                                     </a>
                                     <ul class="sub-menu1">
@@ -72,7 +82,7 @@
                                                 <span class="textoos">Ver novedades</span>
                                             </a>
                                         </li>
-                                        
+                                
                                     </ul>
                                 </li>
                                 <li>
@@ -113,388 +123,453 @@
                             <li >
                     </div>
                 </div>
-            </div> 
-        </nav>
-        
-        <main class="container mt-4">
-            <br>
-            <section>
-                {% if session['id_rol'] == 1 %}
-                    <h2>Lista de citas</h2>
-                {% else %}
-                    <h2>Lista de sus citas</h2>
-                {% endif %}
-            </section>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre cliente</th>
-                        <th scope="col">Servicio</th>
-                        <th scope="col">Empleado</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Motivo</th>
-                        {% if session['id_rol'] != 2 %}
-                        <th scope="col">Eliminar</th>
-                        {% endif %}
-                        {% if session['id_rol'] == 1 or session['id_rol'] == 2 %}
-                        <th scope="col">Editar</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cita in citas %}
-                    <tr>
-                        <td>{{ cita['nombre'] }}</td>
-                        <td>{{ cita['servicio'] }}</td>
-                        <td>{{ cita['empleado_nombre'] }}</td>
-                        <td>{{ cita['fecha'] }}</td>
-                        <td>{{ cita['hora'] }}</td>
-                        <td>{{ cita['motivo'] }}</td>
+            </div>
+        <div class="demo-html">
+            <section id="Modulos-cita">
+                <div class="modulosos">
+                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="main--content">
+                            <div class="cabecera">
+                                <div class="cabecera-titulo">
+                                    {% if session['id_rol'] == 1 %}
+                                    <h1>LISTA DE CITAS</h1>
+                                    {% else %}
+                                    <h1>LISTA DE SUS CITAS</h1>
+                                    {% endif %}
+                                </div>
+                                <div class="icono-usuario">
+                                    <div class="iconosisi pl-sm-4 pl-2">
+                                        <i class="iconososo bi bi-envelope"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            
 
-                        {% if session['id_rol'] == 1 %}
-                        <td>
-                            <button onclick="confirmarEliminar('{{ cita['id_cita'] }}')" class="btn btn-danger btn-sm">
-                                <box-icon name='trash-alt'></box-icon>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ cita['id_cita'] }}">
-                                <box-icon name='edit-alt' style="margin-right: 5px;"></box-icon>
-                            </button>
-                        </td>
-                        {% endif %}
-                        {% if session['id_rol'] == 2 %}
-                        <td>
-                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ cita['id_cita'] }}">
-                                <box-icon name='edit-alt' style="margin-right: 5px;"></box-icon>
-                            </button>
-                        </td>
-                        {% endif %}
-                    </tr>
-                    <div id="modaledit{{ cita['id_cita'] }}" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Citas</h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownOpciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Opciones
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownOpciones">
+                                        {% if session['id_rol'] == 1 %}
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalListaServicios">Ver lista de servicios</a>
+                                        {% endif %}
+                                        {% if session['id_rol'] == 1 %}
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalAgregarServicio">Agregar nuevo servicio</a>
+                                        {% endif %}
+                                        {% if session['id_rol'] != 2 %}
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Agregar nueva cita</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cedula</th>
+                                <th scope="col">Nombre cliente</th>
+                                <th scope="col">Servicio - Precio</th>
+                                <th scope="col">Empleado</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">Motivo</th>
+                                {% if session['id_rol'] != 2 %}
+                                <th scope="col">Eliminar</th>
+                                {% endif %}
+                                {% if session['id_rol'] == 1 or session['id_rol'] == 2 %}
+                                <th scope="col">Editar</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas %}
+                            <tr>
+                                <td>{{ cita['cedula'] }}</td>
+                                <td>{{ cita['nombre'] }}</td>
+                                <td>{{ cita['servicio'] }} - {{ cita['precio_formateado'] }}</td>
+                                <td>{{ cita['empleado_nombre'] }}</td>
+                                <td>{{ cita['fecha'] }}</td>
+                                <td>{{ cita['hora'] }}</td>
+                                <td>{{ cita['motivo'] }}</td>
+                                {% if session['id_rol'] != 2 %}
+                                <td>
+                                    <button onclick="confirmarEliminar('{{ cita['id_cita'] }}')" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></button>
+                                </td>
+                                {% endif %}
+                                {% if session['id_rol'] == 1 or session['id_rol'] == 2 %}
+                                <td>
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ cita['id_cita'] }}"> <i class="bi bi-nut"></i></i></button>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            <div id="modaledit{{ cita['id_cita'] }}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-primary" style="align-content: center;">Detalles de la cita para editar</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% if session['id_rol'] == 2 %}
+                                                <form action="{{ url_for('actualizar_cita_fecha_hora')}}" method="POST">
+                                                    <input type="hidden" name="id_cita" value="{{ cita['id_cita'] }}">
+                                                    <div class="form-group">
+                                                        <label for="fecha">Fecha:</label>
+                                                        <input value="{{ cita['fecha'] }}" type="date" name="fecha" class="form-control" id="fecha">
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label for="hora">Hora:</label>
+                                                        <select name="hora" class="form-control" id="hora" required>
+                                                            <option value="" selected>Seleccione la hora para la cita</option>
+                                                            {% for hora in horas %}
+                                                                <option value="{{ hora }}">{{ hora }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                    <button type="submit" class="btn btn-dark">Actualizar</button>
+                                                </form>
+                                            {% else %}
+                                            <form action="{{ url_for('Citas') }}" method="POST">
+                                                <input type="hidden" name="id_cita" value="{{ cita['id_cita'] }}">
+                                                    <div class="form-group">
+                                                        <label for="nombre">Nombre:</label>
+                                                        <input value="{{ cita['nombre'] }}" type="text" name="nombre" class="form-control" required>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label for="cedula">Cedula:</label>
+                                                        <input value="{{ cita['cedula'] }}" type="text" name="cedula" class="form-control" required>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label>Servicio:</label>
+                                                        <select name="servicio" class="form-control" id="servicio" required>
+                                                            <option value="" selected>Selecciona el servicio</option>
+                                                            {% for servicio, precio in nombres_y_precios_servicios %}
+                                                                <option value="{{ servicio }}">{{ servicio }} - Precio: {{ precio }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label>Empleado:</label>
+                                                        <select name="empleado_nombre" class="form-control" id="empleado_nombre" required>
+                                                            <option value="" selected>Selecciona el empleado</option>
+                                                            {% for empleado in empleados_servicios %}
+                                                                <option value="{{ empleado }}">{{ empleado }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label for="Fecha">Fecha:</label>
+                                                        <input value="{{ cita['fecha'] }}" type="date" name="Fecha" class="form-control" id="Fecha">
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label for="Hora">Hora:</label>
+                                                        <select name="Hora" class="form-control" id="Hora" required>
+                                                            <option value="" selected>Seleccione la hora para la cita</option>
+                                                            {% for hora in horas %}
+                                                                <option value="{{ hora }}">{{ hora }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label>Motivo:</label>
+                                                        <input value="{{ cita['motivo'] }}" type="text" name="motivo" class="form-control">
+                                                    </div>
+                                                    <br>
+                                                {% endif %}
+                                                <button type="submit" class="btn btn-success">Actualizar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="modal fade" id="modalListaServicios" tabindex="-1" role="dialog" aria-labelledby="modalListaServiciosLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title text-primary" style="align-content: center;">Detalles de la cita para editar</h5>
+                                    <div class="text-center w-100">
+                                    <h5 class="tytu modal-title" id="modalListaServiciosLabel">Lista de Servicios</h5>
+                                </div>
                                 </div>
                                 <div class="modal-body">
-                                    {% if session['id_rol'] == 2 %}
-                                        <form action="{{ url_for('actualizar_cita_fecha_hora')}}" method="POST">
-                                            <input type="hidden" name="id_cita" value="{{ cita['id_cita'] }}">
-                                            <div class="form-group">
-                                                <label for="fecha">Fecha:</label>
-                                                <input value="{{ cita['fecha'] }}" type="date" name="fecha" class="form-control" id="fecha">
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="hora">Hora:</label>
-                                                <select name="hora" class="form-control" id="hora" required>
-                                                    <option value="" selected>Seleccione la hora para la cita</option>
-                                                    {% for hora in horas %}
-                                                        <option value="{{ hora }}">{{ hora }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <button type="submit" class="btn btn-dark">Actualizar</button>
-                                        </form>
-                                    {% else %}
-                                    <form action="{{ url_for('Citas') }}" method="POST">
-                                        <input type="hidden" name="id_cita" value="{{ cita['id_cita'] }}">
-                                            <div class="form-group">
-                                                <label for="nombre">Nombre:</label>
-                                                <input value="{{ cita['nombre'] }}" type="text" name="nombre" class="form-control">
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label>Servicio:</label>
-                                                <select name="servicio" class="form-control" id="servicio" required>
-                                                    <option value="" selected>Selecciona el servicio</option>
-                                                    {% for servicio in nombres_servicios %}
-                                                        <option value="{{ servicio }}">{{ servicio }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label>Empleado:</label>
-                                                <select name="empleado_nombre" class="form-control" id="empleado_nombre" required>
-                                                    <option value="" selected>Selecciona el empleado</option>
-                                                    {% for empleado in empleados_servicios %}
-                                                        <option value="{{ empleado }}">{{ empleado }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="Fecha">Fecha:</label>
-                                                <input value="{{ cita['fecha'] }}" type="date" name="Fecha" class="form-control" id="Fecha">
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="Hora">Hora:</label>
-                                                <select name="Hora" class="form-control" id="Hora" required>
-                                                    <option value="" selected>Seleccione la hora para la cita</option>
-                                                    {% for hora in horas %}
-                                                        <option value="{{ hora }}">{{ hora }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label>Motivo:</label>
-                                                <input value="{{ cita['motivo'] }}" type="text" name="motivo" class="form-control">
-                                            </div>
-                                            <br>
-                                        {% endif %}
-                                        <button type="submit" class="btn btn-success">Actualizar</button>
+                                    <ul>
+                                        <!-- Modifica el bucle para mostrar tanto el nombre como el precio de cada servicio -->
+                                        {% for servicio, precio in nombres_y_precios_servicios %}
+                                            <li>{{ servicio }} - Precio: {{ precio }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="botoncito text-center w-100"">
+                                    <button type="button" class="bete btn btn-success" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modalAgregarServicio" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="text-center w-100">
+                                    <h5 class="modal-title">Agregar nuevo servicio</h5>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('agregar_servicio') }}" method="POST">
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-6">
+                                            <label for="nombre_servicio">Nombre del Servicio:</label>
+                                            <input type="text" name="nombre_servicio" class="form-control" id="nombre_servicio" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="Precio_servicio">Precio del Servicio:</label>
+                                            <input type="text" name="Precio_servicio" class="form-control" id="Precio_servicio" required>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="empleados_nombre">Empleado:</label>
+                                            <select name="empleados_nombre" class="form-control" id="empleados_nombre" required>
+                                                <option value="">Seleccione un empleado</option>
+                                                {% for empleado in empleados_servicios %}
+                                                    <option value="{{ empleado }}">{{ empleado }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <div class="botoncito text-center w-100"">
+                                        <button type="submit" class="bete btn btn-primary">Agregar</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
                     {% endfor %}
-                </tbody>
-            </table>
-
-            {% if session['id_rol'] == 1 %}
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalListaServicios">
-                    Ver lista de servicios
-                </button>
-            {% endif %}
-
-            <div class="modal fade" id="modalListaServicios" tabindex="-1" role="dialog" aria-labelledby="modalListaServiciosLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="modalListaServiciosLabel">Lista de Servicios</h5>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-
-                    <ul>
-                        {% for servicio in lista_servicios %}
-                        <li>{{ servicio }}</li>
-                        {% endfor %}
-                    </ul>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <br>
-            <br>
-            {% if session['id_rol'] == 1 %}
-                <section>
-                    <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalAgregarServicio">Agregar nuevo servicio</a>
-                </section>
-            {% endif %}
-            <div id="modalAgregarServicio" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Agregar nuevo servicio</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ url_for('agregar_servicio') }}" method="POST">
-                                <div class="form-group">
-                                    <label for="nombre_servicio">Nombre del Servicio:</label>
-                                    <input type="text" name="nombre_servicio" class="form-control" id="nombre_servicio" required>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="empleados_nombre">Empleado:</label>
-                                    <select name="empleados_nombre" class="form-control" id="empleados_nombre" required>
-                                        <option value="">Seleccione un empleado</option>
-                                        {% for empleado in empleados_servicios %}
-                                            <option value="{{ empleado }}">{{ empleado }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Agregar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            {% if session['id_rol'] != 2 %}
-            <section>
-                <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Agregar nueva cita</a>
-            </section>
-            {% endif %}
-
-            <!-- Resto del contenido de la página -->
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success alert-dismissable" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-            <br>
-            <!-- Modal para agregar producto -->
+                    {% endif %}
+                    {% endwith %}
+                <!-- Modal para agregar producto -->
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <div class="text-center w-100"> 
                             {% if session['id_rol'] == 2 %}
                                 {% else %}
-                                <h5 class="modal-title text-primary">Ingresa una nueva cita</h5> 
+                                <h5 class="tytu modal-title text-primary">Ingresa una nueva cita</h5> 
                             {% endif %}
+                            </div>
                         </div>
                         <div class="modal-body">
                             <form action="{{ url_for('Registrar_Cita') }}" method="POST">
-                                <div class="form-group">
+                            <div class="row py-2">
+                                <div class="form-group col-md-6">
                                     <label for="nombre">Nombre:</label>
-                                    <input type="text" name="nombre" class="form-control" id="nombre" required value="{{ nombre }}">
+                                    <input title="Ingresa el nombre" type="text" name="nombre" class="form-control" id="nombre" required value="{{ nombre }}">
                                 </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="Servicio">Servicio:</label>
-                                    <select name="servicio" class="form-select" required>
+                                <div class="form-group col-md-6">
+                                    <label for="cedula">Cedula:</label>
+                                    <input title="cedula" type="text" name="cedula" class="form-control" id="cedula" value="{{ cedula }}" required>
+                                </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="form-group col-md-6">
+                                    <label>Servicio:</label>
+                                    <select name="servicio" class="form-control" id="servicio" required>
                                         <option value="" selected>Selecciona el servicio</option>
-                                        {% for servicio in nombres_servicios %}
-                                            <option value="{{ servicio }}">{{ servicio }}</option>
+                                        {% for servicio, precio in nombres_y_precios_servicios %}
+                                            <option value="{{ servicio }}">{{ servicio }} - Precio: {{ precio }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <br>
-                                <div class="form-group">
+                                <div class="form-group col-md-6">
                                     <label for="empleados_nombre">Empleado:</label>
-                                    <select name="empleados_nombre" class="form-control" id="empleados_nombre" required>
+                                    <select title="Nombre del empleado" name="empleados_nombre" class="form-control" id="empleados_nombre" required>
                                         <option value="">Seleccione un empleado</option>
                                         {% for empleado in empleados_servicios %}
                                             <option value="{{ empleado }}">{{ empleado }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <br>
-                                <div class="form-group">
+                            </div>
+                            
+                            <div class="row py-2">
+                                <div class="form-group col-md-6">
                                     <label for="Fecha">Fecha:</label>
-                                    <input type="date" name="Fecha" class="form-control" id="Fecha" required>
+                                    <input title="Fecha" type="date" name="Fecha" class="form-control" id="Fecha" required>
                                 </div>
-                                <br>
-                                <div class="form-group">
+                                <div class="form-group col-md-6">
                                     <label for="Hora">Hora:</label>
-                                    <select name="Hora" class="form-control" id="Hora" required>
+                                    <select title="Hora" name="Hora" class="form-control" id="Hora" required>
                                         <option value="" selected>Seleccione la hora para la cita</option>
                                         {% for hora in horas %}
                                             <option value="{{ hora }}">{{ hora }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <br>
-                                <div class="form-group">
+                            </div>
+                            <div class="row py-2">
+                                <div class="form-group col-md-12">
+                                    <div class="text-center w-100"> <div>
                                     <label for="Motivo">Motivo:</label>
-                                    <textarea name="motivo" required></textarea><br>
+                                    </div>
+                                    </div>
+                                <div class="form-group col-md-12">
+                                    <div class="text-center w-100"> 
+                                    <textarea class="textito" title="Motivo de la cita" name="motivo" required></textarea>
+                                    </div>
                                 </div>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Agendar</button>
+                            </div>
+                                <div class="botoncito text-center w-100""> 
+                                <button type="submit" class="bete btn btn-primary" title="Agendar">Agendar</button>
+                                </div>
+                            </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>  
-        </main>
+            </div>
+        </div>
+        </div>
+    </section>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmarEliminar(id) {
+        if (confirm("¿Estás seguro de que quieres eliminar esta cita?")) {
+            eliminarCita(id);
+        } else {
+            console.log("Eliminación cancelada por el usuario.");
+        }
+    }
 
-        <script>
-            // Funcion para eliminar la cita agendada 
-            function confirmarEliminar(id) {
-                if (confirm("¿Estás seguro de que quieres eliminar esta cita?")) {
-                    eliminarCita(id);
-                } else {
-                    console.log("Eliminación cancelada por el usuario.");
+    function eliminarCita(id) {
+        fetch(`/eliminar_cita/${id}`, {
+            method: 'POST' 
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                console.error('Error al eliminar la cita.');
+            }
+        })
+        .catch(error => {
+            console.error('Error de red:', error);
+        });
+    }
+</script>
+<script>
+    $(".menu1 > ul > li").click(function(e){
+        //quitar el active para los que ya estan activos
+        $(this).siblings().removeClass("activeos")
+        //poner el active al darle clic
+            $(this).toggleClass("activeos");
+        //para abrir sub-menu
+            $(this).find("ul").slideToggle();
+        //cerrar submenu en caso de haber dos
+            $(this).siblings().find("ul").slideup();
+        //remover el active de los submenus
+            $(this).siblings().find("ul").find("li").removeClass("activeos");
+                    // ajustar el ancho del container1 cuando está activo
+    });
+
+    $(".menu1-boton").click(function () {
+        $(".sidebar1").toggleClass("activeos");
+    });
+</script>
+
+
+<script>
+    function formatearPrecio(precio) {
+        // Formatear el precio con el símbolo de la moneda y comas para separar los miles
+        return '$' + parseFloat(precio).toLocaleString();
+    }
+
+    // Llamar a esta función cuando cambie la selección del servicio
+    document.getElementById('servicio').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var precio = selectedOption.value.split(' - ')[1];
+        document.getElementById('precio_servicio').innerText = 'Precio: ' + formatearPrecio(precio);
+    });
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
                 }
             }
-        
-            function eliminarCita(id) {
-                fetch(`/eliminar_cita/${id}`, {
-                    method: 'POST'
-                })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        console.error('Error al eliminar la cita.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error de red:', error);
-                });
-            }
-        </script>
-        
-        <script>
-            $(".menu1 > ul > li").click(function(e){
-                //quitar el active para los que ya estan activos
-                $(this).siblings().removeClass("activeos")
-                //poner el active al darle clic
-                    $(this).toggleClass("activeos");
-                //para abrir sub-menu
-                    $(this).find("ul").slideToggle();
-                //cerrar submenu en caso de haber dos
-                    $(this).siblings().find("ul").slideup();
-                //remover el active de los submenus
-                    $(this).siblings().find("ul").find("li").removeClass("activeos");
-                            // ajustar el ancho del container1 cuando está activo
-            });
-        
-            $(".menu1-boton").click(function () {
-                $(".sidebar1").toggleClass("activeos");
-            });
-        </script>
+        });
+    });
+</script>
 
-        <script>
-            var inputFecha = document.getElementById('Fecha');
 
-            function deshabilitarSabadosDomingos(event) {
-                var fechaSeleccionada = new Date(event.target.value);
-                var diaSemana = fechaSeleccionada.getDay();
-                if (diaSemana === 5 || diaSemana === 6) { // 6 = sábado, 0 = domingo
-                    mostrarModal('Lo siento no trabajamos los sabados ni domingos, elije otro dia gracias.');
-                    event.target.value = ''; 
-                }
-            }
-            inputFecha.addEventListener('change', deshabilitarSabadosDomingos);
 
-            function mostrarModal(mensaje) {
-                var modalHtml = `
-                    <div class="texto1"></div>
-                    <div class="texto2 modal-bold">
-                        <p>${mensaje}</p>
-                        <button onclick="cerrarModal()">Cerrar</button>
-                    </div>
-                `;
-                document.body.insertAdjacentHTML('afterbegin', modalHtml); 
-            }
-            
-            // Función para cerrar el modal
-            function cerrarModal() {
-                var modalBackdrop = document.querySelector('.texto1');
-                var modalContent = document.querySelector('.texto2');
-                if (modalBackdrop && modalContent) {
-                    modalBackdrop.parentNode.removeChild(modalBackdrop);
-                    modalContent.parentNode.removeChild(modalContent);
-                }
-            }
-        </script>
-        
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </body>
 </html>

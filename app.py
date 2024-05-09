@@ -1,12 +1,12 @@
-
 from flask import Flask, render_template, request, url_for, flash, session, redirect, jsonify, send_from_directory
-
 
 from flask_mysqldb import MySQL
 from flask_mail import Mail
 from flask_mail import Message
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from flask import url_for, current_app
+from flask import current_app
 import os
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'AngieStudio'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['UPLOAD_FOLDER'] = 'static/img'
+app.config['UPLOAD_FOLDER'] = 'static/IMG'
 
 # Configuracion para enviar correos
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -113,16 +113,16 @@ def Citas():
     if request.method == 'POST':
         id_cita = request.form['id_cita']
         nombre = request.form['nombre']
+        cedula = request.form['cedula']
         servicio = request.form['servicio']
         empleado_nombre = request.form['empleado_nombre']
         fecha = request.form['Fecha']
         hora = request.form['Hora'] 
         motivo = request.form['motivo']
-        
-        
+    
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE citas SET nombre=%s, servicio=%s, empleado_nombre=%s, fecha=%s, hora=%s, motivo=%s WHERE id_cita=%s", 
-                    (nombre, servicio,  empleado_nombre,  fecha, hora, motivo, id_cita)) 
+        cur.execute("UPDATE citas SET nombre=%s, cedula=%s, servicio=%s, empleado_nombre=%s, fecha=%s, hora=%s, motivo=%s WHERE id_cita=%s", 
+                    (nombre, cedula, servicio,  empleado_nombre,  fecha, hora, motivo, id_cita)) 
         mysql.connection.commit()
         cur.close()
         
@@ -151,10 +151,10 @@ def Citas():
     citas = cursor.fetchall()
 
     # Consulta para obtener nombres de servicios
-    cursor.execute("SELECT nombre FROM servicios")
+    cursor.execute("SELECT nombre, FORMAT(precio, 2, 'es_CL') AS precio_formateado FROM servicios")
     servicios = cursor.fetchall()
-    nombres_servicios = [servicio['nombre'] for servicio in servicios]
-
+    nombres_y_precios_servicios = [(servicio['nombre'], servicio['precio_formateado']) for servicio in servicios]
+    
     # Consulta para obtener nombres de empleados
     cursor.execute("SELECT nombre FROM usuarios WHERE id_rol = 2")
     empleados = cursor.fetchall()
@@ -162,6 +162,7 @@ def Citas():
     
     cursor.close()
 
+    # Formato de horas par el campo de agendamiento de citas por parte de los clientes, empleados y administradores
     horas = []
     for i in range(8, 12): 
         hora_am = str(i).zfill(2) + ':00 am'
@@ -174,7 +175,7 @@ def Citas():
             hora_pm = str(i - 12).zfill(2) + ':00 pm'  
         horas.append(hora_pm)
         
-    return render_template("Citas.html", nombres_servicios=nombres_servicios, empleados_servicios=empleados_servicios, citas=citas, nombre=session.get('nombre'), lista_servicios=nombres_servicios, horas=horas)
+    return render_template("Citas.html",  nombres_y_precios_servicios= nombres_y_precios_servicios, empleados_servicios=empleados_servicios, citas=citas, nombre=session.get('nombre'), lista_servicios= nombres_y_precios_servicios, horas=horas)
 
 @app.route('/actualizar_cita_fecha_hora', methods=['POST'])
 def actualizar_cita_fecha_hora():
@@ -355,7 +356,7 @@ def Delete_Empleado(id):
     return render_template('Registrar_Empleado.html', nombre=session.get('nombre'))
 
 # Función para actualizar un producto
-@app.route('/update', methods=['POST', 'GET'])
+@app.route('/update', methods=['POST'])
 def update():
     if request.method == 'POST':
         Id = request.form['Id']
@@ -365,13 +366,28 @@ def update():
         Marca = request.form['Marca']
         Precio = request.form['precio']
         Descripcion = request.form['Descripcion']
+        Imagen = request.files['Imagen']
         Fecha_vencimiento = request.form['Fecha_vencimiento']
+
         try:
             cur = mysql.connection.cursor()
+
+            # Verifica si se ha subido una nueva imagen
+            if Imagen.filename != '':
+                # Obtener nombre de archivo seguro
+                nombre_archivo = secure_filename(Imagen.filename)
+                # Mueve la imagen a una ubicación segura en el servidor
+                ruta_imagen = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo)
+                Imagen.save(ruta_imagen)
+            else:
+                # Si no se ha subido una nueva imagen, conserva la existente
+                ruta_imagen = request.form['Imagen_actual']
+
+            # Actualiza la fila en la base de datos con el nuevo nombre de archivo de imagen
             cur.execute("""
-            UPDATE productos SET Nombre=%s, Fecha_Ingreso= %s, Cantidad=%s, Marca=%s, Precio=%s, Descripcion=%s, Fecha_vencimiento=%s
-            WHERE Id=%s
-            """, (Nombre, Fecha_Ingreso, Cantidad, Marca, Precio, Descripcion, Fecha_vencimiento, Id))
+                UPDATE productos SET Nombre=%s, Fecha_Ingreso=%s, Cantidad=%s, Marca=%s, Precio=%s, Descripcion=%s, Imagen=%s, Fecha_vencimiento=%s
+                WHERE Id=%s
+            """, (Nombre, Fecha_Ingreso, Cantidad, Marca, Precio, Descripcion, nombre_archivo, Fecha_vencimiento, Id))
             
             mysql.connection.commit()
             flash("Actualizado con éxito")
@@ -382,6 +398,8 @@ def update():
             cur.close()
     return render_template('inventario.html', nombre=session.get('nombre'))
 
+
+    
 # Update_Empleado Función para editar al empleado
 @app.route('/Update_Empleado', methods=['POST', 'GET'])
 def Update_Empleado():
@@ -482,6 +500,7 @@ def Novedades():
 
 
 # --------------------------------------------------------Registrar Citas
+# --------------------------------------------------------Registrar Citas
 @app.route('/Registrar_Cita', methods=["GET", "POST"])
 def Registrar_Cita():
     if request.method == "POST":
@@ -499,6 +518,7 @@ def Registrar_Cita():
         
         # Procesar el formulario de cita
         nombre = request.form.get('nombre')
+        cedula = request.form.get('cedula')
         servicio = request.form.get('servicio')
         empleado_nombre = request.form.get('empleados_nombre')
         fecha = request.form.get('Fecha')
@@ -507,19 +527,19 @@ def Registrar_Cita():
 
         # Verificar si la cita ya existe
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM citas WHERE empleado_nombre = %s AND hora  = %s",
-                    (empleado_nombre, hora))
+        cur.execute("SELECT * FROM citas WHERE empleado_nombre = %s AND fecha = %s AND hora = %s",
+                    (empleado_nombre, fecha, hora))
         existing_cita = cur.fetchone()
         cur.close()
 
         if existing_cita:
-            flash(f"Ya hay una cita programada para el empleado: {empleado_nombre} el dia: {fecha} a las: {hora} Por favor, elige otra hora.")
+            flash(f"Ya hay una cita programada para el empleado {empleado_nombre} a las {hora} el día {fecha}. Por favor, elige otra hora.")
             return redirect(url_for('Citas'))
 
         # Insertar la cita en la base de datos
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO citas (nombre, servicio, empleado_nombre, fecha, hora, motivo, id_cliente) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                    (nombre, servicio, empleado_nombre, fecha, hora, motivo, cliente_id))
+        cur.execute("INSERT INTO citas (nombre, cedula, servicio, empleado_nombre, fecha, hora, motivo, id_cliente) VALUES (%s, %s,%s, %s, %s, %s, %s, %s)",
+                    (nombre, cedula, servicio, empleado_nombre, fecha, hora, motivo, cliente_id))
         mysql.connection.commit()
 
         # Incrementar el número de citas del usuario en la base de datos
@@ -533,11 +553,23 @@ def Registrar_Cita():
         cur.close()
 
         # Enviar correo electrónico
+        # Obtener la ruta completa del archivo email.html en la carpeta templates
+    email1_template_path = current_app.root_path + '/templates/email1.html'
+    
+    with open(email1_template_path, 'r') as archivo:
+        email_content = archivo.read()
+        
+        # Renderizar el contenido HTML del archivo email1.html
+        html_content = render_template('email1.html')
+        
         msg = Message('Nueva cita registrada', sender='dilanyarce22@gmail.com', recipients=[user_email])
-        msg.body = f"""\
-        Nueva cita registrada
+        msg.html = f"""\
+        <h1>Nueva cita registrada</h1>
+        <br><br>
+        {html_content}
+        <br><br>
 
-        Se ha registrado una nueva cita para: {nombre} el día: {fecha} a las: {hora} con el empleado: {empleado_nombre}. Motivo: {motivo}.
+        <p>Se ha registrado una nueva cita para: {nombre} el día: {fecha} a las: {hora} con el empleado: {empleado_nombre}. Motivo: {motivo}.</p>.
         """
         mail.send(msg)
 
@@ -590,26 +622,58 @@ def forgot():
 # -----------------------Función para enviar el correo electrónico con el enlace de restablecimiento de contraseña
 def send_reset_email(user_email):
     reset_link = url_for('newpassword', _external=True)
+    
+    # Obtener la ruta completa del archivo email.html en la carpeta templates
+    email_template_path = current_app.root_path + '/templates/email.html'
+    
+    with open(email_template_path, 'r') as archivo:
+        email_content = archivo.read()
+
     msg = Message('Recuperación de contraseña', sender='dilanyarce22@gmail.com', recipients=[user_email])
-    msg.body = f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {reset_link}'
+    
+    msg.html = f'''
+    <html>
+    <head>
+        <style>
+            .button {{
+                background-color: #F3D0D7;
+                color: #fff;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+            }}
+        </style>
+    </head>
+    <body>
+        <h2>Recuperación de contraseña</h2>
+        <br><br>
+        {email_content}
+        <br><br>
+        <a href="{reset_link}" class="button">Restablecer Contraseña</a>
+        <p>Atentamente,<br>
+        Tu Equipo de Soporte</p>
+    </body>
+    </html>
+    '''
+
     mail.send(msg)
 
 # -----------------------------------------------------Ruta para restablecer la contraseña
 @app.route('/newpassword', methods=['GET', 'POST'])
 def newpassword():
-    error = None
     if request.method == 'POST':
-        if request.form['newpass'] != request.form['conpass']:
-            error = 'Las contraseñas no coinciden..!!'
+        if request.form['newPassword'] != request.form['conpass']:
+            return redirect(url_for('newpassword'))
         else:
             user_email = session.get('reset_email')
-            new_password = request.form['newpass']
+            new_password = request.form['newPassword']
             if update_password_in_database(user_email, new_password):
                 session.pop('reset_email', None)
                 return redirect(url_for('login'))
             else:
-                error = 'Error al actualizar la contraseña. Por favor, inténtalo de nuevo.'
-    return render_template('newpassword.html', error=error)
+                return render_template('newpassword.html', error='Error al actualizar la contraseña. Por favor, inténtalo de nuevo.')
+    return render_template('newpassword.html')
 
 #---------------------------------------- Función para actualizar la contraseña en la base de datos
 def update_password_in_database(user_email, new_password):
@@ -635,11 +699,6 @@ def actualizar_cuenta():
         nueva_contrasena = request.form['txtPassword']
         confirmar_contrasena = request.form['txtConfirmPassword']
 
-        # Validar que las contraseñas coincidan
-        if nueva_contrasena != confirmar_contrasena:
-            flash('Las contraseñas no coinciden. Inténtalo de nuevo.', 'error')
-            return redirect(url_for('actualizar_cuenta'))
-
         # Actualizar los datos en la base de datos
         cur = mysql.connection.cursor()
         cur.execute("UPDATE usuarios SET nombre = %s, apellido = %s, correo = %s, telefono = %s, password = %s WHERE id = %s",
@@ -647,7 +706,6 @@ def actualizar_cuenta():
         mysql.connection.commit()
         cur.close()
 
-        # flash('Información de la cuenta actualizada correctamente.', 'success')
         return redirect(url_for('actualizar_cuenta'))
 
     # Obtener los datos actuales del usuario
@@ -668,59 +726,174 @@ def Home_Catalogo():
     return render_template('home.html', products=products)
 
 
+
 @app.route('/add_to_cart/<int:id>', methods=['POST'])
 def add_to_cart(id):
     product_id = id
     quantity = int(request.form.get('quantity', 1))  # Obtener la cantidad del formulario
 
-    # Verificar si 'cart' ya está en la sesión
-    if 'cart' not in session:
-        session['cart'] = {}
+    # Consultar la base de datos para verificar si el producto ya está en el carrito
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cart WHERE product_id = %s", (product_id,))
+    already_in_cart = cur.fetchone()
 
-    # Verificar si el producto ya está en el carrito
-    if str(product_id) in session['cart']:
-        # Si el producto ya está en el carrito, aumentar la cantidad
-        session['cart'][str(product_id)] += quantity
+    if already_in_cart:
+        flash('El producto ya está en el carrito', 'danger')
     else:
-        # Si el producto no está en el carrito, agregarlo con la cantidad especificada
-        session['cart'][str(product_id)] = quantity
+        # Consultar la base de datos para obtener el producto completo
+        cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
+        product_data = cur.fetchone()  # Obtener los datos del producto como un diccionario
 
-    # Mostrar un mensaje de éxito
-    # flash('Producto añadido al carrito exitosamente', 'success')
+        if product_data:
+            # Insertar el producto en la tabla de carrito en la base de datos
+            cur.execute("INSERT INTO cart (product_id, title, image_path, price, quantity, total) VALUES (%s, %s, %s, %s, %s, %s)",
+                        (product_data['id'], product_data['title'], product_data['image_path'], product_data['price'], quantity, product_data['price'] * quantity))
+            mysql.connection.commit()
+            flash('Producto agregado al carrito exitosamente', 'success')
+        else:
+            flash('El producto no existe', 'danger')
 
-    # Redirigir de vuelta a la página de inicio
+    cur.close()
+
     return redirect(url_for('Home_Catalogo'))
 
 
+
+
+# ------------------------------- Finalizar compra --- carrito
+
+
+# Lista global para almacenar los elementos del carrito
+cart_items = []
+
+# Clase de ejemplo para un producto
+class Product:
+    def __init__(self, id, title, price):
+        self.id = id
+        self.title = title
+        self.price = price
+
+# Ruta para el carrito de compras
 @app.route('/cart')
 def cart():
-    if 'cart' not in session or len(session['cart']) == 0:
-        # flash('No hay productos en el carrito', 'info')
-        return redirect(url_for('Home_Catalogo'))
-    
-    cart_items = []
-    total_price = 0
-    
     cur = mysql.connection.cursor()
-    for product_id, quantity in session['cart'].items():
-        cur.execute("SELECT * FROM product WHERE id = %s", (int(product_id),))
-        product = cur.fetchone()
-        if product:
-            cart_items.append({'product': product, 'quantity': quantity})
-            total_price += product['price'] * quantity
+    cur.execute("SELECT * FROM cart")
+    cart_items = cur.fetchall()
     cur.close()
-
+    
+    total_price = sum(item['price'] * item['quantity'] for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
+
 
 @app.route('/remove_from_cart/<int:id>', methods=['POST'])
 def remove_from_cart(id):
     product_id = id
-    if 'cart' in session and str(product_id) in session['cart']:
-        session['cart'].pop(str(product_id))
-        flash('Producto removido del carrito exitosamente', 'success')
-    else:
-        flash('El producto no está en el carrito', 'danger')
+
+    # Eliminar el producto del carrito en la base de datos
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM cart WHERE product_id = %s", (product_id,))
+    mysql.connection.commit()
+    cur.close()
+
+    flash('Producto removido del carrito exitosamente', 'success')
     return redirect(url_for('cart'))
+
+
+#----------------------------------- apartar producto 
+
+
+# Ruta y función para procesar la orden
+# Ruta y función para procesar la orden
+@app.route('/order_processed', methods=['POST'])
+def order_processed():
+    # Obtener los datos del cliente del formulario
+    nombre = request.form.get('nombre')
+    apellidos = request.form.get('apellidos')
+    direccion = request.form.get('direccion')
+    telefono = request.form.get('telefono')
+    correo = request.form.get('correo')
+
+    # Insertar datos del cliente en la tabla 'client'
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO client (nombre, apellidos, direccion, telefono, correo) VALUES (%s, %s, %s, %s, %s)",
+                (nombre, apellidos, direccion, telefono, correo))
+    mysql.connection.commit()
+    cur.close()
+
+    # Obtener el ID del cliente recién insertado
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT LAST_INSERT_ID()")
+    client_id = cur.fetchone()['LAST_INSERT_ID()']
+    cur.close()
+
+    # Consultar la base de datos para obtener los elementos del carrito con los detalles de los productos
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT c.*, p.title as product_title, p.price as product_price, p.title as product_name
+        FROM cart c 
+        JOIN product p ON c.product_id = p.id
+    """)
+    cart_items = cur.fetchall()
+
+    # Insertar detalles de la orden en la tabla 'order_detail'
+    for item in cart_items:
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO order_detail (client_id, product_id, product_name, quantity, total) VALUES (%s, %s, %s, %s, %s)",
+                    (client_id, item['product_id'], item['product_name'], item['quantity'], item['total']))
+        mysql.connection.commit()
+        cur.close()
+
+    if cart_items:
+        return render_template('order_processed.html',
+                               nombre=nombre,
+                               apellidos=apellidos,
+                               direccion=direccion,
+                               telefono=telefono,
+                               correo=correo,
+                               cart_items=cart_items)
+    else:
+        flash('Error: Carrito vacío', 'danger')
+        return redirect(url_for('Home_Catalogo'))
+
+
+# Ruta y función para mostrar la página de apartado de productos
+@app.route('/apartado_produc', methods=['GET'])
+def apartado_produc():
+    product_ids = request.args.getlist('product_id')  # Obtener lista de IDs de productos
+    if product_ids:
+        cart_items = []
+        cur = mysql.connection.cursor()
+        for product_id in product_ids:
+            cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
+            product_data = cur.fetchone()
+            if product_data:
+                cart_items.append({
+                    'title': product_data['title'],
+                    'description': product_data['description'],
+                    'price': product_data['price']
+                })
+            else:
+                flash(f'Producto con ID {product_id} no encontrado', 'danger')
+        cur.close()
+        return render_template('apartado_produc.html', cart_items=cart_items)
+    else:
+        flash('No se proporcionaron IDs de productos para apartar', 'danger')
+        return redirect(url_for('Home_Catalogo'))
+
+
+# Ruta y función para limpiar el carrito
+@app.route('/limpiar_carrito', methods=['POST'])
+def limpiar_carrito():
+    # Elimina todos los productos del carrito
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM cart")
+    mysql.connection.commit()
+    cur.close()
+    
+    # Redirige al catálogo después de limpiar el carrito
+    return redirect(url_for('Home_Catalogo'))
+
 
 # ---------------------- crear productos
 
@@ -823,6 +996,71 @@ def product_actions():
     products = cur.fetchall()
     cur.close()
     return render_template('product_actions.html', products=products)
+
+
+# --------------------------------------------- editar clientes y detalles del producto
+@app.route('/editar_cliente/<int:cliente_id>', methods=['GET', 'POST'])
+def editar_cliente(cliente_id):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        apellidos = request.form['apellidos']
+        direccion = request.form['direccion']
+        telefono = request.form['telefono']
+        correo = request.form['correo']
+
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE client
+            SET nombre = %s, apellidos = %s, direccion = %s, telefono = %s, correo = %s
+            WHERE id = %s
+        """, (nombre, apellidos, direccion, telefono, correo, cliente_id))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Detalles del cliente actualizados correctamente', 'success')
+        return redirect(url_for('ver_clientes'))
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM client WHERE id = %s", (cliente_id,))
+    cliente = cur.fetchone()
+
+    # Obtener los detalles del pedido del cliente
+    cur.execute("""
+        SELECT * FROM order_detail WHERE client_id = %s
+    """, (cliente_id,))
+    order_details = cur.fetchall()
+    cur.close()
+
+    return render_template('editar_cliente.html', cliente=cliente, order_details=order_details)
+
+
+
+# Ruta y función para eliminar un cliente y sus órdenes asociadas
+@app.route('/eliminar_cliente/<int:cliente_id>', methods=['POST'])
+def eliminar_cliente(cliente_id):
+    cur = mysql.connection.cursor()
+
+    # Eliminar órdenes asociadas al cliente
+    cur.execute("DELETE FROM order_detail WHERE client_id = %s", (cliente_id,))
+    mysql.connection.commit()
+
+    # Eliminar al cliente
+    cur.execute("DELETE FROM client WHERE id = %s", (cliente_id,))
+    mysql.connection.commit()
+    cur.close()
+
+    flash('Cliente y sus órdenes asociadas eliminadas correctamente', 'success')
+    return redirect(url_for('ver_clientes'))
+
+# Ruta y función para ver todos los clientes
+@app.route('/ver_clientes')
+def ver_clientes():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM client")
+    clientes = cur.fetchall()
+    cur.close()
+
+    return render_template('ver_clientes.html', clientes=clientes)
 
 if __name__ == "__main__":
     app.run(debug=True)

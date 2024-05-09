@@ -1,99 +1,259 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salida de Productos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye la librería de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Incluye los estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"/>
+    <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="icon" href="/static/IMG/inventario.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">   
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <title>Salidas</title>
 </head>
-<body id="Salidas">
-    <div class="contenedor">
-        <nav>
-            <ul>
-                <a href="#" class="logo">
-                    <span class="nav-item">Salidas</span>
-                </a>
-                <a href="{{ url_for('admin')}}">
-                    <i class="fas fa-home"></i>
-                    <span class="nav-item">Home</span>
-                </a>
-                <a href="">
-                    <i class="fas fa-user"></i>
-                    <span class="nav-item">Citas</span>
-                </a>
-                <a href="{{ url_for('inventario')}}">
-                    <i class="fas fa-wallet"></i>
-                    <span class="nav-item">Inventario</span>
-                </a>
-                <a href="{{ url_for('Home_Catalogo')}}">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="nav-item">Catalogo</span>
-                </a>
-                <a href="{{ url_for('Registrar_Empleado')}}">
-                    <i class="fas fa-tasks"></i>
-                    <span class="nav-item">Agregar empleado</span>
-                </a>
-                <a href="{{ url_for('actualizar_cuenta')}}">
-                    <i class="fas fa-cog"></i>
-                    <span class="nav-item">Perfil</span>
-                </a>
-                <a href="{{ url_for('home')}}" class="logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="nav-item">Log out</span>
-                </a>
-            </ul>
-        </nav>
-    <br>
-    <div class="container title-container">
-        <h1>Salida de Productos</h1>
+<body id="Empleado">
+    <div class="citasas">
+    <div class="content">
+        <div class="contenedor">
+            <div class="contariner1">
+                <div class="sidebar1">
+                    <div class="menu1-boton">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="head1">
+                        <div class="logo-img">
+                            <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
+                        </div>
+                            <div class="logo-detalles">
+                                <p class="titulo1os">Anguie Studio</p>
+                            </div>
+                    </div>
+                    <div class="nav1">
+                        <div class="menu1">
+                            <p class="title1">Menú</p>
+                            <ul>
+                                <li>
+                                    <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                        <i class="iconoos bi bi-house-door"></i>
+                                            <span class="textoos">Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Citas')}}">
+                                        <i class="iconoos bi bi-envelope"></i>
+                                            <span class="textoos">Citas</span>
+                                    </a>
+                                </li>
+                                <li  class="activeos">
+                                    <a href="#">
+                                        <i class="iconoos bi bi-box2"></i>
+                                            <span class="textoos">inventario</span>
+                                        <i class="flecha bi bi-caret-down"></i>
+                                    </a>
+                                    <ul class="sub-menu1">
+                                        <li>
+                                            <a href="{{ url_for('inventario')}}">
+                                                <span class="textoos">Inventario</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Entradas') }}">
+                                                <span class="textoos">Ver entradas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Salidas') }}">
+                                                <span class="textoos">Ver salidas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Novedades') }}">
+                                                <span class="textoos">Ver novedades</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Home_Catalogo')}}">
+                                        <i class="iconoos bi bi-journal-bookmark-fill"></i>
+                                            <span class="textoos">Catalogo</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Registrar_Empleado')}}">
+                                        <i class="iconoos bi bi-people-fill"></i>
+                                            <span class="textoos">Agregar empleado</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu1">
+                            <p class="title1">Cuenta</p>
+                            <ul>
+                                <li >
+                                    <a href="{{ url_for('actualizar_cuenta')}}">
+                                        <i class="iconoos i bi-person"></i>
+                                            <span class="textoos">Perfil</span>
+                                    </a>
+                                </li>
+                                <li >
+                        </div>
+                    </div>
+                    <div class="menu1">
+                        <p class="title1">Ajustes</p>
+                        <ul>
+                            <li >
+                                <a href="{{ url_for('home')}}">
+                                    <i class="iconoos bi bi-box-arrow-left"></i>
+                                        <span class="textoos">Cerrar sesion</span>
+                                </a>
+                            </li>
+                            <li >
+                    </div>
+                </div>
+            </div>
+        <div class="demo-html">
+            <section id="Modulos-cita">
+                <div class="modulosos">
+                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="main--content">
+                            <div class="cabecera">
+                                <div class="cabecera-titulo">
+                                    <h1>SALIDAS</h1>
+                                </div>
+                                <div class="icono-usuario">
+                                    <div class="iconosisi pl-sm-4 pl-2">
+                                        <i class="iconososo bi bi-arrow-up-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Salida de productos</h2>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    <table id="example" class="table table-striped table-bordered dt-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID salida</th>
+                                <th>ID Producto</th>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                                <th>Precio por unidad</th>
+                                <th>Fecha de salida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for salida in salidas %}
+                            <tr>
+                                <td>{{ salida['Id_Salida'] }}</td>
+                                <td>{{ salida['Id_Producto'] }}</td>
+                                <td>{{ salida['Nombre'] }}</td>
+                                <td>{{ salida['Cantidad'] }}</td>
+                                <td>{{ salida['precio'] }}</td>
+                                <td>{{ salida['Fecha_Salida'] }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+        </div>
+        </div>
+    </section>
+        </div>
+        </div>
     </div>
-    
-    <!-- Tabla -->
-    <div class="container">
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID salida</th>
-                    <th>ID Producto</th>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Precio por unidad</th>
-                    <th>Fecha de salida</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for salida in salidas %}
-                    <tr>
-                        <td>{{ salida['Id_Salida'] }}</td>
-                        <td>{{ salida['Id_Producto'] }}</td>
-                        <td>{{ salida['Nombre'] }}</td>
-                        <td>{{ salida['Cantidad'] }}</td>
-                        <td>{{ salida['precio'] }}</td>
-                        <td>{{ salida['Fecha_Salida'] }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>   
+<script>
+    $(".menu1 > ul > li").click(function(e){
+        //quitar el active para los que ya estan activos
+        $(this).siblings().removeClass("activeos")
+        //poner el active al darle clic
+            $(this).toggleClass("activeos");
+        //para abrir sub-menu
+            $(this).find("ul").slideToggle();
+        //cerrar submenu en caso de haber dos
+            $(this).siblings().find("ul").slideup();
+        //remover el active de los submenus
+            $(this).siblings().find("ul").find("li").removeClass("activeos");
+                    // ajustar el ancho del container1 cuando está activo
+    });
 
-    <script>
-        function mostrarLista() {
-            var lista = document.getElementById("listaInventario");
-            if (lista.style.display === "block") {
-                lista.style.display = "none";
-            } else {
-                lista.style.display = "block";
-            }
+    $(".menu1-boton").click(function () {
+        $(".sidebar1").toggleClass("activeos");
+    });
+</script>
+<script>
+    function mostrarLista() {
+        var lista = document.getElementById("listaInventario");
+        if (lista.style.display === "block") {
+            lista.style.display = "none";
+        } else {
+            lista.style.display = "block";
         }
-    </script>
-
-    <!-- Scripts de Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+    }
+    
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            responsive: true,
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+    });
+</script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Información del Cliente{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>Información del Cliente</h3>
+    <form action="{{ url_for('order_processed') }}" method="POST">
+        {% for product_id in product_ids %}
+        <!-- Campo oculto para cada ID del producto -->
+        <input type="hidden" name="product_id[]" value="{{ product_id }}">
+        {% endfor %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="number" class="form-control" id="telefono" name="telefono" required>
+        </div>
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="correo" name="correo" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Procesar Orden</button>
+    </form>
+</div>
+{% endblock %}

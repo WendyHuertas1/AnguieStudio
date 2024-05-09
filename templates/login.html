@@ -12,14 +12,12 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">   
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
-    <style>
-        /* Estilo para inputs inválidos */
-        input:invalid {
-            border-color: red;
-        }
-    </style>
 </head>
-
+<style>
+    .texto-rojo {
+        color: red;
+    }
+    </style>
 <body id="Login">
 <div class="container">
     <div class="information">
@@ -52,6 +50,7 @@
                     <li id="contraseña"><a href="{{ url_for ('forgot') }}">¿Olvidaste tu contraseña?</a></li>
                     <br>
                     <input type="submit" value="Iniciar sesión">
+                    
                 </form>
             </div>
         </div>
@@ -60,9 +59,11 @@
     <button id="volver"><a href="{{ url_for ('home')}}">Volver</a></button>
 
     <script>
+        // script para mostrar y no mostrar la contraseña en el input del ojo 
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('exampleInputPassword1');
-    
+        
+        //cuando se le da un click 
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);

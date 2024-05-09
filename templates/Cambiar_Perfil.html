@@ -31,7 +31,7 @@
                 <div class="menu1">
                     <p class="title1">Menú</p>
                     <ul>
-                        <li class="activeos">
+                        <li>
                             <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
                                 <i class="iconoos bi bi-house-door"></i>
                                     <span class="textoos">Home</span>
@@ -89,7 +89,7 @@
                 <div class="menu1">
                     <p class="title1">Cuenta</p>
                     <ul>
-                        <li >
+                        <li class="activeos">
                             <a href="{{ url_for('actualizar_cuenta')}}">
                                 <i class="iconoos i bi-person"></i>
                                     <span class="textoos">Perfil</span>
@@ -107,10 +107,33 @@
                                 <span class="textoos">Cerrar sesion</span>
                         </a>
                     </li>
-                    <li >
+                    <li>
             </div>
         </div>
 
+        <!-- Modal de confirmación -->
+        <div class="modal fade" id="confirmacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas actualizar la información de la cuenta?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!-- Agrega un botón para enviar el formulario -->
+                        <button type="submit" class="btn btn-primary" id="btnEnviar">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario para configuracion de la cuenta -->
         <form class="formulario1" action="{{ url_for('actualizar_cuenta') }}" method="post" style="display: contents;">
         <div class="wrapper bg-white mt-sm-5">
             <h4 class="h4os pb-4 border-bottom">Configuracion de la cuenta</h4>
@@ -149,6 +172,7 @@
                     <div class="col-md-6 pt-md-0 pt-3">
                         <label for="txtConfirmPassword">Confirmar Contraseña:</label>
                         <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" required class="bg-light form-control">
+                        <div style="color: red;" id="mensaje-confirmacion"></div>
                     </div>
                 </div>
                 <div class="py-3 pb-4 border-bottom">
@@ -176,6 +200,49 @@
 
     $(".menu1-boton").click(function () {
         $(".sidebar1").toggleClass("activeos");
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Función para validar las contraseñas en tiempo real
+        document.getElementById("txtPassword").addEventListener("keyup", function(){
+            var contrasena = document.getElementById("txtPassword").value;
+            var confirmacion = document.getElementById("txtConfirmPassword").value;
+            var mensajeConfirmacion = document.getElementById("mensaje-confirmacion");
+
+            if (contrasena !== confirmacion) {
+                mensajeConfirmacion.textContent = "Las contraseñas no coinciden.";
+            } else {
+                mensajeConfirmacion.textContent = "";
+            }
+        });
+
+        // Función para validar las contraseñas al enviar el formulario
+        document.querySelector("form").addEventListener("submit", function(event){
+            var contrasena = document.getElementById("txtPassword").value;
+            var confirmacion = document.getElementById("txtConfirmPassword").value;
+            var mensajeConfirmacion = document.getElementById("mensaje-confirmacion");
+
+            // Comprobar si las contraseñas coinciden
+            if (contrasena !== confirmacion) {
+                mensajeConfirmacion.textContent = "Las contraseñas no coinciden.";
+                event.preventDefault(); // Detener el envío del formulario
+            }
+        });
+
+        // Función para validar la coincidencia de las contraseñas al confirmar
+        document.getElementById("txtConfirmPassword").addEventListener("keyup", function(){
+            var contrasena = document.getElementById("txtPassword").value;
+            var confirmacion = document.getElementById("txtConfirmPassword").value;
+            var mensajeConfirmacion = document.getElementById("mensaje-confirmacion");
+
+            if (contrasena !== confirmacion) {
+                mensajeConfirmacion.textContent = "Las contraseñas no coinciden.";
+            } else {
+                mensajeConfirmacion.textContent = "";
+            }
+        });
     });
 </script>
 

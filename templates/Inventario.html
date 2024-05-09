@@ -1,211 +1,242 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <!-- Icono para la pestaña -->
-    <link rel="icon" href="{{ url_for('static', filename='IMG/inventario.png') }}">
-    <!-- Estilos de boostrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Incluye la librería de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Incluye los estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"/>
+    <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">   
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
-<body id="Inventario">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 
-<!-- Inicio de la cabecera del inventario -->
-            <div class="container-fluid">
-                <nav>
-                    <div class="contenedor">
-                        <div class="contariner1">
-                            <div class="sidebar1">
-                                <div class="menu1-boton">
-                                    <i class="bi bi-chevron-right"></i>
-                                </div>
-                                <div class="head1">
-                                    <div class="logo-img">
-                                        <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
-                                    </div>
-                                        <div class="logo-detalles">
-                                            <p class="titulo1os">Anguie Studio</p>
-                                        </div>
-                                </div>
-                                <div class="nav1">
-                                    <div class="menu1">
-                                        <p class="title1">Menú</p>
-                                        <ul>
-                                            <li class="activeos">
-                                                <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
-                                                    <i class="iconoos bi bi-house-door"></i>
-                                                        <span class="textoos">Home</span>
-                                                </a>
-                                            </li>
-                                            <li >
-                                                <a href="{{ url_for('Citas')}}">
-                                                    <i class="iconoos bi bi-envelope"></i>
-                                                        <span class="textoos">Citas</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="iconoos bi bi-box2"></i>
-                                                        <span class="textoos">inventario</span>
-                                                    <i class="flecha bi bi-caret-down"></i>
-                                                </a>
-                                                <ul class="sub-menu1">
-                                                    <li>
-                                                        <a href="{{ url_for('inventario')}}">
-                                                            <span class="textoos">Inventario</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ url_for('Entradas') }}">
-                                                            <span class="textoos">Ver entradas</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ url_for('Salidas') }}">
-                                                            <span class="textoos">Ver salidas</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ url_for('Novedades') }}">
-                                                            <span class="textoos">Ver novedades</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        {% if session['id_rol'] == 1 or session['id_rol'] == 2 %}
-                                                        <a href="{{ url_for('create_product') }}">
-                                                            <span class="textoos">Agregar productos al catalogo</span>
-                                                        </a>
-                                                        {% endif %}
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_for('Home_Catalogo')}}">
-                                                    <i class="iconoos bi bi-journal-bookmark-fill"></i>
-                                                        <span class="textoos">Catalogo</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url_for('Registrar_Empleado')}}">
-                                                    <i class="iconoos bi bi-people-fill"></i>
-                                                        <span class="textoos">Agregar empleado</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="menu1">
-                                        <p class="title1">Cuenta</p>
-                                        <ul>
-                                            <li >
-                                                <a href="{{ url_for('actualizar_cuenta')}}">
-                                                    <i class="iconoos i bi-person"></i>
-                                                        <span class="textoos">Perfil</span>
-                                                </a>
-                                            </li>
-                                            <li >
-                                    </div>
-                                </div>
-                                <div class="menu1">
-                                    <p class="title1">Ajustes</p>
-                                    <ul>
-                                        <li >
-                                            <a href="{{ url_for('home')}}">
-                                                <i class="iconoos bi bi-box-arrow-left"></i>
-                                                    <span class="textoos">Cerrar sesion</span>
+    <title>Inventario</title>
+</head>
+<style>
+
+
+</style>
+<body id="Empleado">
+    <div class="citasas">
+    <div class="content">
+        <div class="contenedor">
+            <div class="contariner1">
+                <div class="sidebar1">
+                    <div class="menu1-boton">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="head1">
+                        <div class="logo-img">
+                            <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
+                        </div>
+                            <div class="logo-detalles">
+                                <p class="titulo1os">Anguie Studio</p>
+                            </div>
+                    </div>
+                    <div class="nav1">
+                        <div class="menu1">
+                            <p class="title1">Menú</p>
+                            <ul>
+                                <li>
+                                    <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                        <i class="iconoos bi bi-house-door"></i>
+                                            <span class="textoos">Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Citas')}}">
+                                        <i class="iconoos bi bi-envelope"></i>
+                                            <span class="textoos">Citas</span>
+                                    </a>
+                                </li>
+                                <li  class="activeos">
+                                    <a href="#">
+                                        <i class="iconoos bi bi-box2"></i>
+                                            <span class="textoos">inventario</span>
+                                        <i class="flecha bi bi-caret-down"></i>
+                                    </a>
+                                    <ul class="sub-menu1">
+                                        <li>
+                                            <a href="{{ url_for('inventario')}}">
+                                                <span class="textoos">Inventario</span>
                                             </a>
                                         </li>
-                                </div>
-                            </div>
-                        </div> 
-                </nav>
-            </div>
-            <br>
-            <div class="container">
-            <div class="col-sm-8">
-            <h1 class="text-center ">Inventario</h1>
-            <div class="row">:
-                    <h2 >Lista de productos <a href="#" title="Añadir" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal"><box-icon name='plus' color='#ffffff'></box-icon></a></h2>
-                    <br>
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success alert-dismissable" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        {{ message }}
+                                        <li>
+                                            <a href="{{ url_for('Entradas') }}">
+                                                <span class="textoos">Ver entradas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Salidas') }}">
+                                                <span class="textoos">Ver salidas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Novedades') }}">
+                                                <span class="textoos">Ver novedades</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Home_Catalogo')}}">
+                                        <i class="iconoos bi bi-journal-bookmark-fill"></i>
+                                            <span class="textoos">Catalogo</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Registrar_Empleado')}}">
+                                        <i class="iconoos bi bi-people-fill"></i>
+                                            <span class="textoos">Agregar empleado</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu1">
+                            <p class="title1">Cuenta</p>
+                            <ul>
+                                <li >
+                                    <a href="{{ url_for('actualizar_cuenta')}}">
+                                        <i class="iconoos i bi-person"></i>
+                                            <span class="textoos">Perfil</span>
+                                    </a>
+                                </li>
+                                <li >
+                        </div>
                     </div>
-                    {% endfor %}
-                    {% endif %}
-                    {% endwith %}
-                    
-                    <!-- Inicio del modal para agregar el producto -->
-                    <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px; margin: 0 auto;">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-primary">Ingresa un nuevo producto</h5>  
-                                    
+                    <div class="menu1">
+                        <p class="title1">Ajustes</p>
+                        <ul>
+                            <li >
+                                <a href="{{ url_for('home')}}">
+                                    <i class="iconoos bi bi-box-arrow-left"></i>
+                                        <span class="textoos">Cerrar sesion</span>
+                                </a>
+                            </li>
+                            <li >
+                    </div>
+                </div>
+            </div>
+        <div class="demo-html">
+            <section id="Modulos-cita">
+                <div class="modulosos">
+                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="main--content">
+                            <div class="cabecera">
+                                <div class="cabecera-titulo">
+                                    <h1>INVENTARIO</h1>
                                 </div>
-                                <div class="modal-body">
-                                    <form action="{{ url_for('insert') }}" method="POST" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label>Codigo del producto:</label>
-                                            <input type="number" name="Id" class="form-control" placeholder="Codigo del producto" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nombre del producto:</label>
-                                            <input type="text" name="Nombre" class="form-control" placeholder="Nombre del producto" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha de ingreso</label>
-                                            <input name="Fecha_Ingreso" type="date" class="form-control" placeholder="Fecha de ingreso" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Cantidad:</label>
-                                            <input type="text" name="Cantidad" class="form-control" placeholder="Cantidad" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Marca:</label>
-                                            <input name="Marca" type="text" class="form-control" placeholder="Marca del producto" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Precio por unidad:</label>
-                                            <input name="Precio" type="text" class="form-control" placeholder="Precio del producto por unidad" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Descripción</label>
-                                            <textarea name="Descripcion" type="text" class="form-control" placeholder="Descripcion del producto" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Imagen" class="form-label">Image</label>
-                                            <input type="file" class="form-control" id="Imagen" name="Imagen" accept="Imagen/*" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha de vencimiento</label>
-                                            <input name="Fecha_vencimiento" type="date" class="form-control" placeholder="Fecha de vencimiento" required>
-                                        </div>
-                                        <br>
-                                        <button type="submit" class="btn btn-primary mb-2">Guardar</button>
-                                    </form>
+                                <div class="icono-usuario">
+                                    <div class="iconosisi pl-sm-4 pl-2">
+                                        <i class="iconososo bi bi-box2"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Lista de productos</h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalAgregarProducto">
+                                        Agregar productos
+                                    </button>
+                                </div> 
+                            
+
 
                     <!-- Fin del modal para agregar el producto -->
-
-                    <!-- Inicio para agregar nuevo producto -->
-                    <table class="table table-hover">
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- Inicio del modal para agregar el producto -->
+                    <!-- Modal -->
+                    <div id="modalAgregarProducto" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px; margin: 0 auto;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="text-center w-100">
+                                    <h5 class="tytu modal-title text-primary">Ingresa un nuevo producto</h5>  
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('insert') }}" method="POST" enctype="multipart/form-data">
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-6">
+                                            <label>Codigo del producto:</label>
+                                            <input type="number" name="Id" class="form-control" placeholder="Codigo del producto" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Nombre del producto:</label>
+                                            <input type="text" name="Nombre" class="form-control" placeholder="Nombre del producto" required>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-6">
+                                            <label>Fecha de ingreso:</label>
+                                            <input name="Fecha_Ingreso" type="date" class="form-control" placeholder="Fecha de ingreso" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Cantidad:</label>
+                                            <input type="text" name="Cantidad" class="form-control" placeholder="Cantidad" required>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-6">
+                                            <label>Marca:</label>
+                                            <input name="Marca" type="text" class="form-control" placeholder="Marca del producto" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Precio por unidad:</label>
+                                            <input name="Precio" type="text" class="form-control" placeholder="Precio del producto por unidad" required>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        <div class="form-group col-md-6">
+                                            <label>Descripción:</label>
+                                            <textarea name="Descripcion" type="text" class="form-control" placeholder="Descripcion del producto" required></textarea>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="Imagen" class="form-label">Imagen:</label>
+                                            <input type="file" class="form-control" id="Imagen" name="Imagen" accept="Imagen/*" required>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2">
+                                        <div class="form-group">
+                                            <label>Fecha de vencimiento;:</label>
+                                            <input name="Fecha_vencimiento" type="date" class="form-control" placeholder="Fecha de vencimiento" required>
+                                        </div>
+                                    </div>
+                                    <div class="botoncito text-center w-100">
+                                        <button type="submit" class="bete btn btn-primary mb-2">Guardar</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <table id="example" class="table table-striped table-bordered dt-responsive" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Codigo</th>
@@ -230,18 +261,20 @@
                                 <td>{{ producto['Marca'] }}</td>
                                 <td>{{ producto['precio'] }}</td>
                                 <td>{{ producto['Descripcion'] }}</td>
-                                <td>{{ producto['Imagen'] }}</td>
+                                <td>
+                                    <img src="{{ url_for('static', filename='IMG/' + producto['Imagen']) }}" alt="Imagen del Producto" style="max-width: 100px; max-height: 100px;">
+                                </td>
                                 <td>{{ producto['Fecha_vencimiento'] }}</td>
                                 <td>
                                     <!-- Botones con estilos de iconos  -->
-                                    <a href="/update/{{ producto['Id'] }}" title="Editar" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ producto['Id'] }}">
+                                    <a href="/update/{{ producto['Id'] }}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{ producto['Id'] }}">
                                         <box-icon name='edit-alt' style="margin-right: 5px;"></box-icon>
                                     </a>
-                                    <button onclick="confirmarEliminar('{{ producto['Id'] }}')" title="Eliminar" class="btn btn-danger btn-sm">
+                                    <button onclick="confirmarEliminar('{{ producto['Id'] }}')" class="btn btn-danger btn-sm">
                                         <box-icon name='trash-alt'></box-icon>
                                     </button>
                                     <form action="{{ url_for('add_to_catalog', id=producto['Id']) }}" method="POST">
-                                        <button type="submit" title="Agregar al catalogo" class="btn btn-success btn-sm">
+                                        <button type="submit" class="btn btn-success btn-sm">
                                             <box-icon name='plus'></box-icon>
                                         </button>
                                     </form>
@@ -253,44 +286,47 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title text-primary">Detalles del producto para editar</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ url_for('update') }}" method="POST">
+                                            <form action="{{ url_for('update') }}" method="POST" enctype="multipart/form-data">
                                                 <input type="hidden" name="Id" value="{{ producto['Id'] }}">
                                                 <div class="form-group">
                                                     <label>Nombre:</label>
                                                     <input value="{{ producto['Nombre'] }}" type="text" name="Nombre" class="form-control" placeholder="Nombre" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Fecha de ingreso</label>
-                                                    <input value="{{ producto['Fecha_Ingreso'] }}" name="Fecha_Ingreso" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de Ingreso" required>
+                                                    <label>Fecha de ingreso:</label>
+                                                    <input value="{{ producto['Fecha_Ingreso'] }}" name="Fecha_Ingreso" type="date" class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Cantidad:</label>
-                                                    <input value="{{ producto['Cantidad'] }}" type="text" name="Cantidad" class="form-control" id="exampleFormControlInput1" placeholder="Cantidad" required>
+                                                    <input value="{{ producto['Cantidad'] }}" type="text" name="Cantidad" class="form-control" placeholder="Cantidad" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Marca:</label>
-                                                    <input value="{{ producto['Marca'] }}" name="Marca" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Marca" required>
+                                                    <input value="{{ producto['Marca'] }}" name="Marca" type="text" class="form-control" placeholder="Marca" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Precio:</label>
-                                                    <input value="{{ producto['precio'] }}" name="precio" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Precio" required>
+                                                    <input value="{{ producto['precio'] }}" name="precio" type="text" class="form-control" placeholder="Precio" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea value="{{ producto['Descripcion'] }}" name="Descripcion" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Descripcion del producto" required></textarea>
+                                                    <textarea name="Descripcion" class="form-control" placeholder="Descripcion del producto" required>{{ producto['Descripcion'] }}</textarea>
                                                 </div>
+                                                <!-- Campo de imagne para saber que foto teneemos en el producto a la hora de editar el producto-->
                                                 <div class="form-group">
-                                                    <label for="Imagen" class="form-label">Imagen:</label>
-                                                    <input type="file" class="form-control" id="Imagen" name="Imagen" accept="Imagen/*" required>
+                                                    <label for="Imagen" class="form-label">Imagen actual:</label>
+                                                    <img src="{{ url_for('static', filename='IMG/' + producto['Imagen']) }}" alt="Imagen del Producto" style="max-width: 100px; max-height: 100px;">
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="Imagen" class="form-label">Nueva imagen:</label>
+                                                    <input type="file" class="form-control" id="Imagen" name="Imagen" accept="image/*">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Fecha de vencimiento:</label>
-                                                    <input value="{{ producto['Fecha_vencimiento'] }}" name="Fecha_vencimiento" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Fecha de vencimiento" required>
+                                                    <input value="{{ producto['Fecha_vencimiento'] }}" name="Fecha_vencimiento" type="date" class="form-control" required>
                                                 </div>
                                                 <br>
                                                 <button type="submit" class="btn btn-success mb-2">Actualizar</button>
@@ -302,52 +338,13 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>
-            </div>
+        </div>
+        </div>
+    </section>
+        </div>
         </div>
     </div>
-
-    <script>
-        function confirmarEliminar(id) {
-            // Mostrar una alerta de confirmación
-            if (confirm("¿Estás seguro de que quieres eliminar este producto?")) {
-                // Llamar a la función eliminarProducto si el usuario confirma
-                eliminarProducto(id);
-            } else {
-                // Si el usuario cancela, no hacer nada
-                console.log("Eliminación cancelada por el usuario.");
-            }
-        }
-
-        function eliminarProducto(id) {
-            // Realizar una solicitud GET a la ruta de Flask para eliminar el producto
-            fetch(`/delete/${id}`, {
-                method: 'GET'
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Recargar la página después de eliminar el producto
-                    location.reload();
-                } else {
-                    console.error('Error al eliminar el producto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error de red:', error);
-            });
-        }
-
-        function mostrarLista() {
-            var lista = document.getElementById("listaInventario");
-            if (lista.style.display === "block") {
-                lista.style.display = "none";
-            } else {
-                lista.style.display = "block";
-            }
-        }
-    </script>
-
-<!-- Estilos al final de la pagina para el js -->
+</div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>   
 <script>
     $(".menu1 > ul > li").click(function(e){
@@ -368,10 +365,83 @@
         $(".sidebar1").toggleClass("activeos");
     });
 </script>
+<script>
+    function confirmarEliminar(id) {
+        // Mostrar una alerta de confirmación
+        if (confirm("¿Estás seguro de que quieres eliminar este producto?")) {
+            // Llamar a la función eliminarProducto si el usuario confirma
+            eliminarProducto(id);
+        } else {
+            // Si el usuario cancela, no hacer nada
+            console.log("Eliminación cancelada por el usuario.");
+        }
+    }
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    function eliminarProducto(id) {
+        // Realizar una solicitud GET a la ruta de Flask para eliminar el producto
+        fetch(`/delete/${id}`, {
+            method: 'GET'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Recargar la página después de eliminar el producto
+                location.reload();
+            } else {
+                console.error('Error al eliminar el producto.');
+            }
+        })
+        .catch(error => {
+            console.error('Error de red:', error);
+        });
+    }
+
+    function mostrarLista() {
+        var lista = document.getElementById("listaInventario");
+        if (lista.style.display === "block") {
+            lista.style.display = "none";
+        } else {
+            lista.style.display = "block";
+        }
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            responsive: true,
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+    });
+</script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

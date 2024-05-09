@@ -1,17 +1,11 @@
 CREATE DATABASE AngieStudio;
 use AngieStudio;
 
-
-CREATE TABLE cart_item (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  product_id int(11) NOT NULL,
-  quantity int(11) NOT NULL
-);
-
 CREATE TABLE citas (
   id_cita int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   id_cliente int(11) NOT NULL,
   nombre varchar(100) NOT NULL,
+  cedula varchar(100) NOT NULL,
   servicio varchar(100) NOT NULL,
   empleado_nombre varchar(100) NOT NULL,
   fecha date NOT NULL,
@@ -52,6 +46,36 @@ CREATE TABLE product (
   quantity int(11) NOT NULL
 );
 
+CREATE TABLE cart (
+  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  product_id int(11) NOT NULL,
+  title varchar(80) NOT NULL,
+  image_path varchar(255) NOT NULL,
+  price float NOT NULL,
+  quantity int(11) NOT NULL,
+  total float NOT NULL,
+  FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+CREATE TABLE client (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  direccion VARCHAR(255) NOT NULL,
+  telefono VARCHAR(15) NOT NULL,
+  correo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE order_detail (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  client_id INT NOT NULL,
+  product_id INT NOT NULL,
+  product_name VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  total FLOAT NOT NULL,
+  FOREIGN KEY (client_id) REFERENCES client(id),
+  FOREIGN KEY (product_id) REFERENCES product(id)
+);
 
 CREATE TABLE productos (
   Id int(11) NOT NULL PRIMARY KEY,
@@ -122,14 +146,15 @@ CREATE TABLE salida_productos (
 CREATE TABLE servicios (
   id_servicio int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nombre varchar(100) NOT NULL,
+  precio decimal(10, 2) NOT NULL,
   empleado varchar(100) NOT NULL
-) ;
+);
 
-INSERT INTO servicios (id_servicio, nombre, empleado) VALUES
-(1, 'Corte de cabello', '2'),
-(2, 'Manicure', '2'),
-(3, 'Maquillaje', '1'),
-(4, 'Queratina', 'Dilan');
+INSERT INTO servicios (id_servicio, nombre, precio, empleado) VALUES
+(1, 'Corte de cabello','200000' , '2'),
+(2, 'Manicure', '200000' ,'2'),
+(3, 'Maquillaje','200000' , '1'),
+(4, 'Queratina', '200000' ,'Dilan');
 
 CREATE TABLE usuarios (
   id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -154,9 +179,6 @@ INSERT INTO usuarios (id, correo, password, id_rol, nombre, apellido, telefono, 
 (8, 'dilanjimenez208@gmail.com', 'Dilan1', 3, 'Dilan Yusep', 'Jimenez Yarce', 1231, NULL, NULL, 0),
 (9, 'dronlext@gmail.com', 'Oscar1', 3, 'Oscar', 'Sanabria', 312312, NULL, NULL, 0);
 
-
-ALTER TABLE cart_item
-  ADD CONSTRAINT fk_cart_item_product FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE;
 
 
 

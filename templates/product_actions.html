@@ -12,7 +12,6 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ product.title }}</h5>
                         <div class="btn-group" role="group">
-                            <a href="{{ url_for('update_product', id=product.id) }}" class="btn btn-primary">Actualizar</a>
                             <a href="{{ url_for('delete_product', id=product.id) }}" class="btn btn-danger">Borrar</a>
                             {% if not product.active %}
                             <a href="{{ url_for('activate_product', id=product.id) }}" class="btn btn-success">Activado</a>
