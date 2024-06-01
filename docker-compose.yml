@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+
+  db:
+    image: mysql:5.7
+    restart: always
+    command: --init-file /data/init.sql
+    environment:
+      MYSQL_DATABASE: 'AngieStudio'
+      MYSQL_ROOT_PASSWORD: '12345678'
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/data/init.sql
+
+volumes:
+  db_data: 

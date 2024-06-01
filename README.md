@@ -4,6 +4,24 @@
 
 In this repository you are going to find the code relative to my adso project...
 
+
+## Subir los Servicios con Docker:
+
+Asegurate de tener `docker` y `docker compose` en tu computador antes de correr el proyecto, 
+teniendo claro eso corre los siguientes comandos 
+
+```shell
+git clone https://github.com/Dilanss/Project.git project
+cd project
+docker-compose up --build
+```
+
+**If you are in linux and want to check the database write the next command in your CLI**:
+```shell
+sudo docker exec -it 5bf50e4222b8 mysql -u root -p
+```
+
+
 ## Clonar Repositorio
 
 Entra en tu terminal o tu visual estudio code y escribe lo siguiente 

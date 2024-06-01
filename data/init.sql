@@ -57,16 +57,16 @@ CREATE TABLE client (
 );
 
 CREATE TABLE usuarios (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   correo varchar(100) NOT NULL,
   password varchar(100) NOT NULL,
-  id_rol int(11) NOT NULL,
+  id_rol int NOT NULL,
   nombre varchar(100) DEFAULT NULL,
   apellido varchar(100) DEFAULT NULL,
-  telefono int(20) DEFAULT NULL,
+  telefono bigint DEFAULT NULL,
   Dias_trabajo varchar(100) DEFAULT NULL,
   Horario_trabajo varchar(100) DEFAULT NULL,
-  num_citas int(11) DEFAULT 0
+  num_citas int DEFAULT 0
 );
 
 CREATE TABLE cart (
@@ -151,6 +151,11 @@ INSERT INTO usuarios (id, correo, password, id_rol, nombre, apellido, telefono, 
 (11, 'Johan@gmail.com', '$2b$12$UtzSr.qMOD/jKD4HwvnX/uzqMP.COilrzna6BDKTMhb2az8Uz.9Jy', 2, 'Johan', 'Jimenez', 3115678901, 'Lunes a viernes', '8:00 a 5:00', 0),
 (12, 'Carlos@gmail.com', '$2b$12$1xLieR8TIIjePWClcXFc3ebhbnFZPu4TtWrBcqDB4toXGK9uLqdT6', 2, 'Carlos', 'Sanchez', 3136789012, 'Lunes a viernes', '8:00 a 5:00', 0);
 
+INSERT INTO usuarios 
+(id, correo, password, id_rol, nombre, apellido, telefono, Dias_trabajo, Horario_trabajo, num_citas) 
+VALUES 
+(NULL, 'admin@gmail.com', 'VztO1gspIHqSSafy53q0cZRTP9rk3j697ii', 1, 'Nombre', 'Apellido', 1234567890, NULL, NULL, 0);
+
 -- Crear los triggers
 DELIMITER $$
 CREATE TRIGGER after_delete_producto AFTER DELETE ON productos FOR EACH ROW 
@@ -186,3 +191,5 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
