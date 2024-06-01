@@ -14,9 +14,10 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Configuración para MySQL
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = 'db'
+app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '12345678'
 app.config['MYSQL_DB'] = 'AngieStudio'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = 'static/IMG'
@@ -453,7 +454,7 @@ def inventario():
     cur.execute("SELECT Id, Nombre, Fecha_Ingreso, Cantidad, Marca, FORMAT(Precio, 2) AS Precio, Descripcion, Imagen, Fecha_vencimiento FROM productos")
     productos_data = cur.fetchall()
     cur.close()
-    return render_template('inventario.html', productos=productos_data, nombre=session.get('nombre'))
+    return render_template('Inventario.html', productos=productos_data, nombre=session.get('nombre'))
 
 # Función para insertar un nuevo producto
 @app.route('/insert', methods=['POST'])
@@ -694,14 +695,14 @@ def Novedades():
         if marca:
             cur.execute("""
                 SELECT n.*, p.Cantidad AS Cantidad_Actual 
-                FROM Novedades n 
+                FROM novedades n 
                 JOIN productos p ON n.Id_Producto = p.Id 
                 WHERE p.Id = %s AND n.Marca = %s
             """, (Id_Producto, marca))
         else:
             cur.execute("""
                 SELECT n.*, p.Cantidad AS Cantidad_Actual 
-                FROM Novedades n 
+                FROM novedades n 
                 JOIN productos p ON n.Id_Producto = p.Id 
                 WHERE p.Id = %s
             """, (Id_Producto,))
@@ -710,14 +711,14 @@ def Novedades():
         if marca:
             cur.execute("""
                 SELECT n.*, p.Cantidad AS Cantidad_Actual 
-                FROM Novedades n 
+                FROM novedades n 
                 JOIN productos p ON n.Id_Producto = p.Id 
                 WHERE n.Marca = %s
             """, (marca,))
         else:
             cur.execute("""
                 SELECT n.*, p.Cantidad AS Cantidad_Actual 
-                FROM Novedades n 
+                FROM novedades n 
                 JOIN productos p ON n.Id_Producto = p.Id
             """)
     novedades_data = cur.fetchall()
@@ -725,7 +726,7 @@ def Novedades():
 
     # Obtener todas las marcas distintas de la tabla de novedades
     cur = mysql.connection.cursor()
-    cur.execute("SELECT DISTINCT Marca FROM Novedades")
+    cur.execute("SELECT DISTINCT Marca FROM novedades")
     marcas_data = cur.fetchall()
     cur.close()
 
@@ -954,7 +955,7 @@ def actualizar_cuenta():
     usuario = cur.fetchone()
     cur.close()
 
-    return render_template('Cambiar_perfil.html', usuario=usuario)
+    return render_template('Cambiar_Perfil.html', usuario=usuario)
 
 # ---------------------------------------------------- Catalogo
 @app.route('/Home_Catalogo')
