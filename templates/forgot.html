@@ -1,4 +1,4 @@
-<html lang="en">
++<html lang="en">
 
 <head>
     <title>Recuperar contraseña</title>
@@ -43,8 +43,8 @@
                     </div>
                 </form>
                 {% if error %}
-                <div class="form-group">
-                    <div class="alert alert-danger bg-danger"><h3 class="blink_text">No encontrado</h3></div>
+                <div class="alert alert-danger" role="alert">
+                    <strong>No encontrado:</strong> {{ error }}
                 </div>
                 {% endif %}
     

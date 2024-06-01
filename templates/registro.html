@@ -11,85 +11,96 @@
     <title>Registro</title>
 </head>
 <body id="Registro">
-    <div class="container-form">
-        <div class="form-information">
-            <div class="form-information-childs">
-                <h2>Crear una Cuenta</h2>
-                <div class="icons">
-                    <i class='bx bxl-google'></i>
-                </div>
-                <form class="form" action="crear-registro" method="post">
-                    <h1>Registro</h1>
-                    {% if mensaje %}
-                    {{mensaje}}
-                    {% endif %}
+    <div class="container">
+        <div class="row container-form">
+            <div class="col-12 col-md-12 col-sm-12 form-information">
+                <div class="form-information-childs">
+                    <h2>Crear una Cuenta</h2>
                     <br>
-                    <label>
-                        <i class='bx bx-envelope'></i>
-                        <input type="email" class="Correo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa tu correo" name="txtCorreo" required>
-                    </label>
-                    <label>
-                        <i class='bx bx-lock'></i>
-                        <input type="password" class="password" id="exampleInputPassword1" placeholder="Contraseña" name="txtPassword" required>
-                    </label>
-                    <div id="mensaje"></div>
-                    <label>
-                        <i class='bx bx-user'></i>
-                        <input type="text" class="Nombre" id="exampleInputName" placeholder="Nombre" name="txtNombre" required>
-                    </label>
-                    <label>
-                        <i class='bx bx-user'></i>
-                        <input type="text" class="Apellido" id="exampleInputApellido" placeholder="Apellido" name="txtApellido" required>
-                    </label>
-                    <label>
-                        <i class='bx bx-phone'></i>
-                        <input type="text" class="Telefono" id="exampleInputTelefono" placeholder="Teléfono" name="txtTelefono" required>
-                    </label>
-                    
-                    <button type="submit" class="btn btn-primary" id="boton">Registrar</button>
-                </form>
+                    <p>Para ser beneficiario de nuestros servicios te invitamos a registrarte.</p>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert {% if category == 'error' %}alert-danger{% else %}alert-info{% endif %}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form class="form" action="crear-registro" method="post">
+                        <label class="login-form">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" class="Correo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa tu correo" name="txtCorreo" required>
+                        </label>
+                        <label>
+                            <i class='bx bx-lock'></i>
+                            <input type="password" class="password" id="exampleInputPassword1" placeholder="Contraseña" name="txtPassword" required>
+                        </label>
+                        <div id="password-message"></div>
+                        <label>
+                            <i class='bx bx-user'></i>
+                            <input type="text" class="Nombre" id="exampleInputName" placeholder="Nombre" name="txtNombre" required>
+                        </label>
+                        <label>
+                            <i class='bx bx-user'></i>
+                            <input type="text" class="Apellido" id="exampleInputApellido" placeholder="Apellido" name="txtApellido" required>
+                        </label>
+                        <label>
+                            <i class='bx bx-phone'></i>
+                            <input type="text" class="Telefono" id="exampleInputTelefono" placeholder="Teléfono" name="txtTelefono" required>
+                        </label>
+                        
+                        <button type="submit" class="btn btn-primary" id="boton">Registrar</button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="information">
-            <div class="info-childs">
-                <h2>Bienvenido</h2>
-                <p>
-                    Para ser beneficiario de nuestros servicios te invitamos a registrarte.
-                </p>
-                <a href="{{url_for('login')}}"><input type="button" value="Inicio de sesión"></a>
+            <div class="col-12 col-md-12 col-sm-12 information">
+                <div class="info-childs">
+                    <h2>Bienvenido</h2>
+                    <p>
+                        Si ya tienes una cuenta inicia sesion.
+                    </p>
+                    <a href="{{url_for('login')}}"><input type="button" value="Inicio de sesión"></a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector("form").addEventListener("submit", function(event){
-                var contrasena = document.getElementById("exampleInputPassword1").value;
-                var mensaje = document.getElementById("mensaje");
-    
-                // Comprobar si la contraseña tiene al menos 8 caracteres
-                if (contrasena.length < 8) {
-                    mensaje.textContent = "La contraseña debe tener al menos 8 caracteres.";
-                    event.preventDefault();
+            document.getElementById("exampleInputPassword1").addEventListener("input", function(event) {
+                var password = event.target.value;
+                var message = document.getElementById("password-message");
+        
+                // Verificar si la contraseña tiene al menos 8 caracteres
+                var regexLength = /.{8,}/;
+                if (!regexLength.test(password)) {
+                    message.textContent = "La contraseña debe tener al menos 8 caracteres.";
                     return;
                 }
-    
-                // Comprobar si la contraseña contiene al menos una mayúscula
-                if (!/[A-Z]/.test(contrasena)) {
-                    mensaje.textContent = "La contraseña debe contener al menos una mayúscula.";
-                    event.preventDefault();
+        
+                // Verificar si la contraseña contiene al menos una mayúscula
+                var regexUpperCase = /[A-Z]/;
+                if (!regexUpperCase.test(password)) {
+                    message.textContent = "La contraseña debe contener al menos una mayúscula.";
                     return;
                 }
-    
-                // Comprobar si la contraseña contiene al menos un caracter especial
-                if (!/[^A-Za-z0-9]/.test(contrasena)) {
-                    mensaje.textContent = "La contraseña debe contener al menos un caracter especial.";
-                    event.preventDefault();
+        
+                // Verificar si la contraseña contiene al menos un número
+                var regexNumber = /\d/;
+                if (!regexNumber.test(password)) {
+                    message.textContent = "La contraseña debe contener al menos un número.";
                     return;
                 }
+        
+                // Si la contraseña cumple con todos los requisitos, borrar el mensaje de error
+                message.textContent = "";
             });
         });
     </script>
+    
 
 </body>
 </html>

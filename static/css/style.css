@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 
-
 /* estilos para el home */
 /*--------------------------------------------------------------
 # General
@@ -564,6 +563,10 @@
   #home #hero .btn-watch-video {
     font-size: 13px;
   }
+
+  .nav-perfil .sidebar1 {
+    height: 0px;
+  }
 }
 
 @media (max-height: 500px) {
@@ -980,107 +983,6 @@
   height: 100px;
   border-radius: 10px;
 }
-/*--------------------------------------------------------------
-# Testimonials
---------------------------------------------------------------*/
-#home .testimonials {
-  padding: 80px 0;
-  background: url("../img/testimonials-bg.jpg") no-repeat;
-  background-position: center center;
-  background-size: cover;
-  position: relative;
-}
-
-#home .testimonials::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-}
-
-#home .testimonials .section-header {
-  margin-bottom: 40px;
-}
-
-#home .testimonials .testimonials-carousel,
-#home .testimonials .testimonials-slider {
-  overflow: hidden;
-}
-
-#home .testimonials .testimonial-item {
-  text-align: center;
-  color: #fff;
-}
-
-#home .testimonials .testimonial-item .testimonial-img {
-  width: 100px;
-  border-radius: 50%;
-  border: 6px solid rgba(255, 255, 255, 0.15);
-  margin: 0 auto;
-}
-
-#home .testimonials .testimonial-item h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px 0 5px 0;
-  color: #fff;
-}
-
-#home .testimonials .testimonial-item h4 {
-  font-size: 14px;
-  color: #ddd;
-  margin: 0 0 15px 0;
-}
-
-#home .testimonials .testimonial-item .quote-icon-left,
-#home .testimonials .testimonial-item .quote-icon-right {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 26px;
-}
-
-#home .testimonials .testimonial-item .quote-icon-left {
-  display: inline-block;
-  left: -5px;
-  position: relative;
-}
-
-#home .testimonials .testimonial-item .quote-icon-right {
-  display: inline-block;
-  right: -5px;
-  position: relative;
-  top: 10px;
-}
-
-#home .testimonials .testimonial-item p {
-  font-style: italic;
-  margin: 0 auto 15px auto;
-  color: #eee;
-}
-
-#home .testimonials .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
-
-#home .testimonials .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-
-#home .testimonials .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #FF7C97;
-}
-
-@media (min-width: 992px) {
-  #home .testimonials .testimonial-item p {
-    width: 80%;
-  }
-}
 
 /*--------------------------------------------------------------
 # Portfolio
@@ -1253,88 +1155,6 @@
 
 #home .portfolio-details .portfolio-description p {
   padding: 0;
-}
-
-/*--------------------------------------------------------------
-# Team
---------------------------------------------------------------*/
-#home .team {
-  padding: 60px 0;
-}
-
-#home .team .member {
-  margin-bottom: 20px;
-  overflow: hidden;
-  border-radius: 4px;
-  background: #fff;
-  box-shadow: 0px 2px 15px rgba(16, 110, 234, 0.15);
-}
-
-#home .team .member .member-img {
-  position: relative;
-  overflow: hidden;
-}
-
-#home .team .member .social {
-  position: absolute;
-  left: 0;
-  bottom: 30px;
-  right: 0;
-  opacity: 0;
-  transition: ease-in-out 0.3s;
-  text-align: center;
-}
-
-#home .team .member .social a {
-  transition: color 0.3s;
-  color: #222222;
-  margin: 0 3px;
-  padding-top: 7px;
-  border-radius: 4px;
-  width: 36px;
-  height: 36px;
-  background: #FFBCBF;
-  display: inline-block;
-  transition: ease-in-out 0.3s;
-  color: #fff;
-}
-
-#home .team .member .social a:hover {
-  background: #FF7C97;
-}
-
-#home .team .member .social i {
-  font-size: 18px;
-}
-
-#home .team .member .member-info {
-  padding: 25px 15px;
-}
-
-#home .team .member .member-info h4 {
-  font-weight: 700;
-  margin-bottom: 5px;
-  font-size: 18px;
-  color: #222222;
-}
-
-#home .team .member .member-info span {
-  display: block;
-  font-size: 13px;
-  font-weight: 400;
-  color: #aaaaaa;
-}
-
-#home .team .member .member-info p {
-  font-style: italic;
-  font-size: 14px;
-  line-height: 26px;
-  color: #777777;
-}
-
-#home .team .member:hover .social {
-  opacity: 1;
-  bottom: 15px;
 }
 
 /*--------------------------------------------------------------
@@ -1818,14 +1638,14 @@
   }
 }
 
-/* -------------------------------------------------------- Estilos para el login */
+
+/*=============================================
+=            LOGIN STYLES            =
+=============================================*/
 
 #Login * {
-  padding: 0;
-  margin: 0;
-  font-family: monospace;
+  font-family: 'Montserrat', sans-serif;
   text-decoration: none;
-  list-style: none;
 }
 
 #Login {
@@ -1850,7 +1670,7 @@
 }
 
 #Login .information {
-  width: 1000px;
+  width: 100%;
   height: 500px;
   display: flex;
   align-items: center;
@@ -1877,19 +1697,7 @@
   color: rgb(0, 0, 0);
 }
 
-#Login .info-first-part input {
-  background-color: transparent;
-  outline: none;
-  border: solid 2px #FF7C97;
-  border-radius: 20px;
-  padding: 10px 20px;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  transition: background-color 3.s ease;
-  padding: 10px;
-  background-color: #FF7C97;
-  width: 150px;
-}
+
 
 #Login .info-first-part input:hover {
   background-color: #FF7C97;
@@ -1922,7 +1730,7 @@
 }
 
 #Login .form-information-second img {
-  display: flex;
+  margin: 0 auto;
   width: 100px;
 }
 
@@ -1930,38 +1738,33 @@
   margin: -50px 17px 17px 17px;
 }
 
+#Login .logo-contain {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #Login .form img {
-  width: 200px;
+  width: 275px;
 }
 
 #Login .form label {
   display: contents;
   align-items: center;
   margin-bottom: 15px;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0 10px;
   box-shadow: 0 20px 20px rgb(240, 50, 243);
   
 }
 
-#Login .form label input {
-  width: 100%;
-  padding: 20px;
-  background-color: fff;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  color: black;
-  border: 1px solid transparent;
-  margin-bottom: 10px;
-  font-size: 20px;
-  border-bottom:solid 2px black;
-}
 
-#Login .form input[type="submit"]{
+
+#Login .input-submit{
   background-color: #FF7C97;
   color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
@@ -2011,7 +1814,6 @@ transition: all 0.3s ease;
 
 #Login .icons i{
   border-radius: 50%;
-  padding: 15px;
   cursor: pointer;
   margin: 0 10px;
   color: #ffbcbf;
@@ -2026,62 +1828,106 @@ transition: all 0.3s ease;
 }
 
 #Login .form{
-  margin: 30px 0 0 0;
+  margin: 0;
+  padding: 10px 30px;
 }
 
 #Login .form label{
+  background-color: transparent;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 15px;
-  border-radius: 20px;
-  padding: 10px 10px;
+  border-radius: 8px;
+  padding: 5px 8px;
   box-shadow: 0 2px 5px rgba(0,0, 0, .1);
   width: 500px;
 }
 
+#Login .form label i{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 #Login .form label input{
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   background-color: #fff;
   border: none;
   outline: none;
-  border-radius: 20px;
   color: #333;
 }
 
-/*RESPONSIVE FORM*/
-
-@media screen and (max-width:750px) {
-html {
-  font-size: 12px;
-}
+a.link-password {
+  color: #000;
+  font-size: 0.8rem;
+  padding: 10px !important;
 }
 
-@media screen and (max-width:580px) {
-html {
-  font-size: 15px;
+
+/*=============================================
+=            END LOGIN STYLES            =
+=============================================*/
+
+
+/* Ajustes para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  #Login .container {
+    flex-direction: column;
+    height: auto;
+    max-width: none;
+  }
+
+  #Login .information,
+  #Login .form-information {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  #Login .info-first-part,
+  #Login .form-information-second {
+    padding: 20px;
+  }
+
+  #Login .info-first-part h2,
+  #Login .form-information-second h2 {
+    font-size: 2rem;
+  }
+
+  #Login .form label {
+    width: 100%;
+  }
+
+  #Login #volver {
+    top: 20px;
+    left: 20px;
+  }
 }
 
-#Login .container-form {
-  height: auto;
-  flex-direction: column;
-}
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+  #Login .info-first-part h2,
+  #Login .form-information-second h2 {
+    font-size: 1.5rem;
+  }
 
-#Login .information {
-  width: 100%;
-  padding: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0;
-}
+  #Login .form-information-second img {
+    width: 80px;
+  }
 
-#Login .form-information {
-  width: 100%;
-  padding: 20px;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 0;
-}
+  #Login .form label i {
+    font-size: 20px;
+  }
+
+  #Login .form label input {
+    padding: 5px;
+  }
+
+  #Login .input-submit {
+    padding: 8px 12px;
+  }
 }
 
 /* -------------------------------------------------------------Estilos para el registro */
@@ -2109,7 +1955,7 @@ background-size: cover;
   border-radius: 20px;
   box-shadow: 0 5px 7px rgba(0,0, 0, .1);
   height: 500px;
-  max-width: 900px;
+  max-width: 100%;
   transition: all 1s ease;
   margin: 10px;
 }
@@ -2140,13 +1986,14 @@ background-size: cover;
 }
 
 #Registro .info-childs input{
-  background-color: transparent;
-  outline: none;
-  border: solid 2px white;
-  border-radius: 20px;
-  padding: 10px 20px;
+  background-color: #FF7C97;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background-color .3s ease;
+  margin-top: 10px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .1);
 }
 
 #Registro .info-childs input:hover{
@@ -2207,15 +2054,14 @@ background-size: cover;
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0 10px;
-  box-shadow: 0 2px 5px rgba(0,0, 0, .1);
+  background-color: #fff;
 }
 
 #Registro .form label input{
   width: 316px;
   padding: 10px;
-  background-color: #fff;
   border: none;
   outline: none;
   border-radius: 20px;
@@ -2292,10 +2138,12 @@ background-size: cover;
   html{
       font-size: 10px;
   }
+
   #Registro .container-form{
       height: auto;
       flex-direction: column; 
   }
+  
   #Registro .information{
       width: 100%;
       padding: 20%;
@@ -2303,7 +2151,10 @@ background-size: cover;
       border-top-right-radius: 0px;
       border-bottom-left-radius: 20px; 
       border-bottom-right-radius: 20px;
+  }
 
+  #Registro .input {
+    width: 100%;
   }
 
   #Registro .form-information{
@@ -2314,99 +2165,6 @@ background-size: cover;
       border-top-right-radius: 20px;
       border-top-left-radius: 20px;
   }
-}
-
-/* ---------------------------------------------------------------Menu para el cliente */
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
-#Cliente {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-
-#Cliente nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Cliente	*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-#Cliente	.container{
-width: 90%;
-max-width: 1200px;
-margin: auto;
-}
-
-#Cliente .container .btn-menu, .logo{
-float: left;
-line-height:200px;
-}
-
-#Cliente body{
-  background: #dfe9f5;
-}
-
-#Cliente .contenedor{
-  display: flex;
-}
-
-#Cliente nav{
-  position: relative;
-  top: 0;
-  bottom: 0;
-  height: 145vh;
-  left: 0;
-  background: #fff;
-  width: 280px;
-  overflow: hidden;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-}
-
-#Cliente nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-}
-
-#Cliente nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Cliente nav .logo span{
-  font-weight: bold;
-  padding-left: 15px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-#Cliente nav a{
-  position: relative;
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table;
-  width: 280px;
-  padding: 10px;
-}
-
-#Cliente nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
 }
 
 #Cliente nav .nav-item{
@@ -2503,61 +2261,7 @@ line-height:200px;
   max-width: 1200px;
   margin: auto;
   }
-/* #admin nav{
-  position: relative;
-  top: 0;
-  bottom: 0;
-  height: 145vh;
-  left: 0;
-  background: #fff;
-  width: 280px;
-  overflow: hidden;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-} */
-/* #admin nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-}
-#admin nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-#admin nav .logo span{
-  font-weight: bold;
-  padding-left: 40px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-#admin nav a{
-  position: relative;
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table;
-  width: 280px;
-  padding: 10px;
-}
-#admin nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
-}
-#admin nav .nav-item{
-  position: relative;
-  top: 12px;
-  margin-left: 10px;
-}
-#admin nav a:hover{
-  background: #eee;
-}
-#admin nav .logout{
-  position: absolute;
-  bottom: 370px;
-} */
+
 
 /* --------------------------------------------------------------Estilos para el Empleado */
 #Empleado, body {
@@ -2568,49 +2272,24 @@ line-height:200px;
 #Empleado .contenedor{
   display: flex;
 }
-/* #Empleado {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-#Empleado body{
-  margin: 0;
-  padding: 0;
-}
-
-#Empleado nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-/* #Empleado	*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
 
 #Empleado	.container{
-
-width: 90%;
 max-width: 1200px;
-margin: auto;
 }
 
 #Empleado .container .btn-menu, .logo{
 float: left;
 line-height:200px;
 }
+
 #Empleado body{
   background: #dfe9f5;
 }
+
 #Empleado .contenedor{
   display: flex;
 }
+
 #Empleado nav{
   position: relative;
   top: 0;
@@ -2622,22 +2301,26 @@ line-height:200px;
   overflow: hidden;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
+
 #Empleado nav .logo{
   text-align: center;
   display: flex;
   margin: 10px 0 0 10px;
 }
+
 #Empleado nav .logo img{
   width: 45px;
   height: 45px;
   border-radius: 50%;
 }
+
 #Empleado nav .logo span{
   font-weight: bold;
   padding-left: 15px;
   font-size: 18px;
   text-transform: uppercase;
 }
+
 #Empleado nav a{
   position: relative;
   color: rgb(85, 83, 83);
@@ -2646,6 +2329,7 @@ line-height:200px;
   width: 280px;
   padding: 10px;
 }
+
 #Empleado nav .fas{
   position: relative;
   width: 70px;
@@ -2654,14 +2338,17 @@ line-height:200px;
   font-size: 20px;
   text-align: center;
 }
+
 #Empleado nav .nav-item{
   position: relative;
   top: 12px;
   margin-left: 10px;
 }
+
 #Empleado nav a:hover{
   background: #eee;
 }
+
 #Empleado nav .logout{
   position: absolute;
   bottom: 375px;
@@ -2685,47 +2372,6 @@ line-height:200px;
   font-size: 54px;
 }
 
-/* #Modulos .row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
-
-/* #Modulos .col-lg-4 {
-  flex: 0 0 50%;
-  max-width: 50%;
-} */
-
-/* #Modulos .card-servicios {
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 40px;
-}
-
-#Modulos .card-servicios a {
-  background-color: #7f0072;
-  width: 540.9px; 
-  max-width: 100%; 
-  color: white;
-  font-weight: 700;
-  font-size: 26px;
-  text-decoration: none;
-  position: absolute;
-  bottom: 0;
-  left: 45%;
-  transform: translateX(-50%);
-  text-align: center;
-  transition: .5s;
-  height: 50px;
-  line-height: 50px; 
-}
-
-#Modulos .card-servicios img {
-  max-width: 90%;
-  height: auto;
-} */
-
-
 /* --------------------------------------------------------------- Inventario */
 #Inventario {
   margin: 0;
@@ -2734,13 +2380,6 @@ line-height:200px;
   font-family: "Poppins", sans-serif;
 }
 
-/* #Inventario nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-} */
 
 #Inventario	*{
   margin: 0;
@@ -2752,11 +2391,9 @@ line-height:200px;
   max-width: 1200px;
   margin: auto;
   margin-top: 20px;
-  /* margin-left: 280px; */
 }
 
 #Inventario .container .btn-menu, .logo{
-  /* float: left; */
   line-height:200px;
 }
 
@@ -2769,475 +2406,9 @@ line-height:200px;
   top: 0;
   left: 0;
   bottom: 0;
-  /* background: #fff;
-  width: 243px; */
-  /* overflow-y: auto;  */
-  /* box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1); */
-  /* z-index: 1000;  */
 }
 
-/* #Inventario nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-} */
-
-/* #Inventario nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#Inventario nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Inventario nav .logo span{
-  font-weight: bold;
-  padding-left: 38px;
-  font-size: 18px;
-  text-transform: uppercase;
-} */
-
-/* #Inventario nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Inventario nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
-}
-
-#Inventario nav .nav-item{
-  position: relative;
-  top: 12px;
-  margin-left: 10px;
-}
-
-#Inventario nav a:hover {
-  background: #eee;
-}
-
-#Inventario nav .logout{
-  position: absolute;
-  bottom: 10px;
-} */
-
-
-/* ----------------------------------------------------------- Entrada de productos */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
-#Entrada {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-#Entrada nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Entrada	*{
-  margin: 0;
-  box-sizing: border-box;
-}
-
-#Entrada	.container{
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  margin-top: 20px;
-  margin-left: 280px;
-}
-
-#Entrada .container .btn-menu, .logo{
-  float: left;
-  line-height:200px;
-}
-
-#Entrada body{
-  background: #dfe9f5;
-}
-
-#Entrada nav {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: #fff;
-  width: 234px;
-  overflow-y: auto; 
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  z-index: 1000; 
-}
-
-#Entrada nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-}
-
-#Entrada nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#Entrada nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Entrada nav .logo span{
-  font-weight: bold;
-  padding-left: 40px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-#Entrada nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Entrada nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
-}
-
-#Entrada nav .nav-item{
-  position: relative;
-  top: 12px;
-  margin-left: 10px;
-}
-
-#Entrada nav a:hover {
-  background: #eee;
-}
-
-#Entrada nav .logout{
-  position: absolute;
-  bottom: 10px;
-}
-
-
-/* ----------------------------------------------------------- Salidas de productos*/
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
-#Salidas {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-#Salidas nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Salidas	*{
-  margin: 0;
-  box-sizing: border-box;
-}
-
-#Salidas	.container{
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  margin-top: 20px;
-  margin-left: 280px;
-}
-
-#Salidas .container .btn-menu, .logo{
-  float: left;
-  line-height:200px;
-}
-
-#Salidas body{
-  background: #dfe9f5;
-}
-
-#Salidas nav {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: #fff;
-  width: 252px;
-  overflow-y: auto; 
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  z-index: 1000; 
-}
-
-#Salidas nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-}
-
-#Salidas nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#Salidas nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Salidas nav .logo span{
-  font-weight: bold;
-  padding-left: 55px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-#Salidas nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Salidas nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
-}
-
-#Salidas nav .nav-item{
-  position: relative;
-  top: 12px;
-  margin-left: 10px;
-}
-
-#Salidas nav a:hover {
-  background: #eee;
-}
-
-#Salidas nav .logout{
-  position: absolute;
-  bottom: 10px;
-}
-
-
-/* ----------------------------------------------------------------- Novedades de productos */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
-#Novedades {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-#Novedades nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Novedades	*{
-  margin: 0;
-  box-sizing: border-box;
-}
-
-#Novedades	.container{
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  margin-top: 20px;
-  margin-left: 280px;
-}
-
-#Novedades .container .btn-menu, .logo{
-  float: left;
-  line-height:200px;
-}
-
-#Novedades body{
-  background: #dfe9f5;
-}
-
-#Novedades nav {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: #fff;
-  width: 249px;
-  overflow-y: auto; 
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  z-index: 1000; 
-}
-
-#Novedades nav .logo{
-  text-align: center;
-  display: flex;
-  margin: 10px 0 0 10px;
-}
-
-#Novedades nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#Novedades nav .logo img{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Novedades nav .logo span{
-  font-weight: bold;
-  padding-left: 38px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-#Novedades nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Novedades nav .fas{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  top: 14px;
-  font-size: 20px;
-  text-align: center;
-}
-
-#Novedades nav .nav-item{
-  position: relative;
-  top: 12px;
-  margin-left: 10px;
-}
-
-#Novedades nav a:hover {
-  background: #eee;
-}
-
-#Novedades nav .logout{
-  position: absolute;
-  bottom: 10px;
-}
-
-
-/* ------------------------------------------------ Estilos para el Registro de empleado */
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
-
-#Registrar_Empleado {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-#Registrar_Empleado body {
-  background: #dfe9f5;
-  margin: 0;
-  padding: 0;
-}
-
-#Registrar_Empleado .contenedor {
-  display: flex;
-  justify-content: center; 
-}
-
-#Registrar_Empleado nav {
-  background: #fff;
-  width: 362px;
-  height: 953px;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-}
-
-#Registrar_Empleado nav .logo {
-  text-align: center;
-  margin: 10px 0;
-}
-
-#Registrar_Empleado nav .logo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-#Registrar_Empleado nav .logo span {
-  font-weight: bold;
-  padding-left: 2px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-#Registrar_Empleado nav a {
-  color: rgb(85, 83, 83);
-  font-size: 14px;
-  display: table; 
-  padding: 10px;
-  text-decoration: none;
-}
-
-#Registrar_Empleado nav .fas {
-  width: 70px;
-  height: 40px;
-  font-size: 20px;
-  text-align: center;
-}
-
-#Registrar_Empleado nav .nav-item {
-  margin-left: 10px;
-}
-
-#Registrar_Empleado nav a:hover {
-  background: #eee;
-}
-
-#Registrar_Empleado nav .logout {
-  position: absolute;
-  bottom: 0;
-}
-
-/* ----------------------------------------------------------------- Citas*/
+/* ----------------------------------------------------------------- Citas y vistas del sidebar*/ 
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700");
 
@@ -3258,15 +2429,14 @@ line-height:200px;
 .citasas #Modulos-cita h2 span {
   font-size: 54px;
 }
-
-
 /*parte de citas las tablas*/
 .citasas .table-responsive {
-  padding: 0px 25px;
+  border-radius: 10px;
+  padding: 0px 20px;
   margin: 30px 0;
 }
 .citasas .table-wrapper {
-  min-width: 320px;
+  min-width: 193px;
   background: #fff;
   padding: 20px 25px;
   border-radius: 3px;
@@ -3285,6 +2455,7 @@ line-height:200px;
   font-size: 24px;
 }
 .citasas .table-title .btn {
+  border-radius: 5px;
   color: #ffffff;
   float: right;
   font-size: 13px;
@@ -3292,8 +2463,8 @@ line-height:200px;
   border: none;
 }
 .citasas .table-title .btn:hover, .table-title .btn:focus {
-  color: #ffffff;
-  background: #FFEFEF;
+  color: #000000;
+  background: #FF7C97;
 }
 .citasas .table-title .btn i {
   float: left;
@@ -3326,12 +2497,7 @@ line-height:200px;
   margin: 0 5px;
   cursor: pointer;
 }	
-.citasas table.table td a {
-  font-weight: bold;
-  color: #566787;
-  display: inline-block;
-  text-decoration: none;
-}
+
 .citasas table.table .avatar {
   border-radius: 50%;
   vertical-align: middle;
@@ -3390,7 +2556,7 @@ line-height:200px;
 }
 
 .main--content{
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   background: #fff;
   padding: 1rem;
@@ -3676,8 +2842,8 @@ border-color: #218838;
 }
 .sidebar1{
   position: relative;
-  width: 256px;
-  /* height: 100vh; */
+  width: 230px;
+  /* height: 140vh; */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -3689,8 +2855,8 @@ border-color: #218838;
 
 .sidebar1 .head1{
   display: flex;
-  gap: 20px;
-  padding-bottom: 20px;
+  gap: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #fff;
 }
 .logo-img{
@@ -3741,12 +2907,12 @@ border-color: #218838;
   color: black;
   text-decoration: none;
   padding: 12px 8px;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0,3s;
 }
 .menu1 ul li > a:hover,
 .menu1 ul li.activeos > a{
-  color: #FFBCBF;
+  color: #ff8b90;
   background-color: #fff;
 }
 
@@ -3804,6 +2970,7 @@ border-color: #218838;
 }
 
 .menu1-boton i{
+  display: flex;
   transition:  all 0.3s;
 }
 
@@ -3879,8 +3046,6 @@ border-color: #218838;
   box-shadow: 0px 10px 8px rgba(0, 0, 0, 0,1);
 }
 
-
-
 /* modulos update*/
 
 .contenedor  #Modulos{
@@ -3890,7 +3055,8 @@ border-color: #218838;
 .cartasos {
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: 0px 20px;
+    margin-top: 8px;
   }
   
   .cartasos .carta1 {
@@ -3898,7 +3064,7 @@ border-color: #218838;
     margin-bottom: 40px;
     background: #fff;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
@@ -3934,25 +3100,11 @@ border-color: #218838;
   .cartasos .carta1:hover .crtexto,
   .cartasos .carta1:hover .cardName,
   .cartasos .carta1:hover .iconBx {
-    color: pink;
+    color: #ff8b90;
   }
 
 
-  @media (max-width: 991px) {
-    .cartasos {
-        grid-template-columns: repeat(2, 1fr);
-      }
 
-  }
-
-  @media (max-width: 480px) {
-    .cartasos {
-        grid-template-columns: repeat(1, 1fr);
-      }
-      .cardHeader h2 {
-        font-size: 20px;
-      }
-  }
 
 
   #Empleado .citas{
@@ -3978,32 +3130,556 @@ border-color: #218838;
   }
   
   .iconososo:hover{
-    color: #ffc0cb;
+    color: #ff8b90;
     }
   
   .modulosos{
-    padding: 10px 35px;
+    padding: 10px 32px;
   }
 
 .listaE{
-  padding: 5px 25px;
+  padding: 0px 25px;
+  margin-bottom: 8px;
 }
 
 .estadistica{
-
-  padding: 10px 20px;
-}
-
-.estadist1{
-  border-radius: 10px;
-  position: relative;
-  background: #fff;
+  padding: 0px 20px;
+  margin-bottom: 25px;
 }
 
 /*perfil*/
 
 .wrapper{
   height: 550px;
+  padding: 30px 50px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 10px auto;
+  max-width: 600px;
+}
+
+.lab label{
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #777;
+  padding-left: 3px;
+}
+
+.form-control{
+  border-radius: 10px;
+}
+
+@media(max-width:576px){
+  .wrapper{
+      padding: 25px 20px;
+  }
+  #deactivate{
+      line-height: 18px;
+  }
+}
+
+.iconosi{
+color: #ff8b90;
+display: flex; 
+justify-content: center; 
+align-items: center; 
+font-size: 65px; 
+height: 50px; 
+}
+.boton12 {
+background-color: #ffc0cb;
+border-radius: 5px;
+border-style: none;
+box-sizing: border-box;
+color: #FFFFFF;
+cursor: pointer;
+display: inline-block;
+font-size: 14px;
+font-weight: 500;
+height: 40px;
+line-height: 20px;
+list-style: none;
+margin: 0;
+outline: none;
+padding: 10px 16px;
+position: relative;
+text-align: center;
+text-decoration: none;
+transition: color 100ms;
+vertical-align: baseline;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+}
+
+.boton12:hover,
+.boton12:focus {
+  color: #000000;
+  background: #FF7C97;
+}
+
+/*botones modales*/
+.citasas .bete{
+  background-color: #ffc0cb;
+  border: none;
+  transition: all .4s;
+}
+
+.citasas .bete:hover{
+  color: #000000;
+  background: #FF7C97;
+}
+.citasas .tytu{
+  color: #000000 !important;
+}
+.citasas .botoncito{
+margin-top: 20px;
+}
+.citasas .textito{
+  border-radius: 10px;
+}
+.tacol{
+  background-color: #ffc7c7 !important;
+}
+
+/*botones de tabalas*/
+.trash1{
+  font-size: 27px;
+  color: #ff0000;
+  background-color: transparent;
+  border: none;
+}
+.edit1{
+  font-size: 27px;
+  color: #00d0ff;
+  background-color: transparent;
+  border: none;
+}
+.edit2{
+  font-size: 27px;
+  color: #00d0ff;
+  background-color: transparent;
+  border: none;
+}
+.plus1{
+  font-size: 27px;
+  color: #00ff00;
+  background-color: transparent;
+  border: none;
+}
+.button-container {
+  display: flex; 
+}
+
+.button-container > * {
+  margin-right: 5px; 
+}
+
+.custom-notifications {
+  z-index: 9999;
+  position: fixed;
+  top: 30px;
+  right: 20px;
+}
+
+.custom-notifications :where(.custom-toast, .column) {
+  display: flex;
+  align-items: center;
+}
+
+.custom-notifications .custom-toast {
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  border-radius: 4px;
+  padding: 16px 17px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  justify-content: space-between;
+  animation: show_toast 0.3s ease forwards;
+}
+i:hover{
+  color: #000000;
+  transition: all .4s;
+}
+@keyframes show_toast {
+  0% {
+    transform: translateX(100%);
+  }
+  40% {
+    transform: translateX(-5%);
+  }
+  80% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
+
+.custom-notifications .custom-toast.hide {
+  animation: hide_toast 0.3s ease forwards;
+}
+
+@keyframes hide_toast {
+  0% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(0%);
+  }
+  80% {
+    transform: translateX(-5%);
+  }
+  100% {
+    transform: translateX(calc(100% + 20px));
+  }
+}
+
+.custom-toast::before {
+  position: absolute;
+  content: "";
+  height: 3px;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  animation: progress 2s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    width: 0%;
+  }
+}
+.custom-toast.success::before{
+  background: #adff2f;
+} 
+.custom-btn#custom-success {
+  background-color: #ffc0cb;
+  border: none;
+  font-size: 15px;
+  border-radius: 8px;
+  transition: all .4s;
+}
+.custom-btn#custom-success:hover{
+  color: #000000;
+  background: #FF7C97;
+}
+.custom-toast.error::before{
+  background: #ff0000;
+}
+.custom-btn#custom-error {
+  display: contents;
+  font-size: 27px;
+  color: #ff0000;
+  background-color: transparent;
+  border: none;
+  transition: all .4s;
+}
+.custom-btn#custom-error:hover{
+  color: #000000;
+  background: #FF7C97;
+}
+.custom-toast.warning::before{
+  background: yellow;
+}
+.custom-btn#custom-warning {
+  background-color: #ffc0cb;
+  border: none;
+  font-size: 15px;
+  border-radius: 8px;
+  transition: all .4s;
+}
+.custom-btn#custom-warning:hover{
+  color: #000000;
+  background: #FF7C97;
+}
+.custom-toast.info::before{
+  background: #00d0ff;
+}
+ .custom-btn#custom-info {
+  background-color: #ffc0cb;
+  border: none;
+  font-size: 15px;
+  border-radius: 8px;
+  transition: all .4s;
+}
+.custom-btn#custom-info:hover{
+  color: #000000;
+  background: #FF7C97;
+}
+
+.custom-toast .column i {
+  font-size: 1.75rem;
+}
+
+.custom-toast.success .column i {
+  color: #adff2f;
+}
+
+.custom-toast.error .column i {
+  color: #ff0000;
+}
+
+.custom-toast.warning .column i {
+  color: #ffff00;
+}
+
+.custom-toast.info .column i {
+  color: blue;
+}
+
+.custom-toast .column span {
+  font-size: 1.07rem;
+  margin-left: 12px;
+}
+
+.custom-toast i:last-child {
+  color: #aeb0d7;
+  cursor: pointer;
+}
+
+.custom-toast i:last-child:hover {
+  color: #000000;
+}
+
+.custom-buttons .custom-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0 5px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+/*responsive*/
+
+
+@media screen and (max-width: 530px) {
+  .custom-notifications {
+    width: 95%;
+  }
+  .custom-notifications .custom-toast {
+    width: 100%;
+    font-size: 1rem;
+    margin-left: 20px;
+  }
+  .custom-buttons .custom-btn {
+    margin: 0 1px;
+    font-size: 1.1rem;
+    padding: 8px 15px;
+  }
+}
+.custom-btn1#custom-warning {
+  font-size: 27px;
+  color: #00ff00;
+  background-color: transparent;
+  border: none;
+}
+
+.cliente1{
+  margin-top: 15px;
+  height: 50px;
+}
+
+.cartascli{
+  padding: 0px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contenidocli1{
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px ;
+  transition: all .4s;
+}
+
+.cliicono{
+  font-size: 70px;
+}
+.contenidocli1 > *{
+  flex: 1 1 100%
+}
+
+.contenidocli1 h3{
+  font-size: 30px;
+  margin: 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.contenidocli1 p{
+  font-size: 17px;
+}
+
+.contenidocli1 a{
+  margin: 22px 0;
+  background-color: #ffc0cb;
+  color: white;
+  border-radius: 12px; 
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 15px 0;
+  transition: all .2s ;
+}
+.contenidocli1 a:hover{
+  border-radius: 15px;
+  background-color: #ffffff;
+  color: #FF7C97;
+}
+.contenidocli1:hover{
+  color: white;
+  background-color: #FF7C97;
+}
+
+
+@media(max-width:640px){
+  .modulosos {
+    padding: 18px 28px 0px;
+  }
+  .iconososo {
+    font-size: 28px;
+  }
+  .menu1-boton{
+    display: none;
+  }
+  .sidebar1 {
+    width: 92px;
+    height: 140%; 
+}
+  
+.sidebar1 .menu1-boton i{
+  transform: rotate(180deg);
+}
+
+.sidebar1 .logo-detalles{
+  display: none;
+}
+.sidebar1 .menu1 .title1{
+  text-align: center;
+}
+
+.sidebar1 .menu1 ul li .flecha{
+  display: none;
+}
+
+.sidebar1 .menu1 > ul > li > a{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar1 .menu1 > ul > li > a .textoos{
+  z-index: 1;
+  position: absolute;
+  left: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: black;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.sidebar1 .menu1 > ul > li > a .textoos::after{
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 20%;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background-color: black;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.sidebar1 .menu1 > ul > li > a:hover .textoos{
+  left: 80px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar1 .menu1 .sub-menu1{
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 40px;
+  width: 200px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  border: 1px solid #FFBCBF;
+  background-color: #FFBCBF;
+  box-shadow: 0px 10px 8px rgba(0, 0, 0, 0,1);
+}
+
+/*parte del home*/
+.cartasos .carta1 {
+  margin-bottom: 20px;
+  padding: 19px 17px;
+  }
+  .graf{
+    margin-bottom: 27px;
+  }
+.citasas #Modulos-cita h2 {
+  font-size: 20px;
+  margin-bottom: 66px;
+}
+.citasas .table-title .btn {
+  margin-top: -90px;
+}
+.cartasos .carta1 .iconBx {
+  font-size: 2.5rem;
+}
+
+
+@media (max-width: 991px) {
+  .cartasos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 480px) {
+  .cartasos {
+      grid-template-columns: repeat(1, 1fr);
+      margin-bottom: 16px;
+      padding: 15px 20px;
+    }
+    .cardHeader h2 {
+      font-size: 20px;
+    }
+}
+@media (max-width: 640px) {
+  .citasas .table-title .btn {
+      margin: -59px 13px 62px;
+  }
+  
+}
+}
+@media (max-width: 860px) {
+  .cliente1{
+    padding: 0px 20px;
+    margin-bottom: 84px;
+  }
+}
+
+/*perfil*/
+
+.wrapper{
+  height: auto;
   padding: 30px 50px;
   border: 1px solid #ddd;
   border-radius: 15px;
@@ -4020,15 +3696,6 @@ border-color: #218838;
   color: #777;
   padding-left: 3px;
 }
-
-.form-control{
-  border-radius: 10px;
-}
-
-
-
-
-
 
 
 @media(max-width:576px){
@@ -4050,36 +3717,6 @@ justify-content: center;
 align-items: center; 
 font-size: 65px; 
 height: 50px; 
-}
-
-
-
-
-.boton12 {
-background-color: #EA4C89;
-border-radius: 8px;
-border-style: none;
-box-sizing: border-box;
-color: #FFFFFF;
-cursor: pointer;
-display: inline-block;
-
-font-size: 14px;
-font-weight: 500;
-height: 40px;
-line-height: 20px;
-list-style: none;
-margin: 0;
-outline: none;
-padding: 10px 16px;
-position: relative;
-text-align: center;
-text-decoration: none;
-transition: color 100ms;
-vertical-align: baseline;
-user-select: none;
--webkit-user-select: none;
-touch-action: manipulation;
 }
 
 .boton12:hover,
@@ -4105,4 +3742,316 @@ margin-top: 20px;
 }
 .citasas .textito{
   border-radius: 10px;
+}
+
+
+
+.creator{
+  display: flex;
+  align-items: center;
+  margin-top: .2rem;
+  margin-bottom: -.3rem;
+  ins{
+    color: #a89ec9;
+    text-decoration: none;
+  }
+  .wrapper{
+    display: flex;
+    align-items: center;
+    border: 1px solid #ffffff22;
+    padding: .3rem;
+    margin: 0;
+    margin-right: .5rem;
+    border-radius: 100%;
+    box-shadow: inset 0 0 0 4px #000000aa;
+    img{
+      border-radius: 100%;
+      width: 2rem;
+      height: 2rem;
+      object-fit: cover;
+      margin: 0;
+    }
+  }
+}
+
+.card-title{
+  color: rgb(0, 0, 0);
+  margin-top: 20px;
+}
+
+.card-text{
+  color: rgb(0, 0, 0);
+}
+
+.btn-agregar{
+  width: 100px;
+  height: 40px;
+  border-radius: 15px;
+  color: #ffffff;
+  font-size: 20px;
+  background: #9f9f9f;
+  border: none;
+  display: block;
+  margin: 0 auto;
+}
+
+/*Apartado producto*/
+.wrapper2 {
+  height: 650px;
+  padding: 30px 50px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  margin: 30px auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 500px;
+}
+
+/* CARDS CATALOGO*/
+
+#Empleado .servicios .icon-box {
+  text-align: center;
+  border: 1px solid #FFE6D1;
+  padding: 80px 20px;
+  transition: all ease-in-out 0.3s;
+  background: #fff;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+#Empleado .servicios .icon-box img {
+  height: 150px;
+  margin-top: -60px;
+}
+
+#Empleado .servicios .icon-box .icon {
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: ease-in-out 0.3s;
+}
+
+#Empleado .servicios .icon-box .icon i {
+  color: #FF8C9D;
+  font-size: 28px;
+  transition: ease-in-out 0.3s;
+}
+
+#Empleado .servicios .icon-box h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+#Empleado .servicios .icon-box h4 a {
+  color: #222222;
+  transition: ease-in-out 0.3s;
+}
+
+#Empleado .servicios .icon-box p {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+#Empleado .servicios .icon-box:hover {
+  border-color: #fff;
+  box-shadow: 0px 0 25px 0 #FF8C9D;
+}
+
+#Empleado .servicios .icon-box:hover h4 a,
+#Empleado .servicios .icon-box:hover .icon i {
+  color: #FF8C9D;
+}
+
+#Empleado .servicios .icon-box:hover .icon {
+  border-color: #FF8C9D;
+}
+
+#Empleado .servicios img {
+  height: 100px;
+  border-radius: 10px;
+}
+
+#Empleado .servicios .boton12 {
+  background-color: #ffc0cb;
+  border-radius: 5px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  margin-top: 30px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  }
+  
+  #Empleado .servicios .boton12:hover,
+  #Empleado .servicios .boton12:focus {
+    color: #000000;
+    background: #FF7C97;
+  }
+
+
+  /* CARDS ADMINISTRACIÓN DE PRODUCTOS*/
+
+  #Empleado .productos .icon-box {
+    text-align: center;
+    border: 1px solid #FFE6D1;
+    padding: 50px;  /* Aumenta el padding */
+    transition: all ease-in-out 0.3s;
+    background: #fff;
+    border-radius: 15px;
+    margin-top: 20px;
+    max-width: 100%;  /* Permite que el contenedor se ajuste al tamaño del contenedor padre */
+    margin: auto;
+}
+  
+  #Empleado .productos .icon-box img {
+    height: 200px;  /* Aumenta la altura de la imagen */
+    margin-top: -30px;
+    max-width: 100%;
+  }
+  
+  #Empleado .productos .icon-box .icon {
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: ease-in-out 0.3s;
+  }
+  
+  #Empleado .productos .icon-box .icon i {
+    color: #FF8C9D;
+    font-size: 28px;
+    transition: ease-in-out 0.3s;
+  }
+  
+  #Empleado .productos .icon-box h4 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+  
+  #Empleado .productos .icon-box h4 a {
+    color: #222222;
+    transition: ease-in-out 0.3s;
+  }
+  
+  #Empleado .productos .icon-box p {
+    line-height: 24px;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  
+  #Empleado .productos .icon-box:hover {
+    border-color: #fff;
+    box-shadow: 0px 0 25px 0 #FF8C9D;
+  }
+  
+  #Empleado .productos .icon-box:hover h4 a,
+  #Empleado .productos .icon-box:hover .icon i {
+    color: #FF8C9D;
+  }
+  
+  #Empleado .productos .icon-box:hover .icon {
+    border-color: #FF8C9D;
+  }
+  
+  #Empleado .productos img {
+    height: 100px;
+    border-radius: 10px;
+    max-width: 100%;  /* Asegura que la imagen no sobrepase el tamaño del contenedor */
+  }
+  
+  #Empleado .productos .custom-btn#custom-error {
+    display: inline-flex;  
+    align-items: center;
+    font-size: 27px;
+    color: #ff0000;
+    background-color: transparent;
+    border: none;
+    transition: all .4s;
+    margin-right: 15px;  
+    margin-top: 20px;    
+}
+
+#Empleado .productos .btn-spacing {
+    margin-top: 20px;  
+}
+
+.boton12:hover,
+.boton12:focus {
+    color: #000000;
+    background: #FF7C97;
+}
+
+.custom-toast.error::before {
+    background: #ff0000;
+}
+
+
+#Empleado .productos .botondoble1 {
+  border-radius: 10px;
+  background-color: #8DECB4;
+  border-color: #8DECB4;
+  color: #000;
+  transition: box-shadow 0.3s ease-in-out; 
+}
+
+#Empleado .productos .botondoble1:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#Empleado .productos .botondoble2 {
+  border-radius: 10px;
+  background-color: #FFEC9E;
+  border-color: #FFEC9E;
+  transition: box-shadow 0.3s ease-in-out; 
+}
+
+#Empleado .productos .botondoble2:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+.Boton13 {
+  margin-top: 22px;
+  font-size: 33px;
+  color: orange;
+}
+
+.Boton14 {
+  margin-top: 22px;
+  font-size: 33px;
+  color: green;
+}
+
+.nav-perfil .sidebar1 {
+  height: 100%;
 }

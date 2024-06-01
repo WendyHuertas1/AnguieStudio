@@ -1,38 +1,252 @@
-{% extends 'base.html' %}
-{% block title %}code store - Products{% endblock %}
-{% block content %}
-<div class="container">
-    <h3>Productos</h3>
-    <div class="container my-3 mx-3">
-        <ul class="list-unstyled d-flex">
-            {% for product in products %}
-            <li>
-                <div class="card text-center" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ product.image_path }}" alt="Product Image" height="250">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.title }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Precio: ${{ product.price }}</li>
-                            <li class="list-group-item">Disponible: {{ product.quantity }}</li> <!-- Mostrar la cantidad disponible -->
-                            <br>
-                            {% if product.active %}
-                            {% else %}
-                            <span class="text-danger">Producto Inactivo</span>
-                            {% endif %}
-                        </ul>
-                        <form action="{{ url_for('add_to_cart', id=product.id) }}" method="POST">
-                            <div class="form-group">
-                                <input type="number" class="form-control" name="quantity" placeholder="Cantidad" value="1" min="1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye la librería de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Incluye los estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"/>
+    <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">   
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <title>Home Catalogo</title>
+</head>
+<body id="Empleado">
+    <ul class="custom-notifications"></ul>
+    <div class="citasas">
+    <div class="content">
+        <div class="contenedor">
+            <div class="contariner1">
+                <div class="sidebar1">
+                    <div class="menu1-boton">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="head1">
+                        <div class="logo-img">
+                            <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
+                        </div>
+                            <div class="logo-detalles">
+                                <p class="titulo1os">Anguie Studio</p>
                             </div>
-                            <button type="submit" class="btn btn-primary">Agregar</button>
-                        </form>
+                    </div>
+                    <div class="nav1">
+                        <div class="menu1">
+                            <p class="title1">Menú</p>
+                            <ul>
+                                <li>
+                                    <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('Administrador') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                        <i class="iconoos bi bi-house-door"></i>
+                                            <span class="textoos">Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Citas')}}">
+                                        <i class="iconoos bi bi-envelope"></i>
+                                            <span class="textoos">Citas</span>
+                                    </a>
+                                </li>
+                                {% if session.get('id_rol') != 3 %}
+                                <li>
+                                    <a href="#">
+                                        <i class="iconoos bi bi-box2"></i>
+                                        <span class="textoos">Inventario</span>
+                                        <i class="flecha bi bi-caret-down"></i>
+                                    </a>
+                                    <ul class="sub-menu1">
+                                        <li>
+                                            <a href="{{ url_for('inventario')}}">
+                                                <span class="textoos">Inventario</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Entradas') }}">
+                                                <span class="textoos">Ver entradas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Salidas') }}">
+                                                <span class="textoos">Ver salidas</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('Novedades') }}">
+                                                <span class="textoos">Ver novedades</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+                                <li class="activeos">
+                                    <a href="#">
+                                        <i class="iconoos bi bi-journal-bookmark-fill"></i>
+                                        <span class="textoos">Catálogo</span>
+                                        <i class="flecha bi bi-caret-down"></i>
+                                    </a>
+                                    <ul class="sub-menu1">
+                                        <li>
+                                            <a href="{{ url_for('Home_Catalogo') }}">
+                                                <span class="textoos">Inicio</span>
+                                            </a>
+                                        </li>
+                                        {% if session.get('id_rol') != 1 %}
+                                        <li>
+                                            <a href="{{ url_for('cart') }}">
+                                                <span class="textoos">Carrito</span>
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if session.get('id_rol') != 3 %}
+                                        <li>
+                                            <a href="{{ url_for('product_actions') }}">
+                                                <span class="textoos">Administrar producto</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('ver_clientes') }}">
+                                                <span class="textoos">Productos apartados</span>
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    {% if session.get('id_rol') != 2 and session.get('id_rol') != 3 %}
+                                    <a href="{{ url_for('Registrar_Empleado')}}">
+                                        <i class="iconoos bi bi-people-fill"></i>
+                                        <span class="textoos">Agregar empleado</span>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if session.get('id_rol') != 2 and session.get('id_rol') != 3 %}
+                                    <a href="{{ url_for('RedirigirClientes')}}">
+                                        <i class="iconoos bi bi-person-badge-fill"></i>
+                                        <span class="textoos">Clientes</span>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu1">
+                            <p class="title1">Cuenta</p>
+                            <ul>
+                                <li >
+                                    <a href="{{ url_for('actualizar_cuenta')}}">
+                                        <i class="iconoos i bi-person"></i>
+                                            <span class="textoos">Perfil</span>
+                                    </a>
+                                </li>
+                                <li >
+                        </div>
+                    </div>
+                    <div class="menu1">
+                        <p class="title1">Ajustes</p>
+                        <ul>
+                            <li >
+                                <a href="{{ url_for('home')}}">
+                                    <i class="iconoos bi bi-box-arrow-left"></i>
+                                        <span class="textoos">Cerrar sesion</span>
+                                </a>
+                            </li>
+                            <li >
                     </div>
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-{% endblock %}
+            </div>
 
+
+    <div class="demo-html">
+        <section id="Modulos-cita">
+            <div class="modulosos">
+                <div class="col-md-12">
+                <div class="row">
+                    <div class="main--content">
+                        <div class="cabecera">
+                            <div class="cabecera-titulo">
+                                {% if session['id_rol'] == 1 %}
+                                <h1>LISTA DE PRODUCTOS</h1>
+                                {% else %}
+                                <h1>LISTA DE PRODUCTOS</h1>
+                                {% endif %}
+                            </div>
+                            <div class="icono-usuario">
+                                <div class="iconosisi pl-sm-4 pl-2">
+                                    <i class="iconososo bi bi-house-gear"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+            <section id="servicios" class="servicios">
+                <div class="container" data-aos="fade-up">
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="col-lg-3 align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="icon-box">
+                                <img class="tokenImage" src="{{ url_for('static', filename='IMG/' + product.image_path) }}" alt="Product Image" height="250">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ product.title }}</h4>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <p class="list-group-item">Precio: ${{ "{:,.2f}".format(product.price) }}</p>
+                                    <p class="list-group-item">Disponible: {{ product.quantity }}</p>
+                                    <br>
+                                </div>
+                                {% if product.active %}
+                                {% else %}
+                                <span class="text-danger">Producto Inactivo</span>
+                                {% endif %}
+                                {% if session.get('id_rol') != 1 %}
+                                <form action="{{ url_for('add_to_cart', id=product.id) }}" method="POST">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="quantity" placeholder="Cantidad" value="1" min="1" max="5">
+                                    </div>
+                                    <button type="submit" class="boton12 btn btn-agregar">Agregar</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            
+
+            <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>   
+            <script>
+                $(".menu1 > ul > li").click(function(e){
+                    //quitar el active para los que ya estan activos
+                    $(this).siblings().removeClass("activeos")
+                    //poner el active al darle clic
+                        $(this).toggleClass("activeos");
+                    //para abrir sub-menu
+                        $(this).find("ul").slideToggle();
+                    //cerrar submenu en caso de haber dos
+                        $(this).siblings().find("ul").slideup();
+                    //remover el active de los submenus
+                        $(this).siblings().find("ul").find("li").removeClass("activeos");
+                                // ajustar el ancho del container1 cuando está activo
+                });
+            
+                $(".menu1-boton").click(function () {
+                    $(".sidebar1").toggleClass("activeos");
+                });
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>

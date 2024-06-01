@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,182 +8,330 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"> 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
 </head>
 <body id="Empleado">
     <main>
-    <div class="contenedor">
-        <div class="contariner1">
-            <div class="sidebar1">
-                <div class="menu1-boton">
-                    <i class="bi bi-chevron-right"></i>
+<div class="contenedor">
+    <div class="contariner1">
+        <div class="sidebar1">
+            <div class="menu1-boton">
+                <i class="bi bi-chevron-right"></i>
+            </div>
+            <div class="head1">
+                <div class="logo-img">
+                    <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
                 </div>
-                <div class="head1">
-                    <div class="logo-img">
-                        <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
+                    <div class="logo-detalles">
+                        <p class="titulo1os">Anguie Studio</p>
                     </div>
-                        <div class="logo-detalles">
-                            <p class="titulo1os">Anguie Studio</p>
-                        </div>
-                </div>
-                <div class="nav1">
-                    <div class="menu1">
-                        <p class="title1">Menú</p>
-                        <ul>
-                            <li class="activeos">
-                                <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
-                                    <i class="iconoos bi bi-house-door"></i>
-                                        <span class="textoos">Home</span>
-                                </a>
-                            </li>
-                            <li >
-                                <a href="{{ url_for('Citas')}}">
-                                    <i class="iconoos bi bi-envelope"></i>
-                                        <span class="textoos">Citas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="iconoos bi bi-box2"></i>
-                                        <span class="textoos">inventario</span>
-                                    <i class="flecha bi bi-caret-down"></i>
-                                </a>
-                                <ul class="sub-menu1">
-                                    <li>
-                                        <a href="{{ url_for('inventario')}}">
-                                            <span class="textoos">Inventario</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('Entradas') }}">
-                                            <span class="textoos">Ver entradas</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('Salidas') }}">
-                                            <span class="textoos">Ver salidas</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('Novedades') }}">
-                                            <span class="textoos">Ver novedades</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{{ url_for('Home_Catalogo')}}">
-                                    <i class="iconoos bi bi-journal-bookmark-fill"></i>
-                                        <span class="textoos">Catalogo</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url_for('Registrar_Empleado')}}">
-                                    <i class="iconoos bi bi-people-fill"></i>
-                                        <span class="textoos">Agregar empleado</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="menu1">
-                        <p class="title1">Cuenta</p>
-                        <ul>
-                            <li>
-                                <a href="{{ url_for('actualizar_cuenta')}}">
-                                    <i class="iconoos i bi-person"></i>
-                                        <span class="textoos">Perfil</span>
-                                </a>
-                            </li>
-                            <li>
-                    </div>
-                </div>
+            </div>
+            <div class="nav1">
                 <div class="menu1">
-                    <p class="title1">Ajustes</p>
+                    <p class="title1">Menú</p>
                     <ul>
-                        <li>
-                            <a href="{{ url_for('home')}}">
-                                <i class="iconoos bi bi-box-arrow-left"></i>
-                                    <span class="textoos">Cerrar sesion</span>
+                        <li class="activeos">
+                            <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('Administrador') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                <i class="iconoos bi bi-house-door"></i>
+                                    <span class="textoos">Home</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="{{ url_for('Citas')}}">
+                                <i class="iconoos bi bi-envelope"></i>
+                                    <span class="textoos">Citas</span>
                             </a>
                         </li>
                         <li>
+                            {% if session.get('id_rol') != 3 %}
+                            <a href="#">
+                                <i class="iconoos bi bi-box2"></i>
+                                    <span class="textoos">Inventario</span>
+                                <i class="flecha bi bi-caret-down"></i>
+                            </a>
+                            <ul class="sub-menu1">
+                                <li>
+                                    <a href="{{ url_for('inventario')}}">
+                                        <span class="textoos">Inventario</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Entradas') }}">
+                                        <span class="textoos">Ver entradas</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Salidas') }}">
+                                        <span class="textoos">Ver salidas</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('Novedades') }}">
+                                        <span class="textoos">Ver novedades</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconoos bi bi-journal-bookmark-fill"></i>
+                                    <span class="textoos">Catálogo</span>
+                                <i class="flecha bi bi-caret-down"></i>
+                            </a>
+                            <ul class="sub-menu1">
+                                <li>
+                                    <a href="{{ url_for('Home_Catalogo') }}">
+                                        <span class="textoos">Inicio</span>
+                                    </a>
+                                </li>
+                                {% if 'logueado' in session and session['logueado'] %}
+                                {% if session.get('id_rol') != 3 %}
+                                <li>
+                                    <a href="{{ url_for('product_actions') }}">
+                                        <span class="textoos">Administrar producto</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+                                {% if session.get('id_rol') != 1 %}
+                                <li>
+                                    <a href="{{ url_for('cart') }}">
+                                        <span class="textoos">Carrito</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                                {% if session.get('id_rol') != 3 %}
+                                <li>
+                                    <a href="{{ url_for('ver_clientes') }}">
+                                        <span class="textoos">Productos apartados</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li>
+                            {% if session.get('id_rol') != 2 and session.get('id_rol') != 3 %}
+                            <a href="{{ url_for('Registrar_Empleado')}}">
+                                <i class="iconoos bi bi-people-fill"></i>
+                                <span class="textoos">Agregar empleado</span>
+                            </a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if session.get('id_rol') != 2 and session.get('id_rol') != 3 %}
+                            <a href="{{ url_for('RedirigirClientes')}}">
+                                <i class="iconoos bi bi-person-badge-fill"></i>
+                                <span class="textoos">Clientes</span>
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu1">
+                    <p class="title1">Cuenta</p>
+                    <ul>
+                        <li >
+                            <a href="{{ url_for('actualizar_cuenta')}}">
+                                <i class="iconoos i bi-person"></i>
+                                    <span class="textoos">Perfil</span>
+                            </a>
+                        </li>
+                        <li >
+                </div>
+            </div>
+            <div class="menu1">
+                <p class="title1">Ajustes</p>
+                <ul>
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            <i class="iconoos bi bi-box-arrow-left"></i>
+                            <span class="textoos">Cerrar sesión</span>
+                        </a>
+                    </li>
+                    <li >
+            </div>
+        </div>
+    </div>
+        <section id="Modulos">
+            <div class="modulosos">
+                <div class="col-md-12">
+                <div class="row">
+                    <div class="main--content">
+                        <div class="cabecera">
+                            <div class="cabecera-titulo">
+                                <h1>Bienvenido/a, {{ nombre }}</h1>
+                                <p>Empleado</p>
+                            </div>
+                            <div class="icono-usuario">
+                                <a href="{{ url_for('actualizar_cuenta')}}">
+                                <div class="iconosisi pl-sm-4 pl-2">
+                                    <i class="iconososo bi bi-person"></i>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>                
+            <div class="cartasos">
+                <div class="row">
+
+                    <div class="col-md-4">
+                <div class="carta1">
+                    <a href="{{ url_for('Citas')}}">
+                    <div>
+                        <div class="crtexto"><h1>{{citas_count}}</h1></div>
+                        <div class="cardName">Citas Registradas</div>
+                    </div>
+                </a>
+                            <div class="iconBx">
+                                <i class="iconoc bi bi-envelope"></i>
+                            </div>
+                        
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="carta1">
+                            <a href="{{ url_for('inventario')}}">
+                            <div>
+                                <div class="crtexto"><h1>{{productos_count}}</h1></div>
+                                <div class="cardName">Productos Registrados</div>
+                            </div>
+                        </a>
+                                    <div class="iconBx">
+                                        <i class="iconoc bi bi-box2"></i>
+                                    </div>
+                                
+                            </div>
+                            </div>
+                            <div class="col-md-4">
+                        <div class="carta1">
+                            <a href="{{ url_for('Home_Catalogo')}}">
+                            <div>
+                                <div class="crtexto"><h1>{{product_count}}</div>
+                                    <div class="cardName">Productos agregados al catalogo</div>
+                            </div>
+                        </a>
+                                    <div class="iconBx">
+                                        <i class="iconoc bi bi-journal-bookmark-fill"></i>
+                                    </div>
+                            </div>
+                            </div>
+                </div>
+        </div> 
+            <div class="estadistica">
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="graf">
+                            <div class="card card-danger">
+                                <div class="tacol card-header">
+                                <h3 class="card-title">Citas</h3>
+                                </div>
+                                <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="acquisitions" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 529px;" width="1058" height="500" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="graf">
+                            <div class="card card-danger">
+                                <div class="tacol card-header">
+                                <h3 class="card-title">Productos</h3>
+                                </div>
+                                <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="registro_productos" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 529px;" width="1058" height="500" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div> 
-        <section id="Modulos">
-            <div class="container text-center">
-                <h1>Bienvenido/a, {{ nombre }}</h1>
-                <p> Empleado </p>
-                <br>
-                <h2><span>Modulos</span></h2>
-            </div>
-                <div class="cartasos">
-                    <div class="row">
-                        <div class="col-md-6">
-                    <div class="carta1">
-                        <a href="{{ url_for('Redirigir_Empleado')}}">
-                        <div>
-                            <div class="crtexto">Registar Empleado</div>
-                            <div class="cardName">Hechar un vistazo</div>
-                        </div>
-                    </a>
-                                <div class="iconBx">
-                                    <i class=" iconoc bi bi-people-fill"></i>
-                                </div>
-            
-                        </div>
-                        </div>
-            
-                        <div class="col-md-6">
-                    <div class="carta1">
-                        <a href="{{ url_for('Citas')}}">
-                        <div>
-                            <div class="crtexto">Citas</div>
-                            <div class="cardName">Hechar un vistazo</div>
-                        </div>
-                    </a>
-                                <div class="iconBx">
-                                    <i class="iconoc bi bi-envelope"></i>
-                                </div>
-                            
-                        </div>
-                        </div>
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-6">
-                    <div class="carta1">
-                        <a href="{{ url_for('inventario')}}">
-                        <div>
-                            <div class="crtexto">Inventario</div>
-                            <div class="cardName">Hechar un vistazo</div>
-                        </div>
-                    </a>
-                                <div class="iconBx">
-                                    <i class="iconoc bi bi-box2"></i>
-                                </div>
-                            
-                        </div>
-                        </div>
-                        <div class="col-md-6">
-                    <div class="carta1">
-                        <a href="{{ url_for('Home_Catalogo')}}">
-                        <div>
-                            <div class="crtexto">Catalogo</div>
-                            <div class="cardName">Hechar un vistazo</div>
-                        </div>
-                    </a>
-                                <div class="iconBx">
-                                    <i class="iconoc bi bi-journal-bookmark-fill"></i>
-                                </div>
-                        </div>
-                        </div>
-                    </div>
-            </div> 
-            </section>
+    </section>
         </main>
+        <script>
+            // Obtener los nombres de los meses y las cantidades de citas como listas separadas
+            const mesesCitas = [];
+            const cantidades_citas = [];
+            
+            {% for cita in citas_por_mes %}
+                mesesCitas.push('{{ cita.mes }}');
+                cantidades_citas.push({{ cita.cantidad_citas }});
+            {% endfor %}
+            
+            // Configurar los datos para el gráfico de citas
+            const dataCitas = {
+                labels: mesesCitas,
+                datasets: [{
+                    label: 'Citas del empleado',
+                    data: cantidades_citas,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(0, 99, 132, 0.6)',
+                    tension: 0.1
+                }]
+            };
+            
+            // Configurar y dibujar el gráfico de citas
+            const ctxCitas = document.getElementById('acquisitions').getContext('2d');
+            const myChartCitas = new Chart(ctxCitas, {
+                type: 'bar',
+                data: dataCitas,
+                options: {
+                }
+            });
+        </script>
+        <script>
+            // Obtener los nombres de los meses y las cantidades de productos como listas separadas
+            const meses = [];
+            const cantidades_productos = [];
+        
+            {% for productos in productos_por_mes %}
+                meses.push('{{ productos.mes }}');
+                cantidades_productos.push({{ productos.cantidad_productos }});
+            {% endfor %}
+        
+            // Configurar los datos para el gráfico
+            const data = {
+                labels: meses,
+                datasets: [{
+                    label: 'Productos agregados',
+                    data: cantidades_productos,
+                    backgroundColor: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'], // Colores para los elementos del dataset
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1, // Ancho del borde
+                    fill: false,
+                    tension: 0.1
+                }]
+            };
+        
+            // Configurar y dibujar el gráfico
+            const ctx = document.getElementById('registro_productos').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line', // Tipo de gráfico: línea
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom' // Posición de la leyenda
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true // Empezar el eje y en cero
+                        }
+                    }
+                }
+            });
+        </script>
         <script>
             $(".menu1 > ul > li").click(function(e){
                 //quitar el active para los que ya estan activos

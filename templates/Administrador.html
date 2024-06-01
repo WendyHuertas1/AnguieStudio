@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
                         <p class="title1">Menú</p>
                         <ul>
                             <li class="activeos">
-                                <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('Administrador') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
                                     <i class="iconoos bi bi-house-door"></i>
                                         <span class="textoos">Home</span>
                                 </a>
@@ -47,7 +48,7 @@
                             <li>
                                 <a href="#">
                                     <i class="iconoos bi bi-box2"></i>
-                                        <span class="textoos">inventario</span>
+                                        <span class="textoos">Inventario</span>
                                     <i class="flecha bi bi-caret-down"></i>
                                 </a>
                                 <ul class="sub-menu1">
@@ -74,16 +75,55 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ url_for('Home_Catalogo')}}">
+                                <a href="#">
                                     <i class="iconoos bi bi-journal-bookmark-fill"></i>
-                                        <span class="textoos">Catalogo</span>
+                                        <span class="textoos">Catálogo</span>
+                                    <i class="flecha bi bi-caret-down"></i>
                                 </a>
+                                <ul class="sub-menu1">
+                                    <li>
+                                        <a href="{{ url_for('Home_Catalogo') }}">
+                                            <span class="textoos">Inicio</span>
+                                        </a>
+                                    </li>
+                                    {% if 'logueado' in session and session['logueado'] %}
+                                    {% if session.get('id_rol') != 3 %}
+                                    <li>
+                                        <a href="{{ url_for('product_actions') }}">
+                                            <span class="textoos">Administrar producto</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% if session.get('id_rol') != 1 %}
+                                        <li>
+                                            <a href="{{ url_for('cart') }}">
+                                                <span class="textoos">Carrito</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if session.get('id_rol') != 3 %}
+                                    <li>
+                                        <a href="{{ url_for('ver_clientes') }}">
+                                            <span class="textoos">Productos apartados</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
                             </li>
                             <li>
                                 <a href="{{ url_for('Registrar_Empleado')}}">
                                     <i class="iconoos bi bi-people-fill"></i>
                                         <span class="textoos">Agregar empleado</span>
                                 </a>
+                            </li>
+                            <li>
+                                {% if session.get('id_rol') != 3 %}
+                                <a href="{{ url_for('RedirigirClientes')}}">
+                                    <i class="iconoos bi bi-person-badge-fill"></i>
+                                        <span class="textoos">Clientes</span>
+                                </a>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
@@ -103,7 +143,7 @@
                     <p class="title1">Ajustes</p>
                     <ul>
                         <li >
-                            <a href="{{ url_for('home')}}">
+                            <a href="{{ url_for('logout')}}">
                                 <i class="iconoos bi bi-box-arrow-left"></i>
                                     <span class="textoos">Cerrar sesion</span>
                             </a>
@@ -155,8 +195,8 @@
                     <div class="carta1">
                         <a href="{{ url_for('Citas')}}">
                         <div>
-                            <div class="crtexto">Citas</div>
-                            <div class="cardName">Hechar un vistazo</div>
+                            <div class="crtexto"><h1>{{citas_count}}</h1></div>
+                            <div class="cardName">Citas Registradas</div>
                         </div>
                     </a>
                                 <div class="iconBx">
@@ -169,8 +209,8 @@
                             <div class="carta1">
                                 <a href="{{ url_for('inventario')}}">
                                 <div>
-                                    <div class="crtexto">Inventario</div>
-                                    <div class="cardName">Hechar un vistazo</div>
+                                    <div class="crtexto"><h1>{{productos_count}}</h1></div>
+                                    <div class="cardName">Productos Registrados</div>
                                 </div>
                             </a>
                                         <div class="iconBx">
@@ -183,8 +223,8 @@
                             <div class="carta1">
                                 <a href="{{ url_for('Home_Catalogo')}}">
                                 <div>
-                                    <div class="crtexto">Catalogo</div>
-                                    <div class="cardName">Hechar un vistazo</div>
+                                    <div class="crtexto"><h1>{{product_count}}</div>
+                                        <div class="cardName">Productos en el catalogo</div>
                                 </div>
                             </a>
                                         <div class="iconBx">
@@ -196,10 +236,28 @@
             </div> 
             <div class="estadistica">
                 <div class="row">
+                    <div class=" col-md-6">
+                        <div class="graf">
+                            <div class="card card-danger">
+                                <div class="tacol card-header">
+                                <h3 class="card-title">Citas</h3>
+                                </div>
+                                <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="acquisitions" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 529px;" width="1058" height="500" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
-                        <div class="estadist1" style="width: 600px;">
-                            <!-- Aquí colocamos el canvas para la gráfica -->
-                            <canvas id="acquisitions"></canvas>
+                        <div class="graf">
+                            <div class="card card-danger">
+                                <div class="tacol card-header">
+                                <h3 class="card-title">Productos</h3>
+                                </div>
+                                <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="registro_productos" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 529px;" width="1058" height="500" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,7 +265,7 @@
             <div class="listaE">
                 <div class="col-xl-12">
                     <div class="card">
-                        <div class="card-header border-0">
+                        <div class="tacol card-header border-0">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h3 class="mb-0">Empleados Recientemente Agregados</h3>
@@ -251,25 +309,22 @@
                     </div>
                 </div>
             </div>
-            
-        </div>
-        
+        </div> 
     </section>
         </main>
-
         <script>
             // Obtener los nombres de los meses y las cantidades de citas como listas separadas
-            const meses = [];
+            const mesesCitas = [];
             const cantidades_citas = [];
-        
+            
             {% for cita in citas_por_mes %}
-                meses.push('{{ cita.mes }}');
+                mesesCitas.push('{{ cita.mes }}');
                 cantidades_citas.push({{ cita.cantidad_citas }});
             {% endfor %}
-        
-            // Configurar los datos para el gráfico
-            const data = {
-                labels: meses,
+            
+            // Configurar los datos para el gráfico de citas
+            const dataCitas = {
+                labels: mesesCitas,
                 datasets: [{
                     label: 'Citas agregadas',
                     data: cantidades_citas,
@@ -279,12 +334,59 @@
                     tension: 0.1
                 }]
             };
+            
+            // Configurar y dibujar el gráfico de citas
+            const ctxCitas = document.getElementById('acquisitions').getContext('2d');
+            const myChartCitas = new Chart(ctxCitas, {
+                type: 'bar',
+                data: dataCitas,
+                options: {
+                }
+            });
+        </script>
+        <script>
+            // Obtener los nombres de los meses y las cantidades de productos como listas separadas
+            const meses = [];
+            const cantidades_productos = [];
+        
+            {% for productos in productos_por_mes %}
+                meses.push('{{ productos.mes }}');
+                cantidades_productos.push({{ productos.cantidad_productos }});
+            {% endfor %}
+        
+            // Configurar los datos para el gráfico
+            const data = {
+                labels: meses,
+                datasets: [{
+                    label: 'Productos agregados',
+                    data: cantidades_productos,
+                    backgroundColor: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'], // Colores para los elementos del dataset
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1, // Ancho del borde
+                    fill: false,
+                    tension: 0.1
+                }]
+            };
         
             // Configurar y dibujar el gráfico
-            const ctx = document.getElementById('acquisitions').getContext('2d');
+            const ctx = document.getElementById('registro_productos').getContext('2d');
             const myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'line', // Tipo de gráfico: línea
                 data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom' // Posición de la leyenda
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true // Empezar el eje y en cero
+                        }
+                    }
+                }
             });
         </script>
         <script>

@@ -1,83 +1,192 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente</title>
+    <title>AnguieStudio</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"> 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
 </head>
-<body id="Cliente">
-    <div class="contenedor">
-        <nav>
-            <ul>
-            <a href="#" class="logo">
-                <span class="nav-item">Cliente</span>
-            </a>
-            <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('admin') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
-                <i class="fas fa-home"></i>
-                <span class="nav-item">Home</span>
-            </a>
-            <a href="{{ url_for('Citas')}}">
-                <i class="fas fa-user"></i>
-                <span class="nav-item">Citas</span>
-            </a>
-            <a href="{{ url_for('Home_Catalogo')}}">
-                <i class="fas fa-chart-bar"></i>
-                <span class="nav-item">Catalogo</span>
-            </a>
-            <a href="{{ url_for('actualizar_cuenta')}}">
-                <i class="fas fa-cog"></i>
-                <span class="nav-item">Perfil</span>
-            </a>
+<body id="Empleado">
+    <main>
+<div class="contenedor">
+        <div class="contariner1">
+            <div class="sidebar1">
+                <div class="menu1-boton">
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+                <div class="head1">
+                    <div class="logo-img">
+                        <img src="{{ url_for('static', filename='IMG/logo.1.jfif')}}" alt="">
+                    </div>
+                        <div class="logo-detalles">
+                            <p class="titulo1os">Anguie Studio</p>
+                        </div>
+                </div>
+                <div class="nav1">
+                    <div class="menu1">
+                        <p class="title1">Menú</p>
+                        <ul>
+                            <li class="activeos">
+                                <a href="{% if 'logueado' in session and session['logueado'] %}{% if session.get('id_rol') == 1 %}{{ url_for('Administrador') }}{% elif session.get('id_rol') == 2 %}{{ url_for('Empleado') }}{% elif session.get('id_rol') == 3 %}{{ url_for('Cliente') }}{% endif %}{% else %}{{ url_for('home') }}{% endif %}">
+                                    <i class="iconoos bi bi-house-door"></i>
+                                        <span class="textoos">Home</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="{{ url_for('Citas')}}">
+                                    <i class="iconoos bi bi-envelope"></i>
+                                        <span class="textoos">Citas</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="iconoos bi bi-journal-bookmark-fill"></i>
+                                        <span class="textoos">Catálogo</span>
+                                    <i class="flecha bi bi-caret-down"></i>
+                                </a>
+                                <ul class="sub-menu1">
+                                    <li>
+                                        <a href="{{ url_for('Home_Catalogo') }}">
+                                            <span class="textoos">Inicio</span>
+                                        </a>
+                                    </li>
+                                    {% if 'logueado' in session and session['logueado'] %}
+                                    {% if session.get('id_rol') != 3 %}
+                                    <li>
+                                        <a href="{{ url_for('product_actions') }}">
+                                            <span class="textoos">Administrar producto</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% if session.get('id_rol') != 1 %}
+                                        <li>
+                                            <a href="{{ url_for('cart') }}">
+                                                <span class="textoos">Carrito</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if session.get('id_rol') != 3 %}
+                                    <li>
+                                        <a href="{{ url_for('ver_clientes') }}">
+                                            <span class="textoos">Productos apartados</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="menu1">
+                        <p class="title1">Cuenta</p>
+                        <ul>
+                            <li >
+                                <a href="{{ url_for('actualizar_cuenta')}}">
+                                    <i class="iconoos i bi-person"></i>
+                                        <span class="textoos">Perfil</span>
+                                </a>
+                            </li>
+                            <li >
+                    </div>
+                </div>
+                <div class="menu1">
+                    <p class="title1">Ajustes</p>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('logout') }}">
+                                <i class="iconoos bi bi-box-arrow-left"></i>
+                                <span class="textoos">Cerrar sesión</span>
+                            </a>
+                        </li>
+                        <li >
+                </div>
+            </div>
+        </div>
+        <section id="Modulos">
+            <div class="modulosos">
+                <div class="col-md-12">
+                <div class="row">
+                    <div class="main--content">
+                        <div class="cabecera">
+                            <div class="cabecera-titulo">
+                                <h1>Bienvenido/a, {{ nombre }}</h1>
+                                <p>Cliente</p>
+                            </div>
+                            <div class="icono-usuario">
+                                <a href="{{ url_for('actualizar_cuenta')}}">
+                                <div class="iconosisi pl-sm-4 pl-2">
+                                    <i class="iconososo bi bi-person"></i>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <div class="vistaClie">
+            <div class="cliente1">
+                <div class="text-center w-100">
+                    <h2>¿Que Tienes Planeado Hacer Hoy?</h2>
+                </div>
+            </div>
+            <div class="cartascli">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="servicioscli">
+                            <div class="contenidocli1">
+                                <i class="cliicono bi bi-calendar-event"></i>
+                                <h3>Agendar Cita</h3>
+                                <p>Agenda tu cita en Anguie Studio, mira los diferentes servicios que tenemos. En este espacio, te ofrecemos la conveniencia de reservar tu próxima experiencia de belleza con tan solo unos clics.</p>
+                                <a href="{{ url_for('Citas')}}">¡Agendar Ya!</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="servicioscli">
+                            <div class="contenidocli1">
+                                <i class="cliicono bi bi-cart"></i>
+                                <h3>Ver catálogo</h3>
+                                <p>Mira nuestros productos. En este espacio, te invitamos a explorar una amplia gama de productos cuidadosamente seleccionados para realzar tu belleza y resaltar tu estilo único.</p>
+                                <a href="{{ url_for('Home_Catalogo')}}">¡Hecha un vistazo!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <a href="{{ url_for('home')}}" class="logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="nav-item">Log out</span>
-            </a>
-            </ul>
-        </nav>
-        <main>
-            <section id="Modulos">
-                <div class="container text-center">
-                    <h1>Bienvenido/a, {{ nombre }}</h1>
-                    <p> Cliente </p>
-                    <br>
-                    <h2><span>Modulos</span></h2>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card-servicios">
-                                <img src="{{ url_for('static', filename='IMG/empleados.jpg')}}" alt="Registrar Empleado" class="w-100">
-                                <a href="">Registrar Empleado</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card-servicios">
-                                <img src="{{ url_for('static', filename='IMG/Citas.png')}}" alt="Citas" class="w-100">
-                                <a href="{{ url_for('Citas')}}">Citas</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card-servicios">
-                                <img src="{{ url_for('static', filename='IMG/inventario.webp')}}" alt="Inventario" class="w-100">
-                                <a href="{{ url_for('inventario')}}">Inventario</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card-servicios">
-                                <img src="{{  url_for('static', filename='IMG/belleza.jpg')}}" alt="Editar perfil" class="w-100">
-                                <a href="{{ url_for('Home_Catalogo')}}">Catalogo</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-            </section>
+        </div>
+
+        </div> 
+    </section>
         </main>
+        <script>
+            $(".menu1 > ul > li").click(function(e){
+                //quitar el active para los que ya estan activos
+                $(this).siblings().removeClass("activeos")
+                //poner el active al darle clic
+                    $(this).toggleClass("activeos");
+                //para abrir sub-menu
+                    $(this).find("ul").slideToggle();
+                //cerrar submenu en caso de haber dos
+                    $(this).siblings().find("ul").slideup();
+                //remover el active de los submenus
+                    $(this).siblings().find("ul").find("li").removeClass("activeos");
+                            // ajustar el ancho del container1 cuando está activo
+            });
         
+            $(".menu1-boton").click(function () {
+                $(".sidebar1").toggleClass("activeos");
+            });
+        </script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

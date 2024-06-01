@@ -5,58 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#C1FF33">
     <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmF/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">   
-    <link rel="icon" href="../static/IMG/Uñas-icono.png"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="../static/IMG/Uñas-icono.png">
 </head>
-<style>
-    .texto-rojo {
-        color: red;
-    }
-    </style>
 <body id="Login">
-<div class="container">
-    <div class="information">
-        <div class="info-first-part">
-            <h2>Bienvenido</h2> 
-            <p>Si no tienes una cuenta regístrate</p> 
-            <a href="/registro"><input type="button" value="Registrarse"></a>
-        </div>
-        <div class="form-information">
-            <div class="form-information-seconds">
-                <form class="form" action="acceso-login" method="post">
-                    {% if mensaje %}
-                    {{mensaje}}
-                    {% endif %}
-                    <img src="{{url_for('static', filename='IMG/logo.1.jfif')}}" class="logo">
-                    <h2>Iniciar Sesión</h2>
-                    <div class="icons">
-                        <i class='bx bxl-google'></i>
-                    </div>
-                    <label>
-                        <i class='bx bx-envelope'></i>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo electrónico" name="txtCorreo" required>
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                    </label>
-                    <label for="exampleInputPassword1" style="position: relative;">
-                        <i class='bx bx-lock'></i>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" name="txtPassword">
-                        <i class="bx bx-show" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1.5em; cursor: pointer;"></i>
-                    </label>
-                    <li id="contraseña"><a href="{{ url_for ('forgot') }}">¿Olvidaste tu contraseña?</a></li>
-                    <br>
-                    <input type="submit" value="Iniciar sesión">
-                    
-                </form>
+    <div class="container">
+        <div class="row information">
+            <div class="col-lg-4 col-md-12 info-first-part">
+                <h2>Bienvenido</h2>
+                <p>Si no tienes una cuenta regístrate</p>
+                <a href="/registro"><input type="button" class="input-submit" value="Registrarse"></a>
+            </div>
+            <div class="col-lg-8 col-md-12 form-information">
+                <div class="form-information-second">
+                    <form class="form" action="acceso-login" method="post">
+                        {% if mensaje %}
+                        {{mensaje}}
+                        {% endif %}
+                        
+                        <div class="logo-contain">
+                            <img src="{{url_for('static', filename='IMG/logo.1.jfif')}}" class="logo">
+                        </div>
+                        
+                        <div>
+                            <label class="login-form">
+                                <i class='bx bx-envelope'></i>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo electrónico" name="txtCorreo" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </label>
+                            <label for="exampleInputPassword1" class="login-form" style="position: relative;">
+                                <i class='bx bx-lock-alt'></i>
+                                <input type="password" class="form-control " id="exampleInputPassword1" placeholder="Contraseña" name="txtPassword">
+                                <i class="bx bx-show" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 20px; cursor: pointer;"></i>
+                            </label>
+
+                            <br>
+                            
+                        </div>
+                        <input type="submit" class="input-submit" value="Iniciar sesión">
+                        <br>
+                        <br>
+                        <li id="contraseña"><a href="{{ url_for('forgot') }}" class="link-password">¿Olvidaste tu contraseña?</a></li>
+                        
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-    <button id="volver"><a href="{{ url_for ('home')}}">Volver</a></button>
+    
+    <button id="volver"><a href="{{ url_for('home')}}">Volver</a></button>
 
     <script>
         // script para mostrar y no mostrar la contraseña en el input del ojo 
@@ -72,34 +74,39 @@
         });
     </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector("form").addEventListener("submit", function(event){
-            var contrasena = document.getElementById("exampleInputPassword1").value;
-            var mensaje = document.getElementById("mensaje");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("form").addEventListener("submit", function(event){
+                var contrasena = document.getElementById("exampleInputPassword1").value;
+                var mensaje = document.getElementById("mensaje");
 
-            // Comprobar si la contraseña tiene al menos 8 caracteres
-            if (contrasena.length < 8) {
-                mensaje.textContent = "La contraseña debe tener al menos 8 caracteres.";
-                event.preventDefault();
-                return;
-            }
+                // Comprobar si la contraseña tiene al menos 8 caracteres
+                if (contrasena.length < 8) {
+                    mensaje.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                    event.preventDefault();
+                    return;
+                }
 
-            // Comprobar si la contraseña contiene al menos una mayúscula
-            if (!/[A-Z]/.test(contrasena)) {
-                mensaje.textContent = "La contraseña debe contener al menos una mayúscula.";
-                event.preventDefault();
-                return;
-            }
+                // Comprobar si la contraseña contiene al menos una mayúscula
+                if (!/[A-Z]/.test(contrasena)) {
+                    mensaje.textContent = "La contraseña debe contener al menos una mayúscula.";
+                    event.preventDefault();
+                    return;
+                }
 
-            // Comprobar si la contraseña contiene al menos un caracter especial
-            if (!/[^A-Za-z0-9]/.test(contrasena)) {
-                mensaje.textContent = "La contraseña debe contener al menos un caracter especial.";
-                event.preventDefault();
-                return;
-            }
+                // Comprobar si la contraseña contiene al menos un caracter especial
+                if (!/[^A-Za-z0-9]/.test(contrasena)) {
+                    mensaje.textContent = "La contraseña debe contener al menos un caracter especial.";
+                    event.preventDefault();
+                    return;
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+    <!-- Incluye el JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
