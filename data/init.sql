@@ -1,6 +1,8 @@
 CREATE DATABASE IF NOT EXISTS AngieStudio;
 USE AngieStudio;
 
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
 CREATE TABLE citas (
   id_cita int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   id_cliente int(11) NOT NULL,
@@ -191,5 +193,3 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
-
-SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
