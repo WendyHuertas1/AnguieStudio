@@ -75,10 +75,41 @@
                             {% endif %}
                         </li>
                         <li>
-                            <a href="{{ url_for('Home_Catalogo')}}">
+                            <a href="#">
                                 <i class="iconoos bi bi-journal-bookmark-fill"></i>
-                                    <span class="textoos">Catalogo</span>
+                                    <span class="textoos">Catálogo</span>
+                                <i class="flecha bi bi-caret-down"></i>
                             </a>
+                            <ul class="sub-menu1">
+                                <li>
+                                    <a href="{{ url_for('Home_Catalogo') }}">
+                                        <span class="textoos">Inicio</span>
+                                    </a>
+                                </li>
+                                {% if 'logueado' in session and session['logueado'] %}
+                                {% if session.get('id_rol') != 3 %}
+                                <li>
+                                    <a href="{{ url_for('product_actions') }}">
+                                        <span class="textoos">Administrar producto</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+                                {% if session.get('id_rol') != 1 %}
+                                <li>
+                                    <a href="{{ url_for('cart') }}">
+                                        <span class="textoos">Carrito</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                                {% if session.get('id_rol') != 3 %}
+                                <li>
+                                    <a href="{{ url_for('ver_clientes') }}">
+                                        <span class="textoos">Productos apartados</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
                         </li>
                         <li>
                             {% if session.get('id_rol') != 2 and session.get('id_rol') != 3 %}

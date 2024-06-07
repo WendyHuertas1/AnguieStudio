@@ -14,10 +14,9 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Configuración para MySQL
-app.config['MYSQL_HOST'] = 'db'
-app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '12345678'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'AngieStudio'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = 'static/IMG'

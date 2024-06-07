@@ -44,10 +44,11 @@
                                             <span class="textoos">Citas</span>
                                     </a>
                                 </li>
+                                {% if session.get('id_rol') != 3 %}
                                 <li>
                                     <a href="#">
                                         <i class="iconoos bi bi-box2"></i>
-                                            <span class="textoos">Inventario</span>
+                                        <span class="textoos">Inventario</span>
                                         <i class="flecha bi bi-caret-down"></i>
                                     </a>
                                     <ul class="sub-menu1">
@@ -73,6 +74,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                {% endif %}
                                 <li class="activeos">
                                     <a href="#">
                                         <i class="iconoos bi bi-journal-bookmark-fill"></i>
