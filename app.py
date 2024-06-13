@@ -14,9 +14,10 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Configuración para MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_HOST'] = 'proyecto.cta008mymt9s.us-east-2.rds.amazonaws.com'
+app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_USER'] = 'proyecto'  # Usuario de la base de datos
+app.config['MYSQL_PASSWORD'] = '12345678'  # Contraseña del usuario de la base de datos
 app.config['MYSQL_DB'] = 'AngieStudio'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = 'static/IMG'
@@ -759,7 +760,6 @@ def Registrar_Cita():
         cedula = request.form.get('cedula')
         fecha = request.form.get('Fecha')
         hora = request.form.get('Hora')
-        motivo = request.form.get('motivo')
 
         try:
             # Insertar la cita en la base de datos
@@ -772,8 +772,8 @@ def Registrar_Cita():
             # Convertir a float y formatear con dos decimales
             precio_servicio = '{:.2f}'.format(float(precio_servicio))
 
-            cur.execute("INSERT INTO citas (nombre, cedula, servicio, precio, fecha, hora, motivo, id_cliente) VALUES (%s, %s,  %s, %s, %s, %s, %s, %s)",
-                        (nombre, cedula, nombre_servicio, precio_servicio, fecha, hora, motivo, cliente_id))
+            cur.execute("INSERT INTO citas (nombre, cedula, servicio, precio, fecha, hora,  id_cliente) VALUES ( %s,  %s, %s, %s, %s, %s, %s)",
+                        (nombre, cedula, nombre_servicio, precio_servicio, fecha, hora,  cliente_id))
             mysql.connection.commit()
 
             # Incrementar el número de citas del usuario en la base de datos
@@ -792,7 +792,7 @@ def Registrar_Cita():
                 email_content = archivo.read()
                 
                 # Renderizar el contenido HTML del archivo email1.html
-                html_content = render_template('email1.html', nombre=nombre, fecha=fecha, servicio=servicio, hora=hora, motivo=motivo)
+                html_content = render_template('email1.html', nombre=nombre, fecha=fecha, servicio=servicio, hora=hora)
 
                 msg = Message('Nueva cita registrada', sender='dilanyarce22@gmail.com', recipients=[user_email])
                 msg.html = f"""\
@@ -1103,8 +1103,8 @@ def order_processed():
 
     # Insertar datos del cliente en la tabla 'client'
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO client (nombre, apellidos, direccion, telefono, correo) VALUES (%s, %s, %s, %s, %s)",
-                (nombre, apellidos, direccion, telefono, correo))
+    cur.execute("INSERT INTO client (nombre, apellidos, telefono, correo) VALUES ( %s, %s, %s, %s)",
+                (nombre, apellidos, telefono, correo))
     mysql.connection.commit()
     cur.close()
 
@@ -1135,7 +1135,6 @@ def order_processed():
         return render_template('order_processed.html',
                             nombre=nombre,
                             apellidos=apellidos,
-                            direccion=direccion,
                             telefono=telefono,
                             correo=correo,
                             cart_items=cart_items)
@@ -1166,7 +1165,6 @@ def apartado_produc():
         cur.close()
         return render_template('apartado_produc.html', cart_items=cart_items)
     else:
-        flash('No se proporcionaron IDs de productos para apartar', 'danger')
         return redirect(url_for('Home_Catalogo'))
 
 # Ruta y función para limpiar el carrito

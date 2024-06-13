@@ -229,7 +229,6 @@
                                 <th scope="col">Servicio - Precio</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Hora</th>
-                                <th scope="col">Motivo</th>
                                 {% if session['id_rol'] != 2 %}
                                 <th scope="col">Eliminar</th>
                                 {% endif %}
@@ -246,7 +245,6 @@
                                 <td>{{ cita['servicio'] }} - <span class="precio-servicio">{{ cita['precio'] }}</span></td>
                                 <td>{{ cita['fecha'] }}</td>
                                 <td>{{ cita['hora'] }}</td>
-                                <td>{{ cita['motivo'] }}</td>
                                 {% if session['id_rol'] != 2 %}
                                 <td>
                                     <div class="custom-buttons">
@@ -320,7 +318,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row py-2">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-12">
                                                             <label for="Hora">Hora:</label>
                                                             <select name="Hora" class="form-control" id="Hora" required>
                                                                 <option value="" selected>Seleccione la hora para la cita</option>
@@ -328,12 +326,6 @@
                                                                     <option value="{{ hora }}">{{ hora }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Motivo:</label>
-                                                                <input value="{{ cita['motivo'] }}" type="text" name="motivo" class="form-control">
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="botoncito text-center w-100">
@@ -463,18 +455,6 @@
                                             <option value="{{ hora }}">{{ hora }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
-                            </div>
-                            <div class="row py-2">
-                                <div class="form-group col-md-12">
-                                    <div class="text-center w-100"> <div>
-                                    <label for="Motivo">Motivo:</label>
-                                    </div>
-                                    </div>
-                                <div class="form-group col-md-12">
-                                    <div class="text-center w-100"> 
-                                    <textarea class="textito" title="Motivo de la cita" name="motivo" required></textarea>
-                                    </div>
                                 </div>
                             </div>
                                 <div class="botoncito text-center w-100"> 
